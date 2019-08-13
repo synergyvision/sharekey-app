@@ -1,0 +1,16 @@
+{
+  "name": "myapp",
+  "integrations": {
+    "cordova": {}
+  },
+  "type": "angular",
+  "gulpStartupTasks": [
+    "sass",
+    "watch"
+  ],
+  "watchPatterns": [
+    "www/**/*",
+    "!www/lib/**/*",
+    "!www/**/*.map"
+  ]
+}
