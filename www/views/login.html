@@ -1,0 +1,25 @@
+<ion-view view-title="login">
+    <form mobiscroll-form="settings" class="md-login-form" name="loginForm" novalidate>
+            <div class="md-logo micons icon-mbsc-logo"></div>
+            <div class="mbsc-form-group-inset">
+                <label ng-class="{ 'mbsc-err': loginForm.email.$invalid && (loginForm.$submitted || loginForm.email.$touched) }">
+                    <input type="email" name="email" placeholder="Email" ng-model="email" required />
+                    <span class="mbsc-err-msg" ng-show="loginForm.email.$error.required && (loginForm.$submitted || loginForm.email.$touched)">Email required</span>
+                    <span class="mbsc-err-msg" ng-show="loginForm.email.$error.email && (loginForm.$submitted || loginForm.email.$touched)">Invalid email address</span>
+                </label>
+                <label ng-class="{ 'mbsc-err': loginForm.password.$invalid && (loginForm.$submitted || loginForm.password.$touched) }">
+                    <input name="password" type="text" placeholder="Password" ng-model="password" data-password-toggle="true" data-icon="none" data-icon-align="right" required ng-minlength="6" />
+                    <span class="mbsc-err-msg" ng-show="loginForm.password.$error.required && (loginForm.$submitted || loginForm.password.$touched)">Password required</span>
+                    <span class="mbsc-err-msg" ng-show="loginForm.password.$error.minlength && (loginForm.$submitted || loginForm.password.$touched)">At least 6 characters required</span>
+                </label>
+            </div>
+            <div class="mbsc-form-group-inset mbsc-padding mbsc-align-center">
+                <a href="#" class="md-signup" ng-click="btnClick()">{{lnkText}}</a>
+                <br><br>
+                <a href="#" class="md-login">Forgot password?</a>
+            </div>
+            <div class="mbsc-form-group-inset mbsc-padding">
+                <button class="mbsc-btn-block md-signup-btn" type="submit">{{btnText}}</button>
+            </div>
+        </form>
+</ion-view>

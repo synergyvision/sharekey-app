@@ -33,12 +33,26 @@ angular.module('starter', ['ionic', 'starter.controllers','starter.services'])
   // Each state's controller can be found in controllers.js
   $stateProvider
 
+  .state('/', {
+    url: '/', 
+    templateUrl: 'views/login.html',
+    controller: 'LoginController',
+  })
+  .state('login',{
+    url: '/login', 
+    templateUrl: 'views/login.html',
+    controller: 'LoginController',
+    css: '../css/login.css'
+  })
+
   // setup an abstract state for the tabs directive
   .state('tab', {
     url: '/tab',
     abstract: true,
-    templateUrl: 'templates/tabs.html'
+    templateUrl: 'views/tabs.html'
   })
+
+
 
   // Each tab has its own nav history stack:
 
@@ -46,7 +60,7 @@ angular.module('starter', ['ionic', 'starter.controllers','starter.services'])
     url: '/dash',
     views: {
       'tab-dash': {
-        templateUrl: 'templates/tab-dash.html',
+        templateUrl: 'views/tab-dash.html',
         controller: 'DashCtrl'
       }
     }
@@ -56,7 +70,7 @@ angular.module('starter', ['ionic', 'starter.controllers','starter.services'])
     url: '/chats',
     views: {
       'tab-chats': {
-        templateUrl: 'templates/tab-chats.html',
+        templateUrl: 'views/tab-chats.html',
         controller: 'ChatsCtrl'
       }
     }
@@ -67,7 +81,7 @@ angular.module('starter', ['ionic', 'starter.controllers','starter.services'])
     url: '/social',
     views: {
       'tab-social': {
-        templateUrl: 'templates/tab-social.html',
+        templateUrl: 'views/tab-social.html',
         controller: 'SocialCtrl'
       }
     }
@@ -77,7 +91,7 @@ angular.module('starter', ['ionic', 'starter.controllers','starter.services'])
     url: '/account',
     views: {
       'tab-account': {
-        templateUrl: 'templates/tab-account.html',
+        templateUrl: 'views/tab-account.html',
         controller: 'AccountCtrl'
 
       }
