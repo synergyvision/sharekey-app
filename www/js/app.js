@@ -3,6 +3,8 @@
 // angular.module is a global place for creating, registering and retrieving Angular modules
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
+
+
 angular.module('starter', ['ionic', 'starter.controllers','starter.services'])
 
 .run(function($ionicPlatform) {
@@ -33,17 +35,31 @@ angular.module('starter', ['ionic', 'starter.controllers','starter.services'])
   // Each state's controller can be found in controllers.js
   $stateProvider
 
-  .state('/', {
-    url: '/', 
-    templateUrl: 'views/login.html',
-    controller: 'LoginController',
-  })
   .state('login',{
-    url: '/login', 
-    templateUrl: 'views/login.html',
+    url: '/auth/login', 
+    templateUrl: 'views/auth/login.html',
     controller: 'LoginController',
-    css: '../css/login.css'
+    css: '../../css/login.css'
   })
+
+  .state('checkEmail',{
+    url: '/auth/forgotPassword',
+    templateUrl: 'views/auth/checkEmail.html',
+    controller: 'CheckEmailController',
+    css: '../../css/login.css'
+  })
+  .state('signUp',{
+    url: '/auth/signUp',
+    templateUrl: 'views/auth/signup.html',
+    controller: 'signUpController',
+    css: '../../css/login.css'
+  })
+
+
+
+
+
+  // template states
 
   // setup an abstract state for the tabs directive
   .state('tab', {
@@ -99,7 +115,8 @@ angular.module('starter', ['ionic', 'starter.controllers','starter.services'])
   });
 
   // if none of the above states are matched, use this as the fallback
-  $urlRouterProvider.otherwise('/tab/dash');
+  $urlRouterProvider.otherwise('/auth/login');
   $ionicConfigProvider.tabs.position('bottom'); // other values: top
 
 });
+

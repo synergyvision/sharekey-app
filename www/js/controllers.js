@@ -1,8 +1,17 @@
-angular.module('starter.controllers', [])
 
-.controller('LoginController', function ($scope,$http,$location,$localStorage){
+var env = {};
 
-  /*var getServerKey = function (){
+// Import variables if present (from env.js)
+if(window){  
+  Object.assign(env, window.__env);
+}
+
+ngModule = angular.module('starter.controllers', ['ngStorage'])
+
+ngModule.constant('__env', env)
+
+.controller('LoginController', function ($scope,$http,$location,$localStorage,__env){
+  var getServerKey = function (){
     return $http({
       url: __env.apiUrl + 'config/serverKeys',
       method: 'GET'
@@ -52,26 +61,99 @@ angular.module('starter.controllers', [])
               if (response.data.status == 200){
                   $localStorage[$localStorage.uid + '-username'] = response.data.content.username;
                   $localStorage.userPicture = response.data.content.profileUrl;
-                  $state.go('dash.posts');
               }else{
-                errorLogin(response.data.message);
+                var alertPopup = $ionicPopup.alert({
+                  title: 'Error',
+                  template: 'Ha ocurrido un error'
+                });
               }  
             })
           }else{
             if (response.data.status === 'auth/wrong-password'){
-              errorLogin('Su contraseña es incorrecta');
+              var alertPopup = $ionicPopup.alert({
+                title: 'Error',
+                template: 'Su contraseña es incorrecta'
+              });
             } else if (response.data.status === 'auth/user-not-found'){
-              errorLogin('Su correo es inválido');
+              var alertPopup = $ionicPopup.alert({
+                title: 'Error',
+                template: 'Su correo es invalido'
+              });
             }
           }
         })
       })  
-    }*/
+    }
 })
 
 
+.controller('CheckEmailController', function ($scope,$http,__env,$ionicPopup){
+    $scope.sendEmail = function(){
+      var emailRequest = $.param({
+        email: $scope.email,
+      });
+      $http({
+        url :  __env.apiUrl + 'login/sendEmail',
+        method: 'POST',
+        data: emailRequest,
+        headers: {'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8'}
+      }).then(function(response){
+        if (response.data.status == 200){
+          var alertPopup = $ionicPopup.alert({
+            title: 'Información',
+            template: 'Se ha enviado un correo de recuperacioón a tu cuenta'
+          });
+        }else {
+          var alertPopup = $ionicPopup.alert({
+            title: 'Error',
+            template: 'Tu correo es invalido o no esta registrado'
+          });
+        }
+      })
+    }  
+})
 
+.controller('signUpController', function($scope,$http,$location,$state,__env,$ionicPopup) {
+  
+  $scope.sendData = function(){
+    var signUpRequest = $.param({
+      email: $scope.email,
+      password: $scope.password,
+      nombre: $scope.name,
+      apellido: $scope.lastname,
+      telefono: $scope.phone,
+      usuario: $scope.username
+    });
+    $http({
+      url : __env.apiUrl + 'signup',
+      method: 'POST',
+      data: signUpRequest,
+      headers: {'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8'}
+    }).then(function(response){
+      if (response.data.status == 201){
+        console.log(response);
+        var alertPopup = $ionicPopup.alert({
+          title: 'Exito!',
+          template: 'El usuario se ha registrado exitosamente'
+        });
+        $state.go('login');
+      }else{
+        if (response.data.status == 400){
+          var alertPopup = $ionicPopup.alert({
+            title: 'Error',
+            template: 'El nombre de usuario no se encuentra disponible'
+          });
+        } else if (response.data.status === 'auth/email-already-in-use'){
+          var alertPopup = $ionicPopup.alert({
+            title: 'Error',
+            template: 'El correo ya se encuentra asociado a una cuenta'
+          });
+        }
+      }
+    })
+  }
 
+})
 
 // Controladores de la plantilla Borrar
 

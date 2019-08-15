@@ -1,9 +1,22 @@
-.md-login-form .md-logo {
-    display: inline-block;
-    width: 100%;
-    font-size: 80px;
-    text-align: center;
-    height: 46px;
-    margin: 130px 0 30px 0;
-    color: #1c75bc;
+#loginForm{
+    background-color: white;
+
+}
+
+#logoDiv{
+    display: flex;
+    justify-content: center;
+}
+
+#logo{
+    margin-top: 10px;
+    margin-bottom: 10px;
+    width: 50%;
+    height: 50%;
+}
+
+.item {
+    border-top: none;
+    border-left: none;
+    border-right:none;
 }

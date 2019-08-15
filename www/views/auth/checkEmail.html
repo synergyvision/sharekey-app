@@ -1,0 +1,25 @@
+<ion-view>
+        <ion-content style="background-color: white">
+            <div class="row row-center responsive-sm" ng-controller="CheckEmailController">
+                <div class="col col-center">
+                    <div id="logoDiv">
+                            <img src="../../img/vision.svg" id="logo" alt="Generic placeholder image">
+                    </div>
+                    <form id="loginForm" ng-submit="sendEmail()">
+                        <div class="list">
+                            <label class="item item-input item-stacked-label">
+                                <span class="input-label">Correo</span>
+                                <input type="text" placeholder="example@gmail.com" ng-model="$parent.email" required>
+                            </label>
+                        </div>
+                        <button  type="submit" class="button button-full button-positive">
+                                Continuar
+                        </button>
+                    </form>
+                    <div class="text-center">
+                        <a class="btn btn-lg btn-light btn-block text-uppercase" ui-sref="login">Regresar</a>
+                    </div>
+                </div>
+            </div>    
+        </ion-content>
+</ion-view>

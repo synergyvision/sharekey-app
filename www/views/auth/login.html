@@ -1,0 +1,32 @@
+<ion-view>
+    <ion-content style="background-color: white">
+        <div class="row row-center responsive-sm" ng-controller="LoginController">
+            <div class="col col-center">
+                <div id="logoDiv">
+                        <img src="../../img/vision.svg" id="logo" alt="Generic placeholder image">
+                </div>
+                <form id="loginForm" ng-submit="sendData()">
+                    <div class="list">
+                        <label class="item item-input item-stacked-label">
+                            <span class="input-label">Correo</span>
+                            <input type="text" placeholder="example@gmail.com" ng-model="$parent.email" required>
+                        </label>
+                        <label class="item item-input item-stacked-label">
+                                <span class="input-label">Contraseña</span>
+                                <input type="password" ng-model="$parent.password" required>
+                        </label>
+                    </div>
+                    <button  type="submit" class="button button-full button-positive">
+                            Continuar
+                    </button>
+                </form>
+                <div class="text-center">
+                    <a ui-sref="checkEmail"><h5><small>Olvidó su contraseña?</small></h5></a>
+                    </div>
+                    <div class="text-center">
+                    <a ui-sref="signUp"><h5><small>Usuario nuevo? Regístrate</small></h5></a>
+                </div>
+            </div>
+        </div>    
+    </ion-content>
+</ion-view>
