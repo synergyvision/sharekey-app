@@ -1,0 +1,8 @@
+#profileInfo{
+    display: flex;
+   justify-content: center;
+}
+
+#cardFooter{
+    display: flex;
+}

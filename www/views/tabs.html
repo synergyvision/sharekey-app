@@ -5,23 +5,25 @@ navigation history that also transitions its views in and out.
 -->
 <ion-tabs class="tabs-icon-top tabs-color-active-positive">
 
-  <!-- Dashboard Tab -->
-  <ion-tab title="Status" icon-off="ion-ios-pulse" icon-on="ion-ios-pulse-strong" href="#/tab/dash">
+  <ion-tab title="Inicio" icon="ion-home" href="#/tab/dash">
     <ion-nav-view name="tab-dash"></ion-nav-view>
   </ion-tab>
 
-  <!-- Account Tab -->
-  <ion-tab title="Social" icon-off="ion-social-buffer-outline" icon-on="ion-social-buffer" href="#/tab/social">
+  <ion-tab title="Mensajes" icon-off="ion-android-mail" icon-on="ion-android-mail" href="#/tab/social">
     <ion-nav-view name="tab-social"></ion-nav-view>
   </ion-tab>
 
-  <!-- Chats Tab -->
+
   <ion-tab title="Chats" icon-off="ion-ios-chatboxes-outline" icon-on="ion-ios-chatboxes" href="#/tab/chats">
     <ion-nav-view name="tab-chats"></ion-nav-view>
   </ion-tab>
 
-  <!-- Account Tab -->
-  <ion-tab title="Account" icon-off="ion-ios-gear-outline" icon-on="ion-ios-gear" href="#/tab/account">
+
+  <ion-tab title="Encuestas" icon="ion-document-text" href="">
+    <ion-nav-view name="tab-account"></ion-nav-view>
+  </ion-tab>
+
+  <ion-tab title="Perfil" icon-off="ion-person" icon-on="ion-person" ui-sref="tab.account({user_id: id})">
     <ion-nav-view name="tab-account"></ion-nav-view>
   </ion-tab>
 

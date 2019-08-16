@@ -1,40 +1,98 @@
-<ion-view view-title="Account">
+<ion-view view-title="Perfil">
   <ion-content>
-    <div class="list" style="margin-bottom:0">
-      <div class="card">
-        <div class="item item-text-wrap">
-          <h1 class="box-blue">Hi</h1>
-          <p class="small thin">
-            Are you looking for <b>More</b> Apps?.. Don't worry, You can access our sources from following ways. Help us to do more
-          </p>
-        </div>
+    <div class="list">
+      <div class="list card" style="margin-bottom:0" ng-init="getUserData()">
+        <div class="row" id="profile">
+            <div class="col col-center" id="profileInfo">
+              <div class="col-8">
+                <div class="item item-avatar">
+                    <img ng-if="userPicture" id="userImage" ng-src="{{userPicture}}">
+                    <h2>{{username}}</h2>
+                    <p>{{name}} {{lastname}}</p>
+                    <p>{{bio}}</p>
+                </div>
+              </div>
+              <div class="col-4">  
+                <div class="col col-center" id="gearButton">
+                    <button class="button button-clear button-dark">
+                        <i class="icon ion-gear-a"></i>
+                      </button>
+                </div>  
+              </div>  
+            </div>
+          </div>  
+          <div class="item">
+              <button class="button button-block button-stable" ng-click="modal.show()">
+                  Editar Perfil
+              </button>
+          </div>
       </div>
-
     </div>
-    <div class="list social-list">
-      <a class="item item-thumbnail-left item-text-wrap" target="_blank" ng-repeat="item in items track by $index" ng-href="{{item.url}}">
-        <img class="animated zoomIn" src="{{item.img}}">
-        <h2 ng-style="{'color': item.color}">{{item.title}}
-          <span class="notify pull-right animated rubberBand" ng-style="{'background': item.color}">{{item.count}}</span>
-        </h2>
-        <p class="animated fadeIn" ng-bind-html="item.description"></p>
-      </a>
-    </div>
-    <div class="card">
-      <a class="item item-text-wrap" ng-href="mailto:deshatom@gmail.com?Subject=Custom App Request" target="_top">
-        <h2 class="box-blue">For Business</h2>
-        <p class="small thin">
-          If you need <b>Cus</b><span class="thin">tom</span> <b>App</b> <span class="thin small">(with or without backend)</span>. Feel Free to drop an <b>Email</b>
-        </p>
-        <p class="email-text">deshatom@gmail.com</p>
-      </a>
-    </div>
-    <div class="card">
-      <div class="item item-text-wrap thin ">
-        <p class="small">
-          Specialized in Ionic, Angular, React, IOS, Android <b>React-Native</b>, Nodejs Meteror and etc...
-        </p>
-      </div>
+    <div class="list" ng-init="getFeedbacks()">
+      <div ng-repeat="feedback in feedbacks | orderBy: '-this.data.timestamp'">
+        <div class="list card">
+            <div class="item item-avatar">
+              <img ng-src="{{feedback.picture}}">
+              <h2>{{feedback.data.sender}} te ha enviado:</h2>
+              <p>{{feedback.data.timestamp}}</p>
+            </div>
+            <div class="item item-body">
+              <p>
+                  {{feedback.data.content}}
+              </p>
+              <p>
+                <div id="cardFooter">
+                  <div ng-if="feedback.data.likes >= 1">
+                    <p>{{feedback.data.likes}} Likes</p>
+                  </div>
+                  <a class="button button-clear button-positive" ng-click="likeFeedback(feedback.id)"><i class="icon ion-thumbsup"></i> me gusta</a>
+                </div>
+              </p>
+            </div>
+          </div>
     </div>
   </ion-content>
+  <script id="modifyProfile.html" type="text/ng-template">
+    <ion-modal-view>
+        <ion-header-bar class="bar bar-header bar-positive">
+            <h1 class="title">Modificar perfil</h1>
+            <button class="button button-clear button-primary" ng-click="modal.hide()">Cancelar</button>
+          </ion-header-bar>
+          <ion-content class="padding" ng-controller="profileController">
+              <div class="list">
+                  <a class="item item-avatar" href="#">
+                    <img ng-if="imgSrc" ng-src="{{imgSrc}}">
+                    <img ng-if="!imgSrc" src="../img/default-user-icon-8.jpg">
+                    <p>Cambiar Imagen</p>
+                      <input type="file" file="file" id="customFile">
+                  </a>
+              </div>
+              <div class="list" ng-init="requestData()">
+                <form ng-submit="updateData()">
+                  <label class="item item-input">
+                    <span class="input-label">Nombre</span>
+                    <input ng-model="name" type="text">
+                  </label>
+                  <label class="item item-input">
+                    <span class="input-label">Apellido</span>
+                    <input ng-model="lastname" type="text">
+                  </label>
+                  <label class="item item-input">
+                    <span class="input-label">Usuario</span>
+                    <input ng-model="username" type="text">
+                  </label>
+                  <label class="item item-input">
+                      <span class="input-label">Biografía</span>
+                      <input ng-model="bio" type="text">
+                  </label>
+                  <label class="item item-input">
+                      <span class="input-label">Teléfono</span>
+                      <input ng-model="phone" type="tel">
+                  </label>
+                  <button class="button button-full button-positive" type="submit">Actualizar</button>
+                </form>  
+              </div>
+          </ion-content>    
+    </ion-modal-view>
+  </script>
 </ion-view>

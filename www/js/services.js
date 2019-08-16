@@ -118,38 +118,3 @@ return {
 };
 })
 
-
-.factory('Accounts', function() {
-  var socials = [{
-    img: '../img/icons/ionic-icon.png',
-    title: 'Ionic Market',
-    color: '#229cff',
-    url: 'https://market.ionic.io/user/305270',
-    description: 'You can find all of my <b>Premium </b> and  <b>Free</b> ionic  <b>Apps</b> from ionic Market.'
-  },{
-    img: '../img/icons/youtube.svg',
-    title: 'Youtube',
-    color: '#e52215',
-    url: 'https://www.youtube.com/channel/UCXrvOXBvlugqfohxk76hvog',
-    description: 'You <b>can access</b> My Videos in  <i class="italic thin"> Youtube. Feel free to <b>SUBSCRIBE</b> my channel</i>'
-  }, {
-    img: '../img/icons/twitter.svg',
-    title: 'Twitter',
-    color: '#2196f3',
-    url: 'https://twitter.com/deshatom',
-    description: 'Do you <b>need</b> to know my  <span class="thin ">last works..<b> Follow me on Twitter</b></span>'
-  },{
-    img: '../img/icons/pinterest.svg',
-    title: 'Pinterest',
-    color: '#bd0a1c',
-    url: 'https://www.pinterest.com/deshatom/',
-    description: 'You can <b>see </b> more <b>Projects</b> that <b>I </b> have done. Please follow me on  <b>Pinterest</b>'
-  },
-];
-
-return {
-  all: function() {
-    return socials;
-  },
-};
-});
