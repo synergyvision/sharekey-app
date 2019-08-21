@@ -1,0 +1,19 @@
+<ion-view view-title="Llaves">
+    <ion-content ng-controller="keysController">
+      <div ng-init="checkKeys()">
+        <div ng-repeat="key in keys">
+          <a class="item item-icon-left item-button-right">
+              <i ng-if="key.default == false;key.activated == true" class="icon ion-star" ng-click="useKeys(key.name)"></i>
+              {{key.name}}
+              <button ng-if="key.activated == true" class="button button-small button-assertive" ng-click="getKeyname(key.name)">
+                  <i class="icon ion-trash-b"></i>
+                </button>
+                <button ng-if="key.activated == false" class="button button-small button-clear button-positive" ng-click="getRecover(key.name)">
+                    Activar
+                </button>
+            </a>
+        </div>    
+      </div>    
+    </ion-content>
+  </ion-view>
+  

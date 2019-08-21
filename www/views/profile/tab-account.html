@@ -14,7 +14,7 @@
               </div>
               <div class="col-4">  
                 <div class="col col-center" id="gearButton">
-                    <button class="button button-clear button-dark">
+                    <button class="button button-clear button-dark" ng-click="openModal(2)">
                         <i class="icon ion-gear-a"></i>
                       </button>
                 </div>  
@@ -22,7 +22,7 @@
             </div>
           </div>  
           <div class="item">
-              <button class="button button-block button-stable" ng-click="modal.show()">
+              <button class="button button-block button-stable" ng-click="openModal(1)">
                   Editar Perfil
               </button>
           </div>
@@ -56,7 +56,7 @@
     <ion-modal-view>
         <ion-header-bar class="bar bar-header bar-positive">
             <h1 class="title">Modificar perfil</h1>
-            <button class="button button-clear button-primary" ng-click="modal.hide()">Cancelar</button>
+            <button class="button button-clear button-primary" ng-click="closeModal(1)">Cancelar</button>
           </ion-header-bar>
           <ion-content class="padding" ng-controller="profileController">
               <div class="list">
@@ -92,6 +92,30 @@
                   <button class="button button-full button-positive" type="submit">Actualizar</button>
                 </form>  
               </div>
+          </ion-content>    
+    </ion-modal-view>
+  </script>
+  <script id="configMenu.html" type="text/ng-template">
+    <ion-modal-view>
+        <ion-header-bar class="bar bar-header bar-positive">
+            <h1 class="title">Configuración</h1>
+            <button class="button button-clear button-primary" ng-click="closeModal(2)">Cancelar</button>
+          </ion-header-bar>
+          <ion-content class="padding" ng-controller="profileController">
+            <div class="list">
+              <a class="item item-icon-left" ng-click="goToKeys()">
+                <i class="icon ion-key"></i>
+                Llaves
+              </a>  
+              <a class="item item-icon-left" href="#">
+                <i class="icon ion-aperture"></i>
+                Contactos
+              </a>   
+              <a class="item item-icon-left" href="#">
+                <i class="icon ion-network"></i>
+                Redes
+              </a>
+            </div>
           </ion-content>    
     </ion-modal-view>
   </script>

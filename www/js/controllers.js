@@ -6,6 +6,21 @@ if(window){
   Object.assign(env, window.__env);
 }
 
+function encryptKeys(key,seed){
+  var ciphertext = CryptoJS.AES.encrypt(key,seed);
+  return ciphertext
+}
+
+ function translate(phrase){
+    var chars={
+		"á":"a", "é":"e", "í":"i", "ó":"o", "ú":"u","ñ":"n"}
+    var expr=/[áàéèíìóòúù]/ig;
+    var text= phrase.replace(expr,function(e){return chars[e]});
+    return text;
+
+ }
+
+
 ngModule = angular.module('starter.controllers', ['ngStorage'])
 
 ngModule.constant('__env', env)
@@ -61,7 +76,7 @@ ngModule.constant('__env', env)
               if (response.data.status == 200){
                   $localStorage[$localStorage.uid + '-username'] = response.data.content.username;
                   $localStorage.userPicture = response.data.content.profileUrl;
-                  $state.go('tab.social');
+                  $state.go('tab.dash');
               }else{
                 var alertPopup = $ionicPopup.alert({
                   title: 'Error',
@@ -249,15 +264,40 @@ ngModule.constant('__env', env)
        })    
   }
 
+  $scope.openModal = function(index) {
+    if (index == 1) $scope.modal1.show();
+    else $scope.modal2.show();
+  };
+
+  $scope.closeModal = function(index) {
+    if (index == 1) $scope.modal1.hide();
+    else $scope.modal2.hide();
+  };
+
+
+
   $ionicModal.fromTemplateUrl('modifyProfile.html', {
+    id: '1',
     scope: $scope
   }).then(function(modal) {
-    $scope.modal = modal;
+    $scope.modal1 = modal;
   });
+
+  $ionicModal.fromTemplateUrl('configMenu.html', {
+    id: '2',
+    scope: $scope
+  }).then(function(modal) {
+    $scope.modal2 = modal;
+  });
+
+  $scope.goToKeys = function(){
+    $scope.closeModal('2');
+    $state.go('tab.keys');
+  }
 
 })
 
-.controller('profileController', function($scope,$http,$localStorage,$state,$location,$stateParams,$ionicPopup){
+.controller('profileController', function($scope,$http,$localStorage,$state,$location,$stateParams,$ionicPopup,$window){
   var token = $localStorage.userToken;
 
   $scope.requestData = function(){
@@ -303,12 +343,7 @@ ngModule.constant('__env', env)
     }).then( function (response){
         if (response.data.status == 200){
             console.log('User data updated');
-            $state.reload();
-            var alertPopup = $ionicPopup.alert({
-              title: 'Información',
-              template: 'Su información de ha actualizado'
-            });
-             $state.reload();
+            $window.location.reload()
         }else{
           console.log(response.data.message)
         }
@@ -354,6 +389,377 @@ ngModule.constant('__env', env)
 
 // Controladores de la plantilla Borrar
 
+.controller('keysController',function($scope,$http,$localStorage,$state,$window,$sessionStorage,__env,$ionicPopup){
+  var uid = $localStorage.uid;
+    var token = $localStorage.userToken;
+    if ($localStorage[uid + 'keys']){
+      $scope.userKeys = $localStorage[uid + 'keys']
+    }else{
+      $scope.userKeys = [];
+    }
+
+    $scope.toggleShowPassword = function() {
+      $scope.showPassword = !$scope.showPassword;
+    }
+
+
+    // receives a random generated 12 words phrase
+    $scope.generarPalabras = function (){
+      $http({
+        url: __env.apiUrl + 'mnemonic',
+        method: 'GET'
+      }).then(function (response){
+        if (response.data.status == 200){
+            $scope.words = response.data.message;
+        }else{
+          alert(response.data.message);
+        }  
+      })
+          
+    }
+
+    var checkActiveKeys = function (keys){
+      for (i = 0; i < keys.length; i++){
+          keys[i].activated = false;
+          for (j = 0; j < $scope.userKeys.length; j++){
+              if (keys[i].name == $scope.userKeys[j].keyname ){
+                keys[i].activated = true;
+              }
+          }
+          if (i == (keys.length -1)){
+              return keys
+          }  
+      }
+
+    }
+
+    // check the existing keys on the cloud
+    $scope.checkKeys = function(){
+      $http({
+        url: __env.apiUrl + __env.profile + uid + '/getKeys',
+        method: 'GET',
+        headers: {'Authorization':'Bearer: ' + token}
+      }).then(function (response){
+            var keys = response.data.data;
+            $scope.keys = checkActiveKeys(keys);
+      }).catch(function (error){
+          if (error.status == 401){
+            var alertPopup = $ionicPopup.alert({
+              title: 'Error',
+              template: 'Su sesión ha vencido'
+            });
+            $state.go('login');
+          }else{
+            console.log(error.data);
+          }
+        })
+          
+    }
+
+    //changes the default key
+
+    $scope.useKeys = function (name){
+      for (i = 0; i < $scope.userKeys.length;i++){
+          $scope.userKeys[i].default = false;
+          if ($scope.userKeys[i].keyname == name){
+              $scope.userKeys[i].default = true;
+          }
+          if (i == ($scope.userKeys.length - 1)){
+             $localStorage[uid + 'keys'] = $scope.userKeys;
+          }
+      }
+      var updateDefault = $.param({
+        name: name
+      })
+      $http({
+        url: __env.apiUrl + __env.profile+ uid + '/updateDefault',
+        method: 'PUT',
+        data: updateDefault,
+        headers: {'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8','Authorization':'Bearer: ' + token}
+      }).then(function (response){
+            console.log('Data updated on the cloud')
+            $state.reload();
+      }).catch(function (error){
+          if (error.status == 401){
+            console.log('sesion vencida')
+            $state.go('login');
+          }else{
+            console.log(error.data);
+          }
+        })
+    }
+
+    $scope.close = function (){
+      var popup = angular.element("#changeKey");
+      //for hide model
+      popup.modal('hide');
+      delete $localStorage.todelete
+    }
+
+    //function that sends keypair to the cloud
+
+    storekeys = function (public,private,name){
+        
+        var storeRequest = $.param({
+          pubkey: public,
+          privkey: private,
+          keyname: name
+        })
+          
+        $http({
+          url: __env.apiUrl + __env.profile + $localStorage.uid + '/storeKeys',
+          method: 'POST',
+          data: storeRequest,
+          headers: {'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8','Authorization':'Bearer: ' + token}
+        }).then(function (response){
+            if (response.data.status == 200){
+                console.log('keys stored succesfully')
+                var popup = angular.element("#keySpinner");
+                //for hide model
+                popup.modal('hide');
+                $state.reload();
+            }else{
+              alert(response.data.message);
+            }
+        }).catch(function (e){
+          if (e.status == 401){
+              $state.go('login');
+            }
+          })
+    }
+
+    //store the newly created pair on local storage
+
+    var localStorekeys = function(public,private,name){
+      var newKey = {
+        keyname: name,
+        publicKey: public,
+        privateKey: private,
+        default: false
+      }
+
+      $scope.userKeys.push(newKey);
+      $localStorage[uid + 'keys'] = $scope.userKeys;
+    }
+
+    //funciton that checks form fields
+
+    checkParameters = function (){
+        if (($scope.keyname == "")  && ($scope.name == "") && ($scope.email == "") && ($scope.passphrase = "") && ($scope.phrase == "")){
+          return false;
+        }else{
+          return true;
+        }
+    }
+
+    
+    //function that generates a new key pair
+    $scope.generateKeys =  function (){
+          if (checkParameters){
+            var uid = $localStorage.uid;
+            var options = {
+                userIds: [{ name: $scope.name, email: $scope.email}],
+                numBits: 4096,
+                passphrase: $scope.passphrase,
+            }
+            var popup = angular.element("#keySpinner");
+            //for hide model
+            popup.modal('show');
+            words = translate($scope.phrase);
+            appKey = translate($sessionStorage.appKey);
+            console.log("Generating Keys")
+            openpgp.generateKey(options).then(function(key){
+                var privkey = key.privateKeyArmored;
+                var pubkey = key.publicKeyArmored;
+                console.log('keys created')
+                console.log('keys encrypted');
+                // encrypt keys on local storage
+                var localPrivateKey = encryptKeys(privkey,appKey)
+                localPrivateKey = localPrivateKey.toString();
+                localStorekeys(pubkey,localPrivateKey,$scope.newName);
+                // encrypt keys and send to cloud
+                var privateKey = encryptKeys(privkey,words)
+                privateKey = privateKey.toString()
+                storekeys(pubkey,privateKey,$scope.newName)
+                console.log('keys sent to cloud');
+              }).catch(function (error){
+                console.log(error.code + '\n' + error.message);
+              })
+            }else{
+              alert('Por favor llene todos los campos')
+            }    
+        }
+        
+    //get a keyname for deletion    
+
+    $scope.getKeyname = function (name){
+      $localStorage.keyDelete = name;
+      
+    }
+
+    //get a keyname to recover
+
+    $scope.getRecover = function (name){
+      $localStorage.KeyRecover = name;
+      $scope.recoverKeys();
+    }
+    
+    //deletes a keypair
+    
+    var localDelete = function(name){
+      for (var i = 0 ; i < $scope.userKeys.length; i++){
+        if ($scope.userKeys[i].keyname == name){
+            $scope.userKeys.splice(i,1);
+        }
+      }
+    }
+
+    $scope.deleteKeys  =  function (){
+
+      name = $localStorage.keyDelete;
+      var deleteRequest = $.param({
+        name: name
+      })
+
+      $http({
+        url: __env.apiUrl + __env.profile + $localStorage.uid + '/deleteKey',
+        method: 'DELETE',
+        data: deleteRequest,
+        headers: {'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8','Authorization':'Bearer: ' + token}
+      }).then(function (response){
+            if (response.status == 200){
+              alert('Se ha borrado una llave');
+              delete $localStorage.keyDelete;
+              localDelete(name);
+              $state.reload();
+            }
+        }).catch(function (e){
+          if (e.status == 401){
+              $state.go('login');
+            }else{
+              console.log(e)
+            }
+          })
+    }
+
+    var showRecoverPopUp = function(){
+      $scope.data = {};
+      var myPopup = $ionicPopup.show({
+        template: '<input type="password" ng-model="data.phraseRecovery">',
+        title: 'Introduzca su frase de 12 palabras para la llave',
+        scope: $scope,
+        buttons: [
+          { text: 'Cancelar' },
+          {
+            text: '<b>Activar</b>',
+            type: 'button-positive',
+            onTap: function(e) {
+              if (!$scope.data.phraseRecovery) {
+                //don't allow the user to close unless he enters wifi password
+                e.preventDefault();
+              } else {
+                console.log($scope.data.phraseRecovery)
+                return $scope.data.phraseRecovery;
+              }
+            }
+          }
+        ]
+      });
+      myPopup.then(function(res) {
+        $scope.checkWords(res)
+      });
+    }
+
+    $scope.recoverKeys = function (){
+      name = $localStorage.KeyRecover;
+      var recoverRequest = $.param({
+        name: name
+      })
+
+      $http({
+        url: __env.apiUrl + __env.profile + $localStorage.uid + '/recoverKey',
+        method: 'POST',
+        data: recoverRequest,
+        headers: {'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8','Authorization':'Bearer: ' + token}
+      }).then(function (response){
+          if (response.data.status == 200){
+              console.log('the key has been retrieved from cloud');
+              $localStorage.recoveryKey = response.data.data;
+              showRecoverPopUp();
+          }else{
+            console.log(response.data.message);
+          }
+      }).catch(function (e){
+          if (e.status == 401){
+              $state.go('login');
+            }else{
+              console.log(e.data);
+            }
+          })
+
+    }
+
+    $scope.closeRecover = function (){
+      delete $localStorage.KeyRecover;
+      delete $localStorage.recoveryKey;
+    }
+
+    var appKeyPopUp = function(){
+      $scope.data = {}
+      var myPopup = $ionicPopup.show({
+        template: '<input type="password" ng-model="data.appKey">',
+        title: 'Introduzca su clave de aplicación',
+        scope: $scope,
+        buttons: [
+          { text: 'Cancelar' },
+          {
+            text: '<b>Activar</b>',
+            type: 'button-positive',
+            onTap: function(e) {
+              if (!$scope.data.appKey) {
+                //don't allow the user to close unless he enters wifi password
+                e.preventDefault();
+              } else {
+                return $scope.data.appKey;
+              }
+            }
+          }
+        ]
+      });
+      myPopup.then(function(res) {
+        $scope.newPassword(res)
+      });
+
+    }
+
+    $scope.checkWords = function (phraseRecovery){
+      words = translate(phraseRecovery)
+      var bytes  = CryptoJS.AES.decrypt($localStorage.recoveryKey.PrivKey,words);
+      var priv = bytes.toString(CryptoJS.enc.Utf8);
+      if (priv != ""){
+          $localStorage.recoveryKey.PrivKey = priv;
+          appKeyPopUp();
+      }else{
+        alert("La clave insertada no es correcta")
+      }
+      
+    }
+
+    $scope.newPassword = function (appKey){
+      words = translate(appKey)
+      if (words == $sessionStorage.appKey){
+        var localPrivateKey = encryptKeys($localStorage.recoveryKey.PrivKey,words)
+        localPrivateKey = localPrivateKey.toString();
+        localStorekeys($localStorage.recoveryKey.PubKey,localPrivateKey,$localStorage.recoveryKey.name);
+        alert("LLave activada exitosamente");
+        delete $localStorage.recoveryKey
+        $window.location.reload(); 
+      }else{
+        alert('La clave de aplicacion es incorrecta')
+      }  
+    }
+})
+
 .controller('DashCtrl', function($scope) {
 
   // --------------------- animation for green color .badge-notification icon---
@@ -376,6 +782,7 @@ ngModule.constant('__env', env)
     direction: 'normal'
   });
 
+  
 })
 
 .controller('ChatsCtrl', function($scope, Chats) {

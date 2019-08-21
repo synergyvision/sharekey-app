@@ -107,13 +107,22 @@ angular.module('starter', ['ionic', 'starter.controllers','starter.services'])
     url: '/account/?user_id',
     views: {
       'tab-account': {
-        templateUrl: 'views/tab-account.html',
+        templateUrl: 'views/profile/tab-account.html',
         controller: 'publicationsController',
         ccs: 'profile.css'
       }
     }
-  });
-
+  })
+  .state('tab.keys',{
+    url: '/profile/keys',
+    views: {
+      'tab-account': {
+        templateUrl: 'views/profile/tab-account-keys.html',
+        controller: 'keysController',
+        css: ''
+      }
+    }
+  })
   // if none of the above states are matched, use this as the fallback
   $urlRouterProvider.otherwise('/auth/login');
   $ionicConfigProvider.tabs.position('bottom'); // other values: top
