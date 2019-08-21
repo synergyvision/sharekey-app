@@ -1,0 +1,38 @@
+<ion-view view-title="Nueva llave">
+        <ion-content ng-controller="keysController">
+            <div class="list" ng-init="generarPalabras()">
+                <form ng-submit="generateKeys()">
+                <label class="item item-input">
+                    <span class="input-label">Nombre llave</span>
+                    <input type="text" id="keyname" ng-model="$parent.newName" required>
+                </label>
+                <label class="item item-input">
+                    <span class="input-label">Nombre usuario</span>
+                    <input type="text" ng-model="$parent.name" id="name" required>
+                </label>
+                <label class="item item-input">
+                    <span class="input-label">Correo</span>
+                    <input type="text" ng-model="email" id="email" required>
+                </label>
+                <label class="item item-input">
+                    <span class="input-label">Passphrase</span>
+                    <input type="text" ng-model="passphrase" id="passphrase" required>
+                </label>
+                <div class="item item-divider">
+                    Clave
+                </div>
+                <div class="card">
+                    <div class="item item-text-wrap">
+                        {{words}}
+                    </div>
+                </div>
+                <label class="item item-input">
+                    <span class="input-label">Frase clave</span>
+                    <input type="text" id="phrase" ng-model="phrase" required>
+                </label>
+                <button class="button button-full button-positive" type="submit">Generar</button>
+                </form>  
+            </div>
+        </ion-content>    
+      </ion-view>
+      

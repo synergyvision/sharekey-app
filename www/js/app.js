@@ -119,7 +119,17 @@ angular.module('starter', ['ionic', 'starter.controllers','starter.services'])
       'tab-account': {
         templateUrl: 'views/profile/tab-account-keys.html',
         controller: 'keysController',
-        css: ''
+        css: 'profile.css'
+      }
+    }
+  })
+  .state('tab.newKey',{
+    url: '/profile/newKeys',
+    views: {
+      'tab-account': {
+        templateUrl: 'views/profile/tab-account-newKey.html',
+        controller: 'keysController',
+        css: 'profile.css'
       }
     }
   })

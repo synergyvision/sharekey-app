@@ -6,3 +6,11 @@
 #cardFooter{
     display: flex;
 }
+
+#keys{
+    margin-top: 4px;
+}
+
+#newKey{
+    margin-left: 5px;
+}

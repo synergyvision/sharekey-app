@@ -1,7 +1,7 @@
 <ion-view view-title="Dashboard">
-  <ion-content>
+  <ion-content ng-controller="DashCtrl">
 
-    <div class="dashboard-main-container animated bounceInDown">
+    <div class="dashboard-main-container animated bounceInDown" ng-init="checkAppKey()">
       <h3>D<span class="thin">esh</span> <b>A</b>tom</h3>
       <div class="avatar-conatainer">
         <span class="badge">10Xp</span>
