@@ -7,13 +7,14 @@
               <div class="col-8">
                 <div class="item item-avatar">
                     <img ng-if="userPicture" id="userImage" ng-src="{{userPicture}}">
+                    <img ng-if="!userPicture" id="userImage" src="../../img/default-user-icon-8.jpg">
                     <h2>{{username}}</h2>
                     <p>{{name}} {{lastname}}</p>
                     <p>{{bio}}</p>
                 </div>
               </div>
               <div class="col-4">  
-                <div class="col col-center" id="gearButton">
+                <div class="col col-center" ng-if="user_id == uid" id="gearButton">
                     <button class="button button-clear button-dark" ng-click="openModal(2)">
                         <i class="icon ion-gear-a"></i>
                       </button>
@@ -21,7 +22,7 @@
               </div>  
             </div>
           </div>  
-          <div class="item">
+          <div ng-if="user_id == uid" class="item">
               <button class="button button-block button-stable" ng-click="openModal(1)">
                   Editar Perfil
               </button>
@@ -107,7 +108,7 @@
                 <i class="icon ion-key"></i>
                 Llaves
               </a>  
-              <a class="item item-icon-left" href="#">
+              <a class="item item-icon-left" ng-click="goToContacts()">
                 <i class="icon ion-aperture"></i>
                 Contactos
               </a>   

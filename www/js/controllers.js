@@ -174,7 +174,9 @@ ngModule.constant('__env', env)
 .controller('publicationsController', function($scope,$http,$localStorage,$state,$location,$stateParams,$ionicModal,$ionicPopup,$window){
   var token = $localStorage.userToken;
   var uid = $localStorage.uid;
+  $scope.uid = uid;
   var user_id = $stateParams.user_id;
+  $scope.user_id = user_id
    $scope.username = $localStorage[uid + '-username'];
 
    var checkLike = function (reactions){
@@ -293,6 +295,11 @@ ngModule.constant('__env', env)
   $scope.goToKeys = function(){
     $scope.closeModal('2');
     $state.go('tab.keys');
+  }
+
+  $scope.goToContacts = function(){
+    $scope.closeModal('2');
+    $state.go('tab.contacts');
   }
 
   
@@ -830,7 +837,146 @@ ngModule.constant('__env', env)
 })
 
 
+.controller('contactsController', function ($scope,__env,$localStorage,$http,$state){
+  uid = $localStorage.uid;
+  var token = $localStorage.userToken;
 
+    $scope.getFriendRequest = function (){
+      $http({
+          url: __env.apiUrl + __env.contacts + uid + '/requests',
+          method: 'GET',
+          headers: {'Authorization':'Bearer: ' + token}
+      }).then(function (response){
+          if (response.data.status == 200){
+              $scope.requests = response.data.data;
+              console.log($scope.requests )
+          }
+      }).catch(function (error){
+          console.log(error);
+          if (error.status == 401){
+            alert('Su sesion ha vencido por inactividad')
+            $state.go('login');
+          }
+      })
+  }
+
+    $scope.acceptRequest = function (id){
+        updateStatus = $.param({
+            status: true
+        })
+        sendStatus(id,updateStatus)
+    }
+
+    $scope.rejectRequest = function (id){
+        updateStatus = $.param({
+            status: false
+        })
+        sendStatus(id,updateStatus)
+    }
+
+  sendStatus = function (id,status){ 
+      $http({
+          url: __env.apiUrl + __env.contacts + uid + '/requests/' + id,
+          method: 'PUT',
+          data: status,
+          headers: {'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8','Authorization':'Bearer: ' + token}
+      }).then(function (response){
+          console.log(response.data)
+          if (response.data.status == 200){
+              if (response.data.accepted == true){
+                  alert('Has aceptado la solicitud de amistad')
+                  $state.reload();
+              }else{
+                  alert('Has rechazado la soliciud');
+                  $state.reload();
+              }
+          }
+      }).catch(function (error){
+          if (error.status == 401){
+              alert('Su sesion ha vencido')
+              $state.go('login');
+            }
+      })
+  }
+
+  $scope.getContacts = function (){
+
+    $http({
+        url: __env.apiUrl + __env.profile + uid + '/contacts',
+        method: 'GET',
+        headers: {'Authorization':'Bearer: ' + token}
+    }).then(function (response){
+        if (response.data.status == 200){
+            console.log(response.data.data)
+            $scope.contacts = response.data.data
+        }
+    }).catch(function (error){
+        if (error.status == 401){
+          alert('Su sesion ha vencido')
+          $state.go('login');
+        }
+    })
+
+  }
+
+  $scope.goProfile = function(id){
+    console.log(id)
+    $state.go('tab.account',{'user_id': id})
+  }
+
+  /*$scope.getUsers = function (){
+    $scope.search = $localStorage.search
+    $http({
+        url: __env.apiUrl + __env.contacts + uid + '/users',
+        method: 'GET',
+        headers: {'Authorization':'Bearer: ' + token}
+    }).then(function (response){
+        if (response.data.status == 200){
+            $scope.users = response.data.data;
+        }
+    }).catch(function (error){
+        if (error){
+          if (error.status == 401){
+              alert('Su sesion ha vencido')
+              $state.go('login');
+          }
+          else{
+              console.log(error.code);
+              console.log(error.message);
+          }
+        }  
+    }) 
+}
+
+  $scope.sendRequest =  function(id){
+    var request = $.param({
+        id_to: id
+    })
+
+    $http({
+        url: __env.apiUrl + __env.contacts + uid + '/requests',
+        method: 'POST',
+        data: request,
+        headers: {'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8','Authorization':'Bearer: ' + token}
+    }).then(function (response){
+        if (response.data.status == 201){
+            alert('Se ha enviado una solicitud de amistad');
+        }
+    }).catch(function (error){
+            if (error){
+                if (error.status == 401){
+                    alert('Su sesion ha vencido')
+                    $state.go('login');
+                }
+                else{
+                    console.log(error.code);
+                    console.log(error.message);
+                }
+            }  
+        }) 
+  }*/
+
+})
 
 
 

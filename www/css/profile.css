@@ -14,3 +14,10 @@
 #newKey{
     margin-left: 5px;
 }
+
+#friendRequest{
+    margin-left: 2px;
+    justify-content: center;
+    width: 99%;
+    border-radius: 7px; 
+}

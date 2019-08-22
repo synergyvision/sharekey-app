@@ -1,0 +1,38 @@
+<ion-view view-title="Contactos" cache-view="false">
+    <ion-content ng-controller="contactsController">
+            <div id="friendRequest" class="item item-divider">
+                <h2>Solicitudes de amistad</h2>
+            </div>
+        <div class="list social-list" ng-init="getFriendRequest()">
+            <a class="item item-thumbnail-left item-text-wrap"  ng-repeat="request in requests">
+                <img ng-if="request.picture" class="animated zoomIn" ng-src="{{request.picture}}">
+                <img ng-if="!request.picture" class="animated zoomIn" src="../../img/default-user-icon-8.jpg">
+                <h2 >{{request.name}} {{request.lastname}}</h2>
+                </h2>
+                <p class="animated fadeIn">Te ha enviado una solicitud de amistad</p>
+                <button class="button button-small button-outline button-balanced" ng-click="acceptRequest(request.requestId)">
+                        <i class="icon ion-checkmark"></i>
+                </button>
+                <button class="button button-small button-outline button-assertive" ng-click="rejectRequest(request.requestId)">
+                        <i class="icon ion-close"></i>
+                </button>
+            </a>
+        </div>
+        <div id="friendRequest" class="item item-divider">
+                <h2>Contactos</h2>
+        </div>
+        <div class="list social-list" ng-init="getContacts()">
+                <a class="item item-thumbnail-left item-text-wrap"  ng-repeat="contact in contacts">
+                    <img ng-if="contact.photo" class="animated zoomIn" ng-src="{{contact.photo}}">
+                    <img ng-if="!contact.photo" class="animated zoomIn" src="../../img/default-user-icon-8.jpg">
+                    <h2 >{{contact.name}} {{contact.lastname}}</h2>
+                    </h2>
+                    <p class="animated fadeIn">{{contact.bio}}</p>
+                    <button class="button button-small button-outline button-dark" ng-click="goProfile(contact.id)">
+                            Ver perfil
+                    </button>
+                </a>
+            </div>
+      </ion-content>
+  </ion-view>
+  

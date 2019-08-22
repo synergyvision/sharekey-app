@@ -133,6 +133,17 @@ angular.module('starter', ['ionic', 'starter.controllers','starter.services'])
       }
     }
   })
+
+  .state('tab.contacts',{
+    url: '/profile/contacts',
+    views: {
+      'tab-account':{
+        templateUrl: 'views/profile/tab-account-contacts.html',
+        controller: 'contactsController',
+        css: 'profile.css'
+      }
+    }
+  })
   // if none of the above states are matched, use this as the fallback
   $urlRouterProvider.otherwise('/auth/login');
   $ionicConfigProvider.tabs.position('bottom'); // other values: top
