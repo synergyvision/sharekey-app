@@ -1,0 +1,80 @@
+<ion-view class="has-header" view-title="Tus redes" cache-view="false">
+    <ion-content ng-controller="redesController">
+            <div id="fb-root"></div>    
+            <ul class="list" ng-init="getSocials()">
+             <li ng-if="validFacebook == true" class="item item-toggle">
+                Facebook
+                <label class="toggle toggle-positive">
+                    <input type="checkbox" ng-click="toggleFormFb()"> 
+                    <div class="track">
+                    <div class="handle"></div>
+                    </div>
+                </label>
+             </li>
+             <a  ng-if="validFacebook == false" class="item item-icon-right">
+                    <i class="icon ion-checkmark-circled" style="color: blue"></i>
+                    Facebook
+            </a>
+             <li class="item" ng-show="fbForm">       
+                <div class="fb-login-button" data-width="" data-size="medium" data-button-type="continue_with" data-auto-logout-link="false" data-use-continue-as="false" scope="public_profile,email,user_posts"></div>  
+            </li>
+             <li ng-if="validTwitter == false" class="item item-toggle">
+                    Twitter
+                <label class="toggle toggle-calm">
+                    <input type="checkbox" ng-click="toggleFormTw()">
+                    <div class="track">
+                    <div class="handle"></div>
+                    </div>
+                </label>
+             </li>
+             <a  ng-if="validTwitter == true" class="item item-icon-right">
+                    <i class="icon ion-checkmark-circled" style="color: aqua"></i>
+                    Twitter
+            </a>
+             <li class="item" ng-if="twitterForm">
+                 <form>
+                    <label class="item item-input item-stacked-label" ng-init="showTwitterMessage()">
+                            <span class="input-label">Usuario en twitter</span>
+                            <input type="text" ng-model="$parent.twitterUsername">
+                    </label>
+                    <div class="card">
+                            <div class="item item-text-wrap">
+                                Para validar su twitter coloque el siguiente mensaje en su timeline y oprima verificar
+                            </div>
+                    </div>
+                    <div class="card">
+                            <div class="item item-text-wrap">
+                                 "{{validationMessage}}"
+                            </div>
+                    </div>
+                     <button class="button button-positive" ng-click="getTwitterFeed()">Verificar</button>
+                </form>
+             </li>
+             <a  ng-if="validGitHub == true" class="item item-icon-right">
+                    <i class="icon ion-checkmark-circled"></i>
+                    Github
+            </a>
+             <li ng-if="validGitHub == false" class="item item-toggle">
+                    Github
+                    <label class="toggle toggle-dark">
+                        <input type="checkbox" ng-click="toggleFormGh()">
+                        <div class="track">
+                        <div class="handle"></div>
+                        </div>
+                    </label>
+             </li>
+             <li class="item" ng-if="githubForm">
+                <label class="item item-input item-stacked-label" ng-init="showTwitterMessage()">
+                        <span class="input-label">Usuario en Github</span>
+                        <input type="text" ng-model="$parent.username">
+                </label>
+                <label class="item item-input item-stacked-label" ng-init="showTwitterMessage()">
+                    <span class="input-label">Contraseña</span>
+                    <input type="text" ng-model="$parent.password">
+                </label>
+                <button class="button button-positive" id="gitButton" ng-click="getToken()">Continuar</button>
+             </li>
+            </ul>
+    </ion-content>
+</ion-view>
+      

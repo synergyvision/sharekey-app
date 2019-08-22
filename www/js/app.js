@@ -55,9 +55,6 @@ angular.module('starter', ['ionic', 'starter.controllers','starter.services'])
   })
 
 
-
-
-
   // template states
 
   // setup an abstract state for the tabs directive
@@ -140,6 +137,17 @@ angular.module('starter', ['ionic', 'starter.controllers','starter.services'])
       'tab-account':{
         templateUrl: 'views/profile/tab-account-contacts.html',
         controller: 'contactsController',
+        css: 'profile.css'
+      }
+    }
+  })
+
+  .state('tab.networks',{
+    url: '/profile/networks',
+    views: {
+      'tab-account':{
+        templateUrl: 'views/profile/tab-account-social.html',
+        controller: 'redesController',
         css: 'profile.css'
       }
     }
