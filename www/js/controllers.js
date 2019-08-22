@@ -1091,6 +1091,13 @@ ngModule.constant('__env', env)
 
   }(document));
 
+  $scope.loginFacebook = function(){
+      FB.login(function(response){
+        console.log(response)
+      },{scope: 'public_profile,email,user_posts'});
+  }
+
+
     $scope.verify = function (){
         FB.api(
           "me/feed?limit=5",

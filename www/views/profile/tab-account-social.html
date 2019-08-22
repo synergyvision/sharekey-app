@@ -1,4 +1,4 @@
-<ion-view class="has-header" view-title="Tus redes" cache-view="false">
+<ion-view view-title="Tus redes" cache-view="false">
     <ion-content ng-controller="redesController">
             <div id="fb-root"></div>    
             <ul class="list" ng-init="getSocials()">
@@ -16,7 +16,7 @@
                     Facebook
             </a>
              <li class="item" ng-show="fbForm">       
-                <div class="fb-login-button" data-width="" data-size="medium" data-button-type="continue_with" data-auto-logout-link="false" data-use-continue-as="false" scope="public_profile,email,user_posts"></div>  
+                <button class="button button-positive" ng-click="loginFacebook()">Facebook</button>
             </li>
              <li ng-if="validTwitter == false" class="item item-toggle">
                     Twitter
