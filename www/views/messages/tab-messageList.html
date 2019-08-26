@@ -1,0 +1,18 @@
+<ion-view view-title="Social">
+    <ion-content ng-controller="messagesController" ng-init="getMessages(tray)">
+        <div class="button-bar">
+            <a class="button" active>Entrada</a>
+            <a class="button">Salida</a>
+        </div>
+        <div class="list social-list">
+        <a class="item item-thumbnail-left item-text-wrap" ng-repeat="item in items track by $index">
+            <img class="animated zoomIn" src="{{item.img}}">
+            <h2  ng-style="{'color': item.color}">{{item.title}}
+            <span class="notify pull-right animated rubberBand" ng-style="{'background': item.color}">{{item.count}}</span>
+            </h2>
+            <p class="animated fadeIn" ng-bind-html="item.description"></p>
+        </a>
+        </div>
+    </ion-content>
+ </ion-view>
+      
