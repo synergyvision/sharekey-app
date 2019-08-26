@@ -1,0 +1,55 @@
+<ion-view view-title="Ver post" cache-view="false">
+    <ion-content ng-controller="DashCtrl">
+        <div id="Posted" >
+            <div id="card" class="list card" ng-init="loadPost()">
+                <div class="item item-avatar">
+                    <img ng-if="post.userPicture" ng-src="{{post.userPicture}}">
+                    <img ng-if="!post.userPicture" src="../../img/default-user-icon-8.jpg">
+                    <h2>{{post.name}}</h2>
+                    <div id="userButtons" ng-if="post.data.user_id == uid">
+                        <a ng-if="post.data.public == 'false'" class="subdued" ng-click="askPassphrase(post.data.content)">Ver</a>
+                        <a class="subdued" ng-if="post.data.public == 'true'"  ng-click="editPop(post.data.content)">Editar</a>
+                        <a class="subdued" ng-click="deletePost(post.id)">Borrar</a>
+                    </div>    
+                </div>
+                <div class="item item-body">
+                    <p style="margin-top: -10px;">
+                    {{post.data.content}}
+                    </p>
+                    <p>
+                        <div style="display: inline-flex">
+                          <div  ng-if="post.reactions == 'liked'">
+                            <a class="subdued">{{post.data.likes}} <i class="icon ion-thumbsup"></i></a>
+                            <a class="subdued" ng-click="likeStatus('dislike',post.id)">{{post.data.dislikes}} <i class="icon ion-thumbsdown"></i></a>
+                          </div>  
+                          <div  ng-if="post.reactions == 'disliked'">
+                              <a class="subdued" ng-click="likeStatus('like',post.id)">{{post.data.likes}} <i class="icon ion-thumbsup"></i></a>
+                              <a class="subdued">{{post.data.dislikes}} <i class="icon ion-thumbsdown" ></i></a>
+                          </div>
+                          <div  ng-if="post.reactions == null">
+                              <a class="subdued" ng-click="likeStatus('like',post.id)">{{post.data.likes}} <i class="icon ion-thumbsup"></i></a>
+                              <a class="subdued" ng-click="likeStatus('dislike',post.id)">{{post.data.dislikes}}<i class="icon ion-thumbsdown"></i></a>
+                          </div>    
+                        </div>  
+                      </p>
+                </div>      
+            </div>  
+        </div>
+        <div ng-init="getComments()">
+                <div class="item item-divider">
+                    Comentarios
+                </div>
+                <div class="list" >
+                <a class="item item-avatar" id="comentario" ng-repeat="comment in comments">
+                      <h2>{{comment.user}}</h2>
+                      <p>{{comment.comment}}</p>
+                      <div id="commentButtons" ng-if="comment.userId == uid">
+                        <p class="subdued" style="margin-right: 2px;"ng-click="editCommentPop(comment.id,comment.comment)">Editar</p>
+                        <p class="subdued" style="margin-left: 2px;" ng-click="deleteComment(comment.id)"> Borrar</p>
+                      </div>
+                </a>
+            </div>
+        </div> 
+    </ion-content>
+</ion-view>
+      

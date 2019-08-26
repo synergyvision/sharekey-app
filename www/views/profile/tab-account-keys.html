@@ -2,8 +2,9 @@
     <ion-content ng-controller="keysController">
         <div id="keys" class="list" ng-init="checkKeys()">
           <div ng-repeat="key in keys">
-            <a class="item item-icon-left item-button-right">
-                <i ng-if="key.default == false && key.activated == true" class="icon ion-star" ng-click="useKeys(key.name)"></i>
+            <a id="keyItem" style="justify-items:center " class="item item-icon-left item-button-right">
+                <i ng-if="key.default == true && key.activated == true" class="icon ion-star"  style="color: gold"></i>
+                <i class="icon ion-star" ng-if="key.default == false && key.activated == true" ng-click="useKeys(key.name)"></i>
                 {{key.name}}
                 <button ng-if="key.activated == true" class="button button-small button-assertive" ng-click="deleteKeys(key.name)">
                     <i class="icon ion-trash-b"></i>
