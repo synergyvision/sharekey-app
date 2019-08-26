@@ -135,6 +135,16 @@
             }
             }
         })
+        .state('tab.messages',{
+            url: '/profile/messages/?tray',
+            views: {
+              'tab-messages':{ 
+                templateUrl: 'views/messages/tab-messageList.html',
+                controller: 'messagesController',
+                css: 'messages.css'
+              }
+            }
+          })
         $urlRouterProvider.otherwise('/auth/login');
     }
 })()
