@@ -99,17 +99,6 @@ angular.module('starter', ['ionic', 'starter.controllers','starter.services'])
     }
   })
 
-
-  .state('tab.social', {
-    url: '/social',
-    views: {
-      'tab-social': {
-        templateUrl: 'views/tab-social.html',
-        controller: 'SocialCtrl'
-      }
-    }
-  })
-
   .state('tab.account', {
     url: '/account/?user_id',
     views: {
@@ -159,6 +148,17 @@ angular.module('starter', ['ionic', 'starter.controllers','starter.services'])
         templateUrl: 'views/profile/tab-account-social.html',
         controller: 'redesController',
         css: 'profile.css'
+      }
+    }
+  })
+
+  .state('tab.messages',{
+    url: '/profile/messages/?tray',
+    views: {
+      'tab-messages':{ 
+        templateUrl: 'views/messages/tab-messageList.html',
+        controller: 'messagesController',
+        css: 'messages.css'
       }
     }
   })
