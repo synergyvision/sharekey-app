@@ -4,19 +4,17 @@
         .module('starter')
         .controller('messagesController', messagesController);
   
-        messagesController.$inject = ['$scope','$http','$localStorage','$state','$window','$location','$sessionStorage','$stateParams','appConstants'];
-        function messagesController($scope,$http,$localStorage,$state,$window,$location,$sessionStorage,$stateParams,appConstants){
+        messagesController.$inject = ['$scope','$http','$localStorage','$state','$window','$location','$sessionStorage','$stateParams','appConstants','$ionicPopup'];
+        function messagesController($scope,$http,$localStorage,$state,$window,$location,$sessionStorage,$stateParams,appConstants,$ionicPopup){
             var uid = $localStorage.uid
             $scope.userKeys = $localStorage[uid + 'keys'];
             var token = $localStorage.userToken;
+            $scope.form = false;
 
             $scope.getPublicKey =  function (idUser){
                 if (!$scope.message){
                 alert("No puede mandar un mensaje en blanco")
                 }else{
-                    var popup = angular.element("#messageSpinner");
-                    //for hide model
-                    popup.modal('show');
                     var keyRequest = $.param({
                         id: idUser
                     })
@@ -31,8 +29,7 @@
                     }).catch(function (error){
                         if (error){
                             if (error.status == 401){
-                                alert('Su sesion ha vencido')
-                                $state.go('dash.login');
+                                console.log(error)
                             }
                             else{
                                 console.log(error.message);
@@ -65,8 +62,8 @@
 
             }
 
-            var encryptWithMultiplePublicKeys  = async (pubkeys, privkey, passphrase, message) => {
-                var pubkeys = pubkeys.map(async (key) => {
+            var encryptWithMultiplePublicKeys  = async (pubkeys, privkey, passphrase = null, message) => {
+                    pubkeys = pubkeys.map(async (key) => {
                     return (await openpgp.key.readArmored(key)).keys[0]
                 });
                 if (passphrase == null){
@@ -107,8 +104,7 @@
                     }
                 }).catch(function (error){
                     if (error.status == 401){
-                    alert('Su sesion ha vencido')
-                    $state.go('dash.login');
+                    $state.go('login');
                     }
                 })
 
@@ -139,27 +135,19 @@
                 recipient: $scope.id_recipient,
                 publish: $scope.publish
                 })
-                $http({
+               $http({
                     url: appConstants.apiUrl + appConstants.messages + uid,
                     method: "POST",
                     data: messageRequest,
                     headers:  {'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8','Authorization':'Bearer: ' + token}
                 }).then(function (response){
-                    var popup = angular.element("#messageSpinner");
-                    //for hide model
-                    popup.modal('hide');
                     alert('Su mensaje se ha enviado');
                     console.log('message sent');
                 }).catch(function (error){
                     if (error){
-                        if (error.status == 401){
-                            alert('Su sesion ha vencido')
-                            $state.go('dash.login');
-                        }
-                        else{
                             console.log(error.code);
                             console.log(error.message);
-                        }
+                        
                     } 
                 })
             }
@@ -171,18 +159,13 @@
                     headers:  {'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8','Authorization':'Bearer: ' + token}
                 }).then(function (response){
                     $scope.data = response.data.data
-                    console.log(response.data.data)
-                    $scope.mensaje = response.data.data.content
+                    $scope.data = getDate($scope.data)
+                    console.log($scope.data)
                 }).catch(function (error){
                     if (error){
-                        if (error.status == 401){
-                            alert('Su sesion ha vencido')
-                            $state.go('dash.login');
-                        }
-                        else{
                             console.log(error.code);
                             console.log(error.message);
-                        }
+                        
                     } 
                 })
             }
@@ -210,15 +193,40 @@
                 })
             }
 
-            $scope.decrypt = async () => {
+            $scope.passPopUp = function(){
+                $scope.something = {};
+                var myPopup = $ionicPopup.show({
+                  template: '<input type="password" ng-model="something.passphrase">',
+                  title: 'Introduzca su clave para ver el mensaje',
+                  scope: $scope,
+                  buttons: [
+                    { text: 'Cancelar' },
+                    {
+                      text: '<b>Activar</b>',
+                      type: 'button-positive',
+                      onTap: function(e) {
+                        if (!$scope.something.passphrase) {
+                          //don't allow the user to close unless he enters wifi password
+                          e.preventDefault();
+                        } else {
+                          return $scope.something.passphrase;
+                        }
+                      }
+                    }
+                  ]
+                });
+                myPopup.then(function(res) {
+                  $scope.decrypt(res)
+                });
+            }
+
+            $scope.decrypt = async (passphrase) => {
                 var privateKey = getPrivateKey();
                 var privateKey = decryptKey(privateKey,$sessionStorage.appKey);
-                var message = decriptMessage(privateKey, $scope.passphrase, $scope.mensaje)
+                var message = decriptMessage(privateKey,passphrase,$scope.data.content)
                 message.then(function (decrypted){
-                    var popup = angular.element("#readingSpinner");
-                        //for hide model
-                    popup.modal('hide');
-                    $scope.decrypted = decrypted;
+                    $scope.data.content = decrypted;
+                    $scope.decrypted = true;
                     $scope.$apply();
                 }).catch(function (error){
                     alert('Verifique que su llave y passphrase sean correctas')
@@ -235,10 +243,15 @@
                     var sent = new Date(messages[i].data.timestamp);
                     messages[i].sent = sent.toLocaleString();
                 }
+                if(!messages.length){
+                    var sent = new Date(messages.timestamp);
+                    messages.sent = sent.toLocaleString();
+                }
                 return messages
             }
 
             $scope.getMessages = function (tray){
+                $scope.tray = tray;
                 var requestMessages = $.param({
                     user_id: uid
                 })
@@ -258,17 +271,16 @@
                 })
             }
 
-            $scope.deleteMessage = function (id){
-                console.log(id);
+            $scope.deleteMessage = function (){
                 $http({
-                    url: appConstants.apiUrl + appConstants.messages + uid + '/' + id,
+                    url: appConstants.apiUrl + appConstants.messages + uid + '/' + $stateParams.id,
                     method: 'DELETE',
                     headers: {'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8','Authorization':'Bearer: ' + token}
                 }).then(function (response){
                     if (response.data.status == 200){
                         console.log(response.data);
                         alert('se ha eliminado un mensaje')
-                        $state.reload();
+                        $state.go('tab.messages');
                     }
                 }).catch(function (error){
                     alert(error)
@@ -291,14 +303,18 @@
                 if (status == 'unread'){
                     updateStatus(id);
                 }
-                $state.go('dash.read',{'id': id})
+                $state.go('tab.readMessage',{'id': id})
+            }
+
+            $scope.readOwnMessage = function (id){
+                $state.go('tab.readMessage',{'id': id})
             }
 
             $scope.publishMessage = function (){
                 var publishRequest = $.param({
                     sender: $scope.data.sender,
                     id_sender: $scope.data.id_sender,
-                    content: $scope.decrypted
+                    content: $scope.data.content
                 })
                 $http({
                     url: appConstants.apiUrl + appConstants.messages + uid + '/' + $stateParams.id + '/publish',
@@ -307,10 +323,20 @@
                     headers: {'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8','Authorization':'Bearer: ' + token}
                 }).then(function (response){
                     console.log(response);
+                    $state.go('tab.messages')
                     alert('Su feedback ha sido publicado exitosamente')
                 }).catch(function (error){
                     console.log(error);
                 })
+            }
+
+
+            $scope.newMessage = function (){
+                $state.go('tab.newMessage');
+            }
+
+            $scope.toggleForm = function(){
+                $scope.form = !$scope.form;
             }
         }    
 })()  

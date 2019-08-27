@@ -136,7 +136,7 @@
             }
         })
         .state('tab.messages',{
-            url: '/profile/messages/?tray',
+            url: '/messages',
             views: {
               'tab-messages':{ 
                 templateUrl: 'views/messages/tab-messageList.html',
@@ -145,6 +145,26 @@
               }
             }
           })
+        .state('tab.newMessage',{
+        url: '/messages/newMessage',
+        views: {
+            'tab-messages':{ 
+            templateUrl: 'views/messages/tab-newMessage.html',
+            controller: 'messagesController',
+            css: 'messages.css'
+            }
+        }
+        })  
+        .state('tab.readMessage',{
+            url: '/messages/read/?id',
+            views: {
+                'tab-messages':{ 
+                templateUrl: 'views/messages/tab-readMessage.html',
+                controller: 'messagesController',
+                css: 'messages.css'
+                }
+            }
+        })    
         $urlRouterProvider.otherwise('/auth/login');
     }
 })()

@@ -35,6 +35,16 @@
                 </div>      
             </div>  
         </div>
+        <div class="list">
+                <div class="item item-input-inset">
+                  <label class="item-input-wrapper">
+                        <input type="text" ng-model="newComment" placeholder="Comenta algo...">
+                  </label>
+                  <button class="button button-balanced" ng-click="sendComment()">
+                        <i class="ion-share"></i>
+                    </button>
+                </div> 
+        </div>
         <div ng-init="getComments()">
                 <div class="item item-divider">
                     Comentarios

@@ -4,14 +4,14 @@
         .module('starter')
         .controller('publicationsController', publicationsController);
   
-        publicationsController.$inject = ['$scope','$http','$localStorage','$state','$location','$stateParams','$ionicPopup','$window','appConstants','$ionicModal'];
-        function publicationsController($scope,$http,$localStorage,$state,$location,$stateParams,$ionicPopup,$window,appConstants,$ionicModal){
+        publicationsController.$inject = ['$scope','$http','$localStorage','$state','$location','$stateParams','$ionicPopup','$window','appConstants','$ionicModal','$sessionStorage'];
+        function publicationsController($scope,$http,$localStorage,$state,$location,$stateParams,$ionicPopup,$window,appConstants,$ionicModal,$sessionStorage){
             var token = $localStorage.userToken;
             var uid = $localStorage.uid;
             $scope.uid = uid;
             var user_id = $stateParams.user_id;
             $scope.user_id = user_id
-             $scope.username = $localStorage[uid + '-username'];
+            $scope.username = $localStorage[uid + '-username'];
           
              var checkLike = function (reactions){
                if (reactions[uid]){
@@ -140,5 +140,21 @@
               $scope.closeModal('2');
               $state.go('tab.networks');
             }
+
+            $scope.logout = function(){
+              $scope.closeModal('2');
+              $http({
+                  url: appConstants.apiUrl + 'logout',
+                  method: 'GET'
+              }).then(function (response){
+                  if (response.data.status == 200){
+                      delete $localStorage.uid;
+                      delete $localStorage.search;
+                      delete $localStorage.userToken;
+                      console.log('Users has logged out')
+                      $state.go('login');
+                  }
+              })
+          }
         }        
 })()  

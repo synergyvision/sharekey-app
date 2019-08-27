@@ -1,0 +1,40 @@
+#text{
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical; 
+}
+
+#unread{
+    background-color: white
+}
+
+#read{
+    background: lightgray
+}
+#contactSelect{
+    border: 4px solid;
+    border-color: rgb(245, 245, 245);
+}
+
+
+
+#keySelect{
+    border-top: 3px solid;
+    border-bottom: 4px solid;
+    border-color: rgb(245, 245, 245);
+}
+
+#sign{
+    border-bottom: 4px solid; 
+    border-color: rgb(245, 245, 245);
+}
+
+#clave{
+    border-bottom: 4px solid; 
+    border-color: rgb(245, 245, 245);
+}
+
+#send{
+    margin: 10px;
+}

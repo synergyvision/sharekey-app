@@ -1,17 +1,35 @@
-<ion-view view-title="Social">
-    <ion-content ng-controller="messagesController" ng-init="getMessages(tray)">
+<ion-view view-title="Correos">
+    <ion-content ng-controller="messagesController" ng-init="getMessages('inbox')">
         <div class="button-bar">
-            <a class="button">Entrada</a>
-            <a class="button">Salida</a>
+            <a ng-if="tray == 'inbox'" style="color: blue" id="inbox" class="button">Entrada</a>
+            <a ng-if="tray != 'inbox'" id="inbox" class="button" ng-click="getMessages('inbox')">Entrada</a>
+            <a ng-if="tray == 'outbox'" style="color: blue" class="button">Salida</a>
+            <a ng-if="tray != 'outbox'" class="button" ng-click="getMessages('outbox')">Salida</a>
         </div>
-        <div class="list social-list">
-        <a class="item item-thumbnail-left item-text-wrap" ng-repeat="item in items track by $index">
-            <img class="animated zoomIn" src="{{item.img}}">
-            <h2  ng-style="{'color': item.color}">{{item.title}}
-            <span class="notify pull-right animated rubberBand" ng-style="{'background': item.color}">{{item.count}}</span>
-            </h2>
-            <p class="animated fadeIn" ng-bind-html="item.description"></p>
-        </a>
+        <div ng-if="tray == 'inbox'" ng-repeat="correo in correos |  orderBy: 'this.sent'">
+            <div class="list social-list"  ng-if="correo.data.status == 'unread'">
+                <a class="item item-text-wrap" ng-click="readMessage(correo.id,correo.data.status)"  id="unread">
+                    <h2>{{correo.data.sender}} te ha enviado un mensaje!</h2>
+                    <p class="animated fadeIn" id="text">{{correo.data.content}}</p>
+                </a>
+            </div>
+            <div class="list social-list" ng-if="correo.data.status == 'read'">
+                    <a class="item item-text-wrap" ng-click="readMessage(correo.id,correo.data.status)" id="read">
+                        <h2>{{correo.data.sender}} te ha enviado un mensaje!</h2>
+                        <p class="animated fadeIn" id="text">{{correo.data.content}}</p>
+                    </a>
+            </div>
+        </div> 
+        <div ng-if="tray == 'outbox'">
+                <div class="list social-list">
+                    <a class="item item-text-wrap" id="read" ng-click="readOwnMessage(correo.id)" ng-repeat="correo in correos |  orderBy: '-this.sent'">
+                        <h2>Enviaste un mensaje a {{correo.data.r_username}}</h2>
+                        <p class="animated fadeIn" id="text">{{correo.data.content}}</p>
+                    </a>
+                </div>
+        </div>     
+        <div class="col col-12" id="newMail">
+            <button id="newMail" class="button button-positive icon ion-plus-circled" ng-click="newMessage()"></button>
         </div>
     </ion-content>
  </ion-view>

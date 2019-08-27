@@ -378,7 +378,7 @@
               }
           
               $scope.sendComment = function(){
-                commentRequest = $.param({
+                var commentRequest = $.param({
                   content: $scope.newComment,
                   user_id: $scope.uid,
                   post_id: post
@@ -389,8 +389,9 @@
                   data: commentRequest,
                   headers: {'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8','Authorization':'Bearer: ' + token}
                 }).then(function (response){
+                  $scope.newComment = "";
                   console.log(response.data);
-                  $state.reload();
+                  $scope.getComments();
                 }).catch(function (error){
                     console.log(error);
                 })
@@ -438,7 +439,7 @@
                     console.log(response.data)
                     $scope.editedCommentContent = "";
                     $scope.editedCommentId = "";
-                    $state.reload();
+                    $scope.getComments();
                   }).catch(function (error){
                     console.log(error)
                   })
@@ -452,7 +453,7 @@
                   headers: {'Authorization':'Bearer: ' + token}
                 }).then(function (response){
                   console.log(response.data);
-                  $state.reload();
+                  $scope.getComments();
                 }).catch(function (error){
                   console.log(error)
                 })
