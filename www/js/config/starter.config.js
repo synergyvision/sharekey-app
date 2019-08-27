@@ -164,7 +164,17 @@
                 css: 'messages.css'
                 }
             }
-        })    
+        })   
+        .state('tab.surveys',{
+            url: '/surveys',
+            views: {
+                'tab-survey':{
+                    templateUrl: 'views/surveys/tab-surveys.html',
+                    controller: 'surveysController',
+                    css: 'surveys.css'
+                }
+            }
+        }) 
         $urlRouterProvider.otherwise('/auth/login');
     }
 })()

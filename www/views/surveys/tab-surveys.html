@@ -1,0 +1,12 @@
+<ion-view view-title="Encuestas" cache-view="false">
+        <ion-content ng-controller="surveysController">
+            <ul class="list" ng-init="getSurveys()">
+              <div ng-repeat="survey in surveys">
+                <li class="item" id="surveys">
+                    {{survey.data.title}}
+                </li>
+              </div>  
+            </ul>
+          </ion-content>
+      </ion-view>
+      
