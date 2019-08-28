@@ -185,6 +185,16 @@
                 }
             }
         })
+        .state('tab.newSurvey',{
+            url: '/newSurvey',
+            views: {
+                'tab-survey':{
+                    templateUrl: 'views/surveys/tab-newSurvey.html',
+                    controller: 'surveysController',
+                    css: 'survey.css'
+                }
+            }
+        })
         $urlRouterProvider.otherwise('/auth/login');
     }
 })()

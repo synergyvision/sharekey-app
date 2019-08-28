@@ -5,4 +5,38 @@
 
 #answers{
     margin-left: -150px;
+    border: 0;
+}
+
+#title{
+    border-bottom: 3px solid;
+    border-color: rgb(245, 245, 245);
+}
+
+#question{
+    border-bottom: 3px solid;
+    border-color: rgb(245, 245, 245);
+}
+
+#newAnswers{
+    border-bottom: 3px solid;
+    border-color: rgb(245, 245, 245);
+}
+
+#addLenght{
+    float: right;
+    margin-right: 3px;
+    margin-top: -20px;
+}
+
+#fill{
+    border: 0;
+}
+
+#delete{
+    border: 0;
+}
+
+#formBody{
+    border: 0;
 }

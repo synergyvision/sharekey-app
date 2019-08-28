@@ -1,6 +1,33 @@
-<ion-view view-title="Encuestas">
+<ion-view view-title="Nueva Encuesta">
         <ion-content ng-controller="surveysController">
-            
+                <div class="list">
+                    <label id="title" class="item item-input">
+                            <span class="input-label">Titulo</span>
+                            <input type="text" ng-model="surveyTitle" required>
+                    </label>
+                    <label id="question" class="item item-input">
+                        <input type="text" placeholder="Pregunta 1" ng-model="question.title" value="{{question.title}}" required>
+                    </label>
+                    <label id="newAnswers" class="item item-input" ng-repeat="answer in answers">
+                            <input type="text" placeholder="Respuesta" ng-model="answer.content" value="" required>
+                    </label>
+                    <label class="item item-input item-select">
+                            <div class="input-label">
+                              Expiración (días)
+                            </div>
+                            <select ng-model="expires" required>
+                              <option>1</option>
+                              <option>2</option>
+                              <option>3</option>
+                              <option>4</option>
+                              <option>5</option>
+                              <option>6</option>
+                              <option>7</option>
+                            </select>
+                    </label>
+                </div>
+                <button id="addLenght" class="button button-positive button-small icon ion-plus-circled"  ng-click="addLenght()"></button>
+                <button type="button" ng-click="createSurvey()" class="button button-calm">Crear</button>
         </ion-content>
     </ion-view>
       

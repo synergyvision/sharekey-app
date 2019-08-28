@@ -6,7 +6,7 @@
                 <h2>{{survey.title}}</h2>
                 <p>Creada por: {{survey.user}}</p>
                 </div> 
-                <div class="item item-image" ng-repeat="question in survey.questions">
+                <div class="item item-image" id="formBody" ng-repeat="question in survey.questions">
                     <div class="item item-divider" >
                             {{question.question}}
                     </div>
@@ -14,9 +14,14 @@
                             <ion-radio id="answers" ng-click="getId(question.questionId,answer)">{{answer.content}}</ion-radio>
                     </ion-list>
                 </div>
-                <a class="item calm" ng-click="fillSurvey()">
-                    Finalizar
-                </a>
+                <p style="display: flex">
+                    <a class="item calm" id="fill" ng-click="fillSurvey()">
+                        Finalizar
+                    </a>
+                    <a class="item assertive" id="delete" ng-click="deleteSurvey()">
+                        Borrar
+                    </a>
+                </p>    
             </div>   
             <div class="card" ng-if="survey.answered == true && survey.expired == false">
                 <div class="item item-text-wrap">
@@ -39,7 +44,7 @@
                             <div class="item" id="answers">{{answer.content}}: {{answer.votes}} votos</div>
                     </ion-list>
                 </div>
-            </div>   
+            </div> 
         </div>
     </ion-content>
 </ion-view>

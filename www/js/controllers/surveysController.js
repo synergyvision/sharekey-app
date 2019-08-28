@@ -115,7 +115,7 @@
                 expires_in.setDate(expires_in .getDate() + parseInt($scope.expires));
                 var newSurvey = $.param({
                     title: $scope.surveyTitle,
-                    id_user: uid,
+                    id_user: $scope.uid,
                     created: created,
                     expires_in: expires_in 
                 })
@@ -185,14 +185,14 @@
                 })
             }
 
-            $scope.deleteSurvey = function (id){
+            $scope.deleteSurvey = function (){
                 $http({
-                    url: appConstants.apiUrl + appConstants.surveys + id,
+                    url: appConstants.apiUrl + appConstants.surveys + survey,
                     method: 'DELETE',
                     headers: {'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8','Authorization':'Bearer: ' + token}
                 }).then(function(response){
                     console.log(response.data)
-                    $state.reload();
+                    $state.go('tab.surveys');
 
                 }).catch(function(error){
                     console.log(error)
