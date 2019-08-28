@@ -1,9 +1,13 @@
-<ion-view view-title="Encuestas" cache-view="false">
+<ion-view view-title="Lista de encuestas" cache-view="false">
         <ion-content ng-controller="surveysController">
             <ul class="list" ng-init="getSurveys()">
               <div ng-repeat="survey in surveys">
-                <li class="item" id="surveys">
+                <li class="item item-button-right" id="surveys">
                     {{survey.data.title}}
+                    <p>Creado por: {{survey.name}}</p>
+                    <button class="button button-balanced" ui-sref="tab.survey({surveyId: survey.id})">
+                      <i class="icon ion-arrow-right-a"></i>
+                    </button>
                 </li>
               </div>  
             </ul>

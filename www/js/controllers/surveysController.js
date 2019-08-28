@@ -27,10 +27,12 @@
                     method: 'GET',
                     headers: {'Authorization':'Bearer: ' + token}
                 }).then(function (response){
-                    console.log(response.data.message)
+                    console.log(response.data)
                     $scope.surveys = response.data.data;
                     $localStorage.surveys = $scope.surveys;
                 }).catch(function (error){
+                    alert('Su sesión ha vencido')
+                    $state.go('login')
                     console.log(error)
                 })
             }
@@ -45,7 +47,7 @@
                 if (survey.answeredBy){
                     var ids = Object.keys(survey.answeredBy);
                     survey.answered = false
-                    for (i = 0; i < ids.length;i++){
+                    for (var i = 0; i < ids.length;i++){
                         if ($scope.uid == ids[i]){
                             survey.answered = true
                         }
@@ -83,7 +85,7 @@
                     headers: {'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8','Authorization':'Bearer: ' + token}
                 }).then(function (response){
                     console.log(response.data)
-                    $state.go('dash.surveys');
+                    $state.go('tab.surveys');
                 }).catch(function (error){
                     console.log(error)
                 })
@@ -162,12 +164,25 @@
                         headers: {'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8','Authorization':'Bearer: ' + token}
                     }).then(function (response){
                         console.log(response.data);
-                        $state.go('dash.surveys');
+                        $state.go('tab.surveys');
                     }).catch(function (error){
                         console.log(error);
                     })
-
                 }
+                var updateParam = $.param({
+                    uid: $scope.uid
+                })
+                $http({
+                    url: appConstants.apiUrl + appConstants.surveys + survey + '/updateAnsweredBy',
+                    method: 'PUT',
+                    data: updateParam,
+                    headers: {'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8','Authorization':'Bearer: ' + token}
+                }).then(function(response){
+                    console.log(response)
+                    console.log('user has answered a survey')
+                }).catch(function(error){
+                    console.log(error)
+                })
             }
 
             $scope.deleteSurvey = function (id){
