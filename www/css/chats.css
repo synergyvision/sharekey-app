@@ -1,0 +1,29 @@
+#chats{
+    border-bottom: 3px solid;
+    border-color: rgb(245, 245, 245);
+}
+
+#sentMessage{
+    width: 75%;
+    float: right;
+    margin-bottom: -10px;
+    border-radius: 10px;
+    background-color: cornflowerblue;
+}
+
+#receivedMessage{
+    border-radius: 10px;
+    width: 75%;
+    float: left;
+    margin-bottom: -10px;
+}
+
+#messageContent{
+    color: white;
+}
+
+#data{
+    float: right;
+    font-size: 0.8em;
+    color: lightgrey;
+}

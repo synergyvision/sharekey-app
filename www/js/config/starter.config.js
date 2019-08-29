@@ -62,28 +62,6 @@
             }
             }
         })
-
-        .state('tab.chats', {
-            url: '/chats',
-            views: {
-            'tab-chats': {
-                templateUrl: 'views/tab-chats.html',
-                controller: 'ChatsCtrl'
-            }
-            }
-        })
-
-
-        .state('tab.social', {
-            url: '/social',
-            views: {
-            'tab-social': {
-                templateUrl: 'views/tab-social.html',
-                controller: 'SocialCtrl'
-            }
-            }
-        })
-
         .state('tab.account', {
             url: '/account/?user_id',
             views: {
@@ -193,6 +171,26 @@
                     controller: 'surveysController',
                     css: 'survey.css'
                 }
+            }
+        })
+        .state('tab.chats', {
+            url: '/chats',
+            views: {
+            'tab-chats': {
+                templateUrl: 'views/chats/tab-chats.html',
+                controller: 'chatsController',
+                css: 'chats.css'
+            }
+            }
+        })
+        .state('tab.chatsMessages', {
+            url: '/chats/?id_chat',
+            views: {
+            'tab-chats': {
+                templateUrl: 'views/chats/tab-chatsMessages.html',
+                controller: 'chatsController',
+                css: 'chats.css'
+            }
             }
         })
         $urlRouterProvider.otherwise('/auth/login');

@@ -1,0 +1,40 @@
+<ion-view view-title="Chats" ng-controller="chatsController" cache-view="false">
+    <ion-header-bar class="bar-subheader" ng-init="chatInfo()">
+            <button class="button button-clear button-positive" ui-sref="tab.chats">Volver</button>
+            <h1 class="title">{{infoChat.title}}</h1>
+            <button class="button button-clear button-positive" ng-click="savePop()">Ver</button>
+    </ion-header-bar>
+    <ion-content ng-init="getMessages()">
+    <div ng-repeat="message in chatMessages | orderBy: 'this.data.date_sent'" >
+        <div class="card" id="sentMessage" ng-if="message.data.id_sender == uid">  
+            <div class="item item-text-wrap" style="background-color: cornflowerblue;">
+                    <p id="messageContent">
+                        {{message.data.content}}
+                        <br>
+                        <small id="data">{{message.sent}}</small>
+                    </p>  
+            </div>
+        </div>
+        <div class="card" id="receivedMessage" ng-if="message.data.id_sender != uid">
+            <div class="item item-text-wrap">
+                <p>
+                    {{message.data.content}}
+                    <br>
+                    <small id="data">{{message.sent}}</small>
+                </p>    
+            </div>
+        </div>
+    </div>    
+    </ion-content>
+    <ion-footer-bar align-title="left" class="bar-light" id="footer">
+        <div class="bar bar-footer item-input-inset">
+            <label class="item-input-wrapper">
+            <input type="text" ng-model="chatMessage">
+            </label>
+            <button class="button button-small button-balanced" ng-click="sendToChat()">
+                <i class="icon ion-android-send"></i>
+            </button>
+        </div>   
+    </ion-footer-bar>
+  </ion-view>
+  
