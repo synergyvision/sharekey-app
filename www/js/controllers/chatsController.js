@@ -14,6 +14,8 @@
             var decrypted = [];
             $scope.show = false;
             $scope.userChats = [];
+            var username =$localStorage[uid +'-username'];
+            $scope.name = [];
             
             $scope.getUserChats = async () => {
             $http({
@@ -47,7 +49,7 @@
                 })
             }
 
-            var storeLocalChats = function (id,title,participants,last_modified){
+            var storeLocalChats = function (id,title,participants,last_modified = null){
                 var chat = {
                     chatID: id,
                     title: title,
@@ -59,15 +61,30 @@
 
             }
 
+            $scope.addId = function(id){
+                
+                var added = false;
+                for (var i = 0; i < $scope.name.length; i++){
+                    if ($scope.name[i] == id){
+                        added = true;
+                    }
+                }
+                if (added == false){
+                    $scope.name.push(id)
+                }
+                console.log($scope.name);
+            } 
+
             $scope.createChat = function (){
                 var participants = {}
                 for (var i = 0; i < $scope.name.length; i++){
                     participants[$scope.name[i]] = 'default'
                 }
                 participants[uid] = $scope.keyname;
+                console.log(participants,$scope.chatTitle)
                 var chatRequest = $.param({
-                title: $scope.title,
-                participants: JSON.stringify(participants)
+                    title: $scope.chatTitle,
+                    participants: JSON.stringify(participants)
                 })
                 $http({
                         url: appConstants.apiUrl + appConstants.chats + uid,
@@ -76,11 +93,12 @@
                         headers: {'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8', 'Authorization':'Bearer: ' + token}
                     }).then(function (response){
                         console.log('chat created')
-                        storeLocalChats(response.data.Id,$scope.title,participants); 
+                        storeLocalChats(response.data.Id,$scope.chatTitle,participants); 
+                        $state.go('tab.chatsMessages',{'id_chat': response.data.Id});
                     }).catch(function (error){
-                    console.log(error);
-                    alert('Error en la creacion de chat intenta de nuevo')
-                    })
+                        console.log(error);
+                        alert('Error en la creacion de chat intenta de nuevo')
+                })
             }
 
             $scope.getChat = function (id){
@@ -246,7 +264,8 @@
                             id_sender: uid,
                             message: message,
                             id_chat: id_chat,
-                            recipients: JSON.stringify(ids)
+                            recipients: JSON.stringify(ids),
+                            username: username
                         })
                         sendRequest(messageRequest);
                     }).catch(function (error){

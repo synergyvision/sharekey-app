@@ -1,0 +1,28 @@
+<ion-view view-title="Crea un chat">
+    <ion-content ng-controller="chatsController">
+        <div class="list">
+            <label class="item item-input">
+                <span class="input-label">Titulo</span>
+                <input type="text" ng-model="chatTitle">
+            </label>
+            <div class="item item-divider" ng-init="getContacts()">
+              Contactos
+            </div>
+            <ion-list ng-repeat="contact in contacts | orderBy">
+                <ion-checkbox ng-click="addId(contact.id)">{{contact.name}} {{contact.lastname}}</ion-checkbox>
+              </ion-list>
+            <label class="item item-input item-select">
+                <div class="input-label">
+                  Llave
+                </div>
+                <select ng-model="keyname">
+                    <option ng-repeat="key in keys" value="{{key.keyname}}">{{key.keyname}}</option>
+                </select>
+            </label>  
+            <button class="button button-positive" id="newChatButton" ng-click="createChat()">
+                    Crear
+            </button>
+        </div>
+    </ion-content>
+  </ion-view>
+  

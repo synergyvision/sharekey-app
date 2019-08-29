@@ -27,3 +27,7 @@
     font-size: 0.8em;
     color: lightgrey;
 }
+
+#newChatButton{
+    margin: 5px;
+}

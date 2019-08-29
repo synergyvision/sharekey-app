@@ -193,6 +193,16 @@
             }
             }
         })
+        .state('tab.newChat',{
+            url: '/newChat',
+            views: {
+                'tab-chats':{
+                    templateUrl: 'views/chats/tab-newChat.html',
+                    controller: 'chatsController',
+                    css: 'chats.css'
+                }
+            }
+        })
         $urlRouterProvider.otherwise('/auth/login');
     }
 })()

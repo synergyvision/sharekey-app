@@ -9,6 +9,7 @@
         <div class="card" id="sentMessage" ng-if="message.data.id_sender == uid">  
             <div class="item item-text-wrap" style="background-color: cornflowerblue;">
                     <p id="messageContent">
+                        {{message.data.username}}<br>
                         {{message.data.content}}
                         <br>
                         <small id="data">{{message.sent}}</small>
@@ -18,6 +19,7 @@
         <div class="card" id="receivedMessage" ng-if="message.data.id_sender != uid">
             <div class="item item-text-wrap">
                 <p>
+                    {{message.data.username}}<br>
                     {{message.data.content}}
                     <br>
                     <small id="data">{{message.sent}}</small>
