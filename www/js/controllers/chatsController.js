@@ -2,7 +2,21 @@
     'use strict';
     angular
         .module('starter')
-        .controller('chatsController', chatsController);
+        .controller('chatsController', chatsController)
+        .directive('file', function () {
+            return {
+                scope: {
+                    file: '='
+                },
+                link: function (scope, el, attrs) {
+                    el.bind('change', function (event) {
+                        var file = event.target.files[0];
+                        scope.file = file ? file : undefined;
+                        scope.$apply();
+                    });
+                }
+            };
+          })
   
         chatsController.$inject = ['$scope','$http','$localStorage','$state','$sessionStorage','$stateParams','$location','appConstants','$ionicPopup'];
         function chatsController($scope,$http,$localStorage,$state,$sessionStorage,$stateParams,$location,appConstants,$ionicPopup){

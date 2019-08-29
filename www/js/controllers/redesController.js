@@ -73,9 +73,9 @@
 
             var validateFacebook = function (){
                 $http({
-                url: appConstants.apiUrl + appConstants.config + uid + '/validateFacebook',
-                method: 'POST',
-                headers: {'Authorization':'Bearer: ' + token}
+                    url: appConstants.apiUrl + appConstants.config + uid + '/validateFacebook',
+                    method: 'POST',
+                    headers: {'Authorization':'Bearer: ' + token}
                 }).then(function (response){
                     alert('Se ha validado la información de facebook exitosamente')
                     $state.reload();

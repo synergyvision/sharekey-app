@@ -177,7 +177,7 @@
                     posts[i].reactions = null;
                   }
                   if (!posts[i].userPicture){
-                    posts[i].userPicture = 'img/default-user-icon-8.jpg'
+                    posts[i].userPicture = '../../img/default-user-icon-8.jpg'
                   }
                   var sent = new Date(posts[i].data.timestamp);
                   posts[i].data.timestamp = sent.toLocaleString(); 

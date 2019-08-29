@@ -247,6 +247,7 @@
               }).then(function (response){
                     if (response.status == 200){
                       alert('Se ha borrado una llave');
+                      localDelete(name)
                       $scope.checkKeys();
                     }
                 }).catch(function (e){
@@ -349,7 +350,7 @@
             }
         
             $scope.checkWords = function (phraseRecovery){
-              words = translate(phraseRecovery)
+              var words = translate(phraseRecovery)
               var bytes  = CryptoJS.AES.decrypt($localStorage.recoveryKey.PrivKey,words);
               var priv = bytes.toString(CryptoJS.enc.Utf8);
               if (priv != ""){
@@ -362,10 +363,10 @@
             }
         
             $scope.newPassword = function (appKey){
-              words = translate(appKey)
+              var words = translate(appKey)
               if (words == $sessionStorage.appKey){
                 var localPrivateKey = encryptKeys($localStorage.recoveryKey.PrivKey,words)
-                localPrivateKey = localPrivateKey.toString();
+                var localPrivateKey = localPrivateKey.toString();
                 localStorekeys($localStorage.recoveryKey.PubKey,localPrivateKey,$localStorage.recoveryKey.name,$localStorage.recoveryKey.default);
                 alert("LLave activada exitosamente");
                 delete $localStorage.recoveryKey

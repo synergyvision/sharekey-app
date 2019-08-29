@@ -61,11 +61,11 @@
           </ion-header-bar>
           <ion-content class="padding" ng-controller="profileController">
               <div class="list">
-                  <a class="item item-avatar" href="#">
+                  <a class="item item-avatar">
                     <img ng-if="imgSrc" ng-src="{{imgSrc}}">
                     <img ng-if="!imgSrc" src="../img/default-user-icon-8.jpg">
                     <p>Cambiar Imagen</p>
-                      <input type="file" file="file" id="customFile">
+                    <input type="file" file="file" id="customFile" accept="image/*" ng-click="takePicture()">
                   </a>
               </div>
               <div class="list" ng-init="requestData()">

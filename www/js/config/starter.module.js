@@ -2,5 +2,5 @@
   'use strict';
 
   angular
-    .module('starter', ['ionic','ngStorage']);  
+    .module('starter', ['ionic','ngStorage','ionic.native']);  
 })();

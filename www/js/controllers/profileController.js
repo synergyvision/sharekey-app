@@ -4,8 +4,8 @@
         .module('starter')
         .controller('profileController', profileController);
   
-        profileController.$inject = ['$scope','$http','$localStorage','$state','$location','$stateParams','$ionicPopup','$window','appConstants'];
-        function profileController($scope,$http,$localStorage,$state,$location,$stateParams,$ionicPopup,$window,appConstants){
+        profileController.$inject = ['$scope','$http','$localStorage','$state','$location','$stateParams','$ionicPopup','$window','appConstants','$cordovaCamera'];
+        function profileController($scope,$http,$localStorage,$state,$location,$stateParams,$ionicPopup,$window,appConstants,$cordovaCamera){
             var token = $localStorage.userToken;
 
             $scope.requestData = function(){
@@ -57,6 +57,26 @@
                   }
               })
             }
+
+            $scope.takePicture = function() {
+              var options = {
+                  quality : 75,
+                  destinationType : Camera.DestinationType.FILE_URL,
+                  sourceType : Camera.PictureSourceType.PHOTOLIBRARY,
+                  allowEdit : true,
+                  encodingType: Camera.EncodingType.JPEG,
+                  targetWidth: 300,
+                  targetHeight: 300,
+                  popoverOptions: CameraPopoverOptions,
+                  saveToPhotoAlbum: false
+              };
+      
+              $cordovaCamera.getPicture(options).then(function(imageData) {
+                  $scope.imgURI = "data:image/jpeg;base64," + imageData;
+              }, function(err) {
+                  alert(err)
+              });
+          }
           
             $scope.uploadPhoto = function (){
                  $http({

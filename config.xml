@@ -106,4 +106,7 @@
     </plugin>
     <plugin name="cordova-plugin-file" spec="~6.0.2" />
     <plugin name="cordova-plugin-inappbrowser" spec="~3.1.0" />
+    <config-file parent="NSCameraUsageDescription" platform="ios" target="*-Info.plist">
+        <string>You can take photos</string>
+    </config-file>
 </widget>
