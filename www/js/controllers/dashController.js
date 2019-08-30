@@ -49,7 +49,7 @@
                   title: 'Introduzca su clave de aplicación,si es la primera vez en este dispositivo se guardara.',
                   scope: $scope,
                   buttons: [
-                    { text: 'Reestablecer',
+                    { text: '<small>Reestablecer</small>',
                       onTap: function(e){
                         showConfirm();
                       }
@@ -177,7 +177,7 @@
                     posts[i].reactions = null;
                   }
                   if (!posts[i].userPicture){
-                    posts[i].userPicture = '../../img/default-user-icon-8.jpg'
+                    posts[i].userPicture = false;
                   }
                   var sent = new Date(posts[i].data.timestamp);
                   posts[i].data.timestamp = sent.toLocaleString(); 

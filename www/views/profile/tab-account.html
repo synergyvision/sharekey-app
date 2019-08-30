@@ -33,7 +33,9 @@
       <div ng-repeat="feedback in feedbacks | orderBy: '-this.data.timestamp'">
         <div class="list card">
             <div class="item item-avatar">
-              <img ng-src="{{feedback.picture}}">
+              <img ng-if="feedback.picture" ng-src="{{feedback.picture}}">
+              <img ng-if="!feedback.picture" src="../../img/default-user-icon-8.jpg">
+
               <h2>{{feedback.data.sender}} te ha enviado:</h2>
               <p>{{feedback.data.timestamp}}</p>
             </div>

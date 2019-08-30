@@ -12,20 +12,20 @@
             url: '/auth/login', 
             templateUrl: 'views/auth/login.html',
             controller: 'LoginController',
-            css: '../../../css/login.css'
+            css: '../../../css/ionic.app.min.css'
         })
 
         .state('checkEmail',{
             url: '/auth/forgotPassword',
             templateUrl: 'views/auth/checkEmail.html',
             controller: 'CheckEmailController',
-            css: '../../css/login.css'
+            css: '../../css/ionic.app.min.css'
         })
         .state('signUp',{
             url: '/auth/signUp',
             templateUrl: 'views/auth/signup.html',
             controller: 'signUpController',
-            css: '../../css/login.css'
+            css: '../../css/ionic.app.min.css'
         })
 
 
@@ -48,7 +48,8 @@
             views: {
             'tab-dash': {
                 templateUrl: 'views/dashboard/tab-posts.html',
-                controller: 'DashCtrl'
+                controller: 'DashCtrl',
+                css: '../../css/ionic.app.min.css'
             }
             }
         })
@@ -68,7 +69,7 @@
             'tab-account': {
                 templateUrl: 'views/profile/tab-account.html',
                 controller: 'publicationsController',
-                ccs: 'profile.css'
+                ccs: '../../css/ionic.app.min.css'
             }
             }
         })
@@ -78,7 +79,7 @@
             'tab-account': {
                 templateUrl: 'views/profile/tab-account-keys.html',
                 controller: 'keysController',
-                css: 'profile.css'
+                css: '../../css/ionic.app.min.css'
             }
             }
         })
@@ -88,7 +89,7 @@
             'tab-account': {
                 templateUrl: 'views/profile/tab-account-newKey.html',
                 controller: 'keysController',
-                css: 'profile.css'
+                css: '../../css/ionic.app.min.css'
             }
             }
         })
@@ -99,7 +100,7 @@
             'tab-account':{
                 templateUrl: 'views/profile/tab-account-contacts.html',
                 controller: 'contactsController',
-                css: 'profile.css'
+                css: '../../css/ionic.app.min.css'
             }
             }
         })
@@ -109,7 +110,7 @@
             'tab-account':{
                 templateUrl: 'views/profile/tab-account-social.html',
                 controller: 'redesController',
-                css: 'profile.css'
+                css: '../../css/ionic.app.min.css'
             }
             }
         })
@@ -119,7 +120,7 @@
               'tab-messages':{ 
                 templateUrl: 'views/messages/tab-messageList.html',
                 controller: 'messagesController',
-                css: 'messages.css'
+                css: '../../css/ionic.app.min.css'
               }
             }
           })
@@ -129,7 +130,7 @@
             'tab-messages':{ 
             templateUrl: 'views/messages/tab-newMessage.html',
             controller: 'messagesController',
-            css: 'messages.css'
+            css: '../../css/ionic.app.min.css'
             }
         }
         })  
@@ -139,7 +140,7 @@
                 'tab-messages':{ 
                 templateUrl: 'views/messages/tab-readMessage.html',
                 controller: 'messagesController',
-                css: 'messages.css'
+                css: '../../css/ionic.app.min.css'
                 }
             }
         })   
@@ -149,7 +150,7 @@
                 'tab-survey':{
                     templateUrl: 'views/surveys/tab-surveys.html',
                     controller: 'surveysController',
-                    css: 'surveys.css'
+                    css: '../../css/ionic.app.min.css'
                 }
             }
         }) 
@@ -159,7 +160,7 @@
                 'tab-survey':{
                     templateUrl: 'views/surveys/tab-survey.html',
                     controller: 'surveysController',
-                    css: 'surveys.css'
+                    css: '../../css/ionic.app.min.css'
                 }
             }
         })
@@ -169,7 +170,7 @@
                 'tab-survey':{
                     templateUrl: 'views/surveys/tab-newSurvey.html',
                     controller: 'surveysController',
-                    css: 'survey.css'
+                    css: '../../css/ionic.app.min.css'
                 }
             }
         })
@@ -179,7 +180,7 @@
             'tab-chats': {
                 templateUrl: 'views/chats/tab-chats.html',
                 controller: 'chatsController',
-                css: 'chats.css'
+                css: '../../css/ionic.app.min.css'
             }
             }
         })
@@ -189,7 +190,7 @@
             'tab-chats': {
                 templateUrl: 'views/chats/tab-chatsMessages.html',
                 controller: 'chatsController',
-                css: 'chats.css'
+                css: '../../css/ionic.app.min.css'
             }
             }
         })
@@ -199,7 +200,7 @@
                 'tab-chats':{
                     templateUrl: 'views/chats/tab-newChat.html',
                     controller: 'chatsController',
-                    css: 'chats.css'
+                    css: '../../css/ionic.app.min.css'
                 }
             }
         })
