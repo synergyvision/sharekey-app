@@ -4,8 +4,8 @@
         .module('starter')
         .controller('profileController', profileController);
   
-        profileController.$inject = ['$scope','$http','$localStorage','$state','$location','$stateParams','$ionicPopup','$window','appConstants','$cordovaCamera'];
-        function profileController($scope,$http,$localStorage,$state,$location,$stateParams,$ionicPopup,$window,appConstants,$cordovaCamera){
+        profileController.$inject = ['$scope','$http','$localStorage','$state','$location','$stateParams','$ionicPopup','$window','appConstants','$cordovaCamera','$ionicPlatform'];
+        function profileController($scope,$http,$localStorage,$state,$location,$stateParams,$ionicPopup,$window,appConstants,$cordovaCamera,$ionicPlatform){
             var token = $localStorage.userToken;
 
             $scope.requestData = function(){
@@ -61,41 +61,37 @@
             $scope.takePicture = function() {
               var options = {
                   quality : 75,
-                  destinationType : Camera.DestinationType.FILE_URL,
+                  destinationType : Camera.DestinationType.DATA_URL,
                   sourceType : Camera.PictureSourceType.PHOTOLIBRARY,
                   allowEdit : true,
                   encodingType: Camera.EncodingType.JPEG,
                   targetWidth: 300,
                   targetHeight: 300,
                   popoverOptions: CameraPopoverOptions,
-                  saveToPhotoAlbum: false
+                  saveToPhotoAlbum: false,
+                  correctOrientation: true
               };
-      
-              $cordovaCamera.getPicture(options).then(function(imageData) {
-                  $scope.imgURI = "data:image/jpeg;base64," + imageData;
-              }, function(err) {
-                  alert(err)
-              });
+              $ionicPlatform.ready(function (){
+                $cordovaCamera.getPicture(options).then(function(imageData) {
+                    imgURI = "data:image/jpeg;base64," + imageData;
+                    $scope.uploadPhoto(imgURI)
+                }, function(err) {
+                    alert(err)
+                });
+              })
           }
           
-            $scope.uploadPhoto = function (){
+            $scope.uploadPhoto = function (image){
+                 data = $.param({
+                    file: image,
+                    uid: $localStorage.uid
+                 })
                  $http({
                    method: 'POST',
                    url: appConstants.apiUrl +appConstants.files + 'images',
                    headers: {
                        'Content-Type': undefined,
                        'Authorization':'Bearer: ' + token
-                   },
-                   data: {
-                       file: $scope.file,
-                       uid: $localStorage.uid
-                   },
-                   transformRequest: function (data, headersGetter) {
-                       var formData = new FormData();
-                       angular.forEach(data, function (value, key) {
-                           formData.append(key, value);
-                       });
-                       return formData;
                    }
                })
                .then(function (response) {

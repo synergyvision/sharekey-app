@@ -4,8 +4,8 @@
         .module('starter')
         .controller('DashCtrl', DashCtrl);
   
-        DashCtrl.$inject = ['$scope','$sessionStorage','$window','$localStorage','$ionicPopup','$stateParams','$http','$state','appConstants'];
-        function DashCtrl($scope,$sessionStorage,$window,$localStorage,$ionicPopup,$stateParams,$http,$state,appConstants){
+        DashCtrl.$inject = ['$scope','$sessionStorage','$window','$localStorage','$ionicPopup','$stateParams','$http','$state','appConstants','$ionicLoading'];
+        function DashCtrl($scope,$sessionStorage,$window,$localStorage,$ionicPopup,$stateParams,$http,$state,appConstants,$ionicLoading){
             var uid = $localStorage.uid
             $scope.uid = uid;
             $scope.storedKeys = $localStorage[uid+'keys'];
@@ -351,12 +351,22 @@
                     return decrypted
                 })
             }
+              var show = function() {
+                $ionicLoading.show({
+                  template: '<ion-spinner icon="spiral"></ion-spinner>'
+                })
+              };
+              var hide = function(){
+                $ionicLoading.hide()
+              };
           
               $scope.decryptPost = function (passphrase){
+                show()
                 var privateKey = getMyDefaultPrivateKey();
                 privateKey = decryptKey(privateKey);
                 var post = decryptPost(privateKey,passphrase,$scope.postContent)
                 post.then(function (content){
+                  hide();
                   $scope.post.data.content = content;
                   $scope.$apply();
                 }).catch(function (error){

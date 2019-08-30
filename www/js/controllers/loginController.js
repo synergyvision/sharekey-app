@@ -39,19 +39,12 @@
                       email: $scope.email,
                       password: password
                     });
-                    $http({
-                      url : appConstants.apiUrl + 'login',
-                      method: 'POST',
-                      data: loginRequest,
-                      headers: {'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8'}
-                    }).then(function(response){
+                    $http.post(appConstants.apiUrl + 'login', loginRequest,{headers: {'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8'}})
+                    .then(function(response){
                       if (response.data.status == 200){
                         $localStorage.uid = response.data.uid;
                         $localStorage.userToken = response.data.token
-                        $http({
-                          url: appConstants.apiUrl +  appConstants.profile + $localStorage.uid,
-                          method: 'GET',
-                          headers: {'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8','Authorization': 'Bearer: ' + $localStorage.userToken}
+                        $http.get(appConstants.apiUrl +  appConstants.profile + $localStorage.uid, {headers: {'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8','Authorization': 'Bearer: ' + $localStorage.userToken}
                         }).then(function (response){
                           if (response.data.status == 200){
                               $localStorage[$localStorage.uid + '-username'] = response.data.content.username;

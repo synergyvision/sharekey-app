@@ -4,8 +4,8 @@
         .module('starter')
         .controller('messagesController', messagesController);
   
-        messagesController.$inject = ['$scope','$http','$localStorage','$state','$window','$location','$sessionStorage','$stateParams','appConstants','$ionicPopup'];
-        function messagesController($scope,$http,$localStorage,$state,$window,$location,$sessionStorage,$stateParams,appConstants,$ionicPopup){
+        messagesController.$inject = ['$scope','$http','$localStorage','$state','$window','$location','$sessionStorage','$stateParams','appConstants','$ionicPopup','$ionicLoading'];
+        function messagesController($scope,$http,$localStorage,$state,$window,$location,$sessionStorage,$stateParams,appConstants,$ionicPopup,$ionicLoading){
             var uid = $localStorage.uid
             $scope.userKeys = $localStorage[uid + 'keys'];
             var token = $localStorage.userToken;
@@ -112,6 +112,7 @@
 
             $scope.encrypt = function (key) {
                 console.log('begin encription')
+                show();
                 var keyPublic = getPublicKey($scope.chatKey);
                 var keyPrivate = getPrivateKey($scope.chatKey);
                 var pKeys = [keyPublic,key]
@@ -141,6 +142,7 @@
                     data: messageRequest,
                     headers:  {'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8','Authorization':'Bearer: ' + token}
                 }).then(function (response){
+                    hide();
                     alert('Su mensaje se ha enviado');
                     console.log('message sent');
                 }).catch(function (error){
@@ -220,13 +222,24 @@
                 });
             }
 
+            var show = function() {
+                $ionicLoading.show({
+                  template: '<ion-spinner icon="spiral"></ion-spinner>'
+                })
+              };
+              var hide = function(){
+                $ionicLoading.hide()
+              };
+
             $scope.decrypt = async (passphrase) => {
+                show()
                 var privateKey = getPrivateKey();
                 var privateKey = decryptKey(privateKey,$sessionStorage.appKey);
                 var message = decriptMessage(privateKey,passphrase,$scope.data.content)
                 message.then(function (decrypted){
                     $scope.data.content = decrypted;
                     $scope.decrypted = true;
+                    hide()
                     $scope.$apply();
                 }).catch(function (error){
                     alert('Verifique que su llave y passphrase sean correctas')

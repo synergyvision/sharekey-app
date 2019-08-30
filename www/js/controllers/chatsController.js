@@ -18,8 +18,8 @@
             };
           })
   
-        chatsController.$inject = ['$scope','$http','$localStorage','$state','$sessionStorage','$stateParams','$location','appConstants','$ionicPopup'];
-        function chatsController($scope,$http,$localStorage,$state,$sessionStorage,$stateParams,$location,appConstants,$ionicPopup){
+        chatsController.$inject = ['$scope','$http','$localStorage','$state','$sessionStorage','$stateParams','$location','appConstants','$ionicPopup','$ionicLoading'];
+        function chatsController($scope,$http,$localStorage,$state,$sessionStorage,$stateParams,$location,appConstants,$ionicPopup, $ionicLoading){
             var uid = $localStorage.uid
             var token = $localStorage.userToken;
             $scope.uid =$localStorage.uid;
@@ -32,10 +32,7 @@
             $scope.name = [];
             
             $scope.getUserChats = async () => {
-            $http({
-                url:   appConstants.apiUrl + appConstants.profile +uid+ '/chats',
-                method: 'GET',
-                headers: {'Authorization':'Bearer: ' + token} 
+            $http.get( appConstants.apiUrl + appConstants.profile +uid+ '/chats',{headers: {'Authorization':'Bearer: ' + token} 
                 }).then(function (response){
                 if (response.data.data){
                     var userChats = response.data.data
@@ -52,11 +49,8 @@
             }
 
             $scope.getContacts = function (){
-                $http({
-                url: appConstants.apiUrl + appConstants.profile + uid + '/contacts',
-                method: 'GET',
-                headers: {'Authorization':'Bearer: ' + token} 
-                }).then(function (response){
+                $http.get(appConstants.apiUrl + appConstants.profile + uid + '/contacts',{headers: {'Authorization':'Bearer: ' + token}})
+                .then(function (response){
                     $scope.contacts = response.data.data;
                 }).catch(function (error){
                     alert(error.message);
@@ -319,8 +313,18 @@
             
             }
 
+            var show = function() {
+                $ionicLoading.show({
+                  template: '<ion-spinner icon="spiral"></ion-spinner>'
+                })
+              };
+              var hide = function(){
+                $ionicLoading.hide()
+              };
+
             var decryptMessages = async (messages) => {
                 console.log('decripting')
+                show();
                 var privateKey = getMyPrivateKey($scope.infoChat.members[uid]);
                 privateKey = decryptKey(privateKey,$sessionStorage.appKey);
                 for (var i = 0; i < messages.length; i++){
@@ -329,6 +333,7 @@
                     var sent = new Date(messages[i].data.date_sent);
                     messages[i].sent = sent.toLocaleString();
                 }
+                hide();
                 return messages
             } 
 
