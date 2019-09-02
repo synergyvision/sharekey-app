@@ -73,7 +73,7 @@
               };
               $ionicPlatform.ready(function (){
                 $cordovaCamera.getPicture(options).then(function(imageData) {
-                    imgURI = "data:image/jpeg;base64," + imageData;
+                    var imgURI = "data:image/jpeg;base64," + imageData;
                     console.log(imgURI)
                     $scope.uploadPhoto(imgURI)
                 }, function(err) {
