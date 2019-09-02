@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "1000748633573",
+    "firebase_url": "https://vision-sharekey.firebaseio.com",
+    "project_id": "vision-sharekey",
+    "storage_bucket": "vision-sharekey.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1000748633573:android:1d45d20807fd246b",
+        "android_client_info": {
+          "package_name": "synergy.vision.sharekey"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1000748633573-vm3mnv66pum4hd4uu4nb5tain6oqs1t6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBS_flYq51wFQrWeAktwXztE4yvy8u4L9I"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1000748633573-vm3mnv66pum4hd4uu4nb5tain6oqs1t6.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
