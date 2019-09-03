@@ -89,8 +89,10 @@
                 $cordovaCamera.getPicture(options).then(function(imageData) {
                     var imgURI = "data:image/jpeg;base64," + imageData;
                     var blob = dataURItoBlob(imgURI);
+                    console.log(blob)
                     var image = new File([blob], 'image.png');
-                    $scope.uploadPhoto(imgURI)
+                    console.log(image)
+                    $scope.uploadPhoto(image)
                 }, function(err) {
                     alert(err)
                 });
