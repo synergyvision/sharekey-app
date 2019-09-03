@@ -88,7 +88,7 @@
               $ionicPlatform.ready(function (){
                 $cordovaCamera.getPicture(options).then(function(imageData) {
                     var imgURI = imageData;
-                    $scope.image = imgURI.files[0];
+                    $scope.file = imgURI.files[0];
                     $scope.uploadPhoto();
                 }, function(err) {
                     alert(err)
