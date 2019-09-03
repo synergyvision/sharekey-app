@@ -101,6 +101,7 @@
                     file: $scope.file,
                     uid: $localStorage.uid
                  }
+                 console.log($scope.file);
                  $http({
                    method: 'POST',
                    url: appConstants.apiUrl +appConstants.files + 'images',
