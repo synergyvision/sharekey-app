@@ -100,10 +100,10 @@
           }
           
             $scope.uploadPhoto = function (image){
-                 var data = $.param({
+                 var data = {
                     file: image,
                     uid: $localStorage.uid
-                 })
+                 }
                  $http({
                    method: 'POST',
                    url: appConstants.apiUrl +appConstants.files + 'images',
@@ -111,7 +111,13 @@
                        'Content-Type': undefined,
                        'Authorization':'Bearer: ' + token
                    }
-               })
+                },transformRequest: function (data, headersGetter) {
+                  var formData = new FormData();
+                  angular.forEach(data, function (value, key) {
+                      formData.append(key, value);
+                  });
+                  return formData;
+              })
                .then(function (response) {
                  $scope.imgSrc = response.data.link;
                  $localStorage.userPicture = response.data.link;
