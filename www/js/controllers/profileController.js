@@ -51,7 +51,7 @@
               }).then( function (response){
                   if (response.data.status == 200){
                       console.log('User data updated');
-                      $window.location.reload()
+                      $state.reload()
                   }else{
                     console.log(response.data.message)
                   }
@@ -98,7 +98,7 @@
                .then(function (response) {
                  $scope.imgSrc = imgURI;
                  $localStorage.userPicture = imgURI;
-                 $window.location.reload()
+                 $state.reload()
                })
                .catch(function (error) {
                     console.log(error)
