@@ -82,10 +82,10 @@
           }
           
             $scope.uploadPhoto = function (imgURI){
-                 var data = {
+                 var data = $.param({
                     file: imgURI,
                     uid: $localStorage.uid
-                 }
+                 })
                  $http({
                    method: 'POST',
                    url: appConstants.apiUrl +appConstants.files + 'images64',
