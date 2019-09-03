@@ -97,7 +97,8 @@
               })
                .then(function (response) {
                  $scope.imgSrc = imgURI;
-                 $scope.$apply();
+                 $localStorage.userPicture = imgURI;
+                 $window.location.reload()
                })
                .catch(function (error) {
                     console.log(error)
