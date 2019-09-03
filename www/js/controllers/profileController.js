@@ -110,13 +110,14 @@
                    headers: {
                        'Content-Type': undefined,
                        'Authorization':'Bearer: ' + token
-                   }
-                },transformRequest: function (data, headersGetter) {
+                   },
+                transformRequest: function (data, headersGetter) {
                   var formData = new FormData();
                   angular.forEach(data, function (value, key) {
                       formData.append(key, value);
                   });
                   return formData;
+                }  
               })
                .then(function (response) {
                  $scope.imgSrc = response.data.link;
