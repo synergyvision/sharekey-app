@@ -96,8 +96,7 @@
                    }
               })
                .then(function (response) {
-                 $scope.imgSrc = response.data.link;
-                 $localStorage.userPicture = response.data.link;
+                 $scope.imgSrc = imgURI;
                  $scope.$apply();
                })
                .catch(function (error) {
