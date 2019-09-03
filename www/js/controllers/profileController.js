@@ -89,8 +89,9 @@
                  $http({
                    method: 'POST',
                    url: appConstants.apiUrl +appConstants.files + 'images64',
+                   data: data,
                    headers: {
-                       'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8',
+                       'Content-Type': 'application/x-www-form-urlencoded;',
                        'Authorization':'Bearer: ' + token
                    }
               })
