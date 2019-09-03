@@ -98,8 +98,7 @@
                .then(function (response) {
                  $scope.imgSrc = response.data.link;
                  $localStorage.userPicture = response.data.link;
-                 console.log(response);
-                 $state.reload();
+                 $scope.$apply();
                })
                .catch(function (error) {
                     console.log(error)
