@@ -2,20 +2,6 @@
     'use strict';
     angular
         .module('starter')
-        .directive('file', function () {
-          return {
-              scope: {
-                  file: '='
-              },
-              link: function (scope, el, attrs) {
-                  el.bind('change', function (event) {
-                      var file = event.target.files[0];
-                      scope.file = file ? file : undefined;
-                      scope.$apply();
-                  });
-              }
-          };
-        })
         .controller('profileController', profileController);
   
         profileController.$inject = ['$scope','$http','$localStorage','$state','$location','$stateParams','$ionicPopup','$window','appConstants','$cordovaCamera','$ionicPlatform'];
@@ -102,6 +88,7 @@
               $ionicPlatform.ready(function (){
                 $cordovaCamera.getPicture(options).then(function(imageData) {
                     var imgURI = imageData;
+                    $scope.image = imgURI.files[0];
                     $scope.uploadPhoto();
                 }, function(err) {
                     alert(err)
