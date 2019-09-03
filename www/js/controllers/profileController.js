@@ -82,18 +82,16 @@
           }
           
             $scope.uploadPhoto = function (imgURI){
-                console.log(imgURI);
                  var photoRequest = $.param({
                     file: imgURI,
                     uid: $localStorage.uid
                  })
-                 console.log(photoRequest)
                  $http({
                    url: appConstants.apiUrl +appConstants.files + 'images64',
                    method: 'POST',
                    data: photoRequest,
                    headers: {
-                       'Content-Type': 'application/x-www-form-urlencoded;',
+                       'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8',
                        'Authorization':'Bearer: ' + token
                    }
               })
