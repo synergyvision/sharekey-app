@@ -2,6 +2,20 @@
     'use strict';
     angular
         .module('starter')
+        .directive('file', function () {
+          return {
+              scope: {
+                  file: '='
+              },
+              link: function (scope, el, attrs) {
+                  el.bind('change', function (event) {
+                      var file = event.target.files[0];
+                      scope.file = file ? file : undefined;
+                      scope.$apply();
+                  });
+              }
+          };
+        })
         .controller('profileController', profileController);
   
         profileController.$inject = ['$scope','$http','$localStorage','$state','$location','$stateParams','$ionicPopup','$window','appConstants','$cordovaCamera','$ionicPlatform'];
@@ -75,7 +89,7 @@
             $scope.takePicture = function() {
               var options = {
                   quality : 75,
-                  destinationType : Camera.DestinationType.DATA_URL,
+                  destinationType : Camera.DestinationType.FILE_URI,
                   sourceType : Camera.PictureSourceType.PHOTOLIBRARY,
                   allowEdit : true,
                   encodingType: Camera.EncodingType.JPEG,
@@ -87,21 +101,17 @@
               };
               $ionicPlatform.ready(function (){
                 $cordovaCamera.getPicture(options).then(function(imageData) {
-                    var imgURI = "data:image/jpeg;base64," + imageData;
-                    var blob = dataURItoBlob(imgURI);
-                    console.log(blob)
-                    var image = new File([blob], 'image.png');
-                    console.log(image)
-                    $scope.uploadPhoto(image)
+                    var imgURI = imageData;
+                    $scope.uploadPhoto();
                 }, function(err) {
                     alert(err)
                 });
               })
           }
           
-            $scope.uploadPhoto = function (image){
+            $scope.uploadPhoto = function (){
                  var data = {
-                    file: image,
+                    file: $scope.file,
                     uid: $localStorage.uid
                  }
                  $http({
