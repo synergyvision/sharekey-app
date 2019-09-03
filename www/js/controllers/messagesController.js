@@ -204,21 +204,18 @@
                   buttons: [
                     { text: 'Cancelar' },
                     {
-                      text: '<b>Activar</b>',
+                      text: '<b>Ver</b>',
                       type: 'button-positive',
                       onTap: function(e) {
                         if (!$scope.something.passphrase) {
                           //don't allow the user to close unless he enters wifi password
                           e.preventDefault();
                         } else {
-                          return $scope.something.passphrase;
+                            $scope.decrypt($scope.something.passphrase)
                         }
                       }
                     }
                   ]
-                });
-                myPopup.then(function(res) {
-                  $scope.decrypt(res)
                 });
             }
 

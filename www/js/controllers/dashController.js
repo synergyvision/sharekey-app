@@ -49,7 +49,7 @@
                   title: 'Introduzca su clave de aplicación,si es la primera vez en este dispositivo se guardara.',
                   scope: $scope,
                   buttons: [
-                    { text: '<small>Reestablecer</small>',
+                    { text: '<small>Reiniciar</small>',
                       onTap: function(e){
                         showConfirm();
                       }
@@ -311,21 +311,18 @@
                   buttons: [
                     { text: 'Cancelar' },
                     {
-                      text: '<b>Activar</b>',
+                      text: '<b>Ver</b>',
                       type: 'button-positive',
                       onTap: function(e) {
                         if (!$scope.data.passphrase) {
                           //don't allow the user to close unless he enters wifi password
                           e.preventDefault();
                         } else {
-                          return $scope.data.passphrase;
+                          $scope.decryptPost($scope.data.passphrase)
                         }
                       }
                     }
                   ]
-                });
-                myPopup.then(function(res) {
-                  $scope.decryptPost(res)
                 });
               }
           

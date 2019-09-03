@@ -3,21 +3,7 @@
     angular
         .module('starter')
         .controller('chatsController', chatsController)
-        .directive('file', function () {
-            return {
-                scope: {
-                    file: '='
-                },
-                link: function (scope, el, attrs) {
-                    el.bind('change', function (event) {
-                        var file = event.target.files[0];
-                        scope.file = file ? file : undefined;
-                        scope.$apply();
-                    });
-                }
-            };
-          })
-  
+
         chatsController.$inject = ['$scope','$http','$localStorage','$state','$sessionStorage','$stateParams','$location','appConstants','$ionicPopup','$ionicLoading'];
         function chatsController($scope,$http,$localStorage,$state,$sessionStorage,$stateParams,$location,appConstants,$ionicPopup, $ionicLoading){
             var uid = $localStorage.uid
@@ -396,14 +382,11 @@
                         //don't allow the user to close unless he enters wifi password
                         e.preventDefault();
                         } else {
-                        return $scope.passphrase.data;
+                            $scope.showMessages($scope.passphrase.data)
                         }
                     }
                     }
                 ]
-                });
-                myPopup.then(function(res) {
-                    $scope.showMessages(res)
                 });
             }
     }        
