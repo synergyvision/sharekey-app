@@ -64,7 +64,7 @@
           <ion-content class="padding" ng-controller="profileController">
               <div class="list">
                   <a class="item item-avatar">
-                    <img ng-if="imgSrc" ng-src="{{imgSrc}}">
+                    <img ng-if="imgSrc" data-ng-src="{{imgSrc}}">
                     <img ng-if="!imgSrc" src="../img/default-user-icon-8.jpg">
                     <p>Cambiar imagen</p>
                     <button class="button button-small button-positive"  accept="image/*" ng-click="takePicture()">Seleccionar</button>
