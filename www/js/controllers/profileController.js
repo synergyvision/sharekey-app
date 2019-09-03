@@ -74,33 +74,25 @@
               $ionicPlatform.ready(function (){
                 $cordovaCamera.getPicture(options).then(function(imageData) {
                     var imgURI = imageData;
-                    $scope.file = imgURI
-                    $scope.uploadPhoto();
+                    $scope.uploadPhoto(imgURI);
                 }, function(err) {
                     alert(err)
                 });
               })
           }
           
-            $scope.uploadPhoto = function (){
+            $scope.uploadPhoto = function (imgURI){
                  var data = {
-                    file: $scope.file,
+                    file: imgURI,
                     uid: $localStorage.uid
                  }
                  $http({
                    method: 'POST',
                    url: appConstants.apiUrl +appConstants.files + 'images64',
                    headers: {
-                       'Content-Type': undefined,
+                       'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8',
                        'Authorization':'Bearer: ' + token
-                   },
-                transformRequest: function (data, headersGetter) {
-                  var formData = new FormData();
-                  angular.forEach(data, function (value, key) {
-                      formData.append(key, value);
-                  });
-                  return formData;
-                }  
+                   }
               })
                .then(function (response) {
                  $scope.imgSrc = response.data.link;
