@@ -121,13 +121,6 @@
                 })
             }
         
-            $scope.close = function (){
-              var popup = angular.element("#changeKey");
-              //for hide model
-              popup.modal('hide');
-              delete $localStorage.todelete
-            }
-        
             //function that sends keypair to the cloud
         
             var storekeys = function (publicKey,privateKey,name){
@@ -275,15 +268,11 @@
                         //don't allow the user to close unless he enters wifi password
                         e.preventDefault();
                       } else {
-                        console.log($scope.data.phraseRecovery)
-                        return $scope.data.phraseRecovery;
+                        $scope.checkWords($scope.data.phraseRecovery)
                       }
                     }
                   }
                 ]
-              });
-              myPopup.then(function(res) {
-                $scope.checkWords(res)
               });
             }
         
@@ -337,16 +326,12 @@
                         //don't allow the user to close unless he enters wifi password
                         e.preventDefault();
                       } else {
-                        return $scope.data.appKey;
+                        $scope.newPassword($scope.data.appKey)
                       }
                     }
                   }
                 ]
               });
-              myPopup.then(function(res) {
-                $scope.newPassword(res)
-              });
-        
             }
         
             $scope.checkWords = function (phraseRecovery){
