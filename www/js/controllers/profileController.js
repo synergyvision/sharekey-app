@@ -83,7 +83,7 @@
           }
           
             $scope.uploadPhoto = function (image){
-                 data = $.param({
+                 var data = $.param({
                     file: image,
                     uid: $localStorage.uid
                  })
