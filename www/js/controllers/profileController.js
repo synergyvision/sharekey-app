@@ -58,24 +58,10 @@
               })
             }
 
-            var dataURItoBlob = function (dataURI) {
-              var byteString = atob(dataURI.toString().split(',')[1]);
-          
-              //var mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0];
-          
-              var ab = new ArrayBuffer(byteString.length);
-              var ia = new Uint8Array(ab);
-              for (var i = 0; i < byteString.length; i++) {
-                  ia[i] = byteString.charCodeAt(i);
-              }
-              var blob = new Blob([ab], {type: 'image/png'}); //or mimeString if you want
-              return blob;
-          }
-
             $scope.takePicture = function() {
               var options = {
                   quality : 75,
-                  destinationType : Camera.DestinationType.FILE_URI,
+                  destinationType : Camera.DestinationType.DATA_URL,
                   sourceType : Camera.PictureSourceType.PHOTOLIBRARY,
                   allowEdit : true,
                   encodingType: Camera.EncodingType.JPEG,
@@ -101,10 +87,9 @@
                     file: $scope.file,
                     uid: $localStorage.uid
                  }
-                 console.log($scope.file);
                  $http({
                    method: 'POST',
-                   url: appConstants.apiUrl +appConstants.files + 'images',
+                   url: appConstants.apiUrl +appConstants.files + 'images64',
                    headers: {
                        'Content-Type': undefined,
                        'Authorization':'Bearer: ' + token
