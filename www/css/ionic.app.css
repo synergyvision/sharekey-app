@@ -10403,3 +10403,9 @@ a.button {
 
 #formBody {
   border: 0; }
+#newPost{
+    margin-top: 10px;
+    width: 30%;
+    height: 20%;
+    padding-right: 3px;
+}
