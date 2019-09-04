@@ -10335,7 +10335,8 @@ a.button {
 #newPost {
   margin-top: 10px;
   width: 20%;
-  height: 20%; }
+  height: 20%;
+  padding-right: 3px; }
 
 #buttons {
   width: 20%;

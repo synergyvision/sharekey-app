@@ -29,7 +29,7 @@
           </div>
       </div>
     </div>
-    <div class="list" ng-init="getFeedbacks()">
+    <div ng-init="getFeedbacks()">
       <div class="list card" ng-repeat="feedback in feedbacks | orderBy: '-this.data.timestamp'">
             <div id="feedback" class="item item-avatar">
               <img ng-if="feedback.picture" ng-src="{{feedback.picture}}">
