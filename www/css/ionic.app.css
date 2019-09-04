@@ -10332,12 +10332,6 @@ a.button {
   justify-content: space-between;
   display: flex; }
 
-#newPost {
-  margin-top: 10px;
-  width: 20%;
-  height: 20%;
-  padding-right: 3px; }
-
 #buttons {
   width: 20%;
   display: flex; }
