@@ -15,11 +15,8 @@
                     telefono: $scope.phone,
                     usuario: $scope.username
                 });
-                $http({
-                    url : appConstants.apiUrl + 'signup',
-                    method: 'POST',
-                    data: signUpRequest,
-                    headers: {'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8'}
+                $http.post(appConstants.apiUrl + 'signup',signUpRequest,
+                    {headers: {'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8'}
                 }).then(function(response){
                     console.log(response)
                     if (response.data.status == 201){

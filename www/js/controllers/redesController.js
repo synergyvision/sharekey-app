@@ -72,10 +72,8 @@
             }
 
             var validateFacebook = function (){
-                $http({
-                    url: appConstants.apiUrl + appConstants.config + uid + '/validateFacebook',
-                    method: 'POST',
-                    headers: {'Authorization':'Bearer: ' + token}
+                $http.post(appConstants.apiUrl + appConstants.config + uid + '/validateFacebook',
+                    {headers: {'Authorization':'Bearer: ' + token}
                 }).then(function (response){
                     alert('Se ha validado la información de facebook exitosamente')
                     $state.reload();
@@ -85,10 +83,7 @@
             }
 
             $scope.getSocials = function (){
-                $http({
-                        url: appConstants.apiUrl + appConstants.config + uid + '/addedSocials',
-                        method: 'GET',
-                        headers: {'Authorization':'Bearer: ' + token}
+                $http(appConstants.apiUrl + appConstants.config + uid + '/addedSocials',{headers: {'Authorization':'Bearer: ' + token}
                 }).then(function (response){
                         $scope.validFacebook = response.data.facebook
                         $scope.validTwitter = response.data.twitter
@@ -104,15 +99,11 @@
             }
 
             $scope.getTwitterFeed = function(){
-            console.log($scope.twitterUsername)
                 var user = $.param({
                     username: $scope.twitterUsername
                 })
-                $http({
-                    url: appConstants.apiUrl + appConstants.config + uid + '/getTwitterFeed',
-                    method: 'POST',
-                    data: user,
-                    headers: {'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8','Authorization':'Bearer: ' + token}
+                $http.post(appConstants.apiUrl + appConstants.config + uid + '/getTwitterFeed',user,
+                    {headers: {'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8','Authorization':'Bearer: ' + token}
                 }).then(function (response){
                     if (response.data.feed.errors){
                         alert('No pudimos encontrar tu usuario por favor verifícalo')
@@ -138,10 +129,8 @@
             }
 
             var validateTwitter = function (){
-                $http({
-                    url: appConstants.apiUrl + appConstants.config + uid + '/validateTwitter',
-                    method: 'POST',
-                    headers: {'Authorization':'Bearer: ' + token}
+                $http.post(appConstants.apiUrl + appConstants.config + uid + '/validateTwitter',
+                    {headers: {'Authorization':'Bearer: ' + token}
                 }).then(function (response){
                     alert('Se ha validado la información de twitter exitosamente')
                     $state.reload();
@@ -151,10 +140,8 @@
             }
 
             var getServerKey = function (){
-                return $http({
-                    url: appConstants.apiUrl + 'config/serverKeys',
-                    method: 'GET'
-                }).then(function(response){
+                return $http.get(appConstants.apiUrl + 'config/serverKeys')
+                .then(function(response){
                     return response.data.publickey
                 }).catch(function (error){
                     console.log(error)
@@ -184,11 +171,8 @@
                     username: $scope.username,
                     password: password
                     }) 
-                    $http({
-                    url: appConstants.apiUrl + appConstants.repos + uid + '/getToken',
-                    method: 'POST',
-                    data: loginGit,
-                    headers: {'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8','Authorization':'Bearer: ' + token} 
+                    $http.post(appConstants.apiUrl + appConstants.repos + uid + '/getToken',loginGit,
+                    {headers: {'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8','Authorization':'Bearer: ' + token} 
                     }).then(function (response){
                         console.log(response.data)
                         $state.reload()

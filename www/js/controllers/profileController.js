@@ -9,10 +9,8 @@
             var token = $localStorage.userToken;
 
             $scope.requestData = function(){
-              $http({
-                url: appConstants.apiUrl + appConstants.profile + $localStorage.uid,
-                method: 'GET',
-                headers: {'Authorization':'Bearer: ' + token}
+              $http.get(appConstants.apiUrl + appConstants.profile + $localStorage.uid,
+                {headers: {'Authorization':'Bearer: ' + token}
               }).then(function (response){
                 if (response.data.status == 200){
                     $scope.username = response.data.content.username;
@@ -43,11 +41,8 @@
                 username: $scope.username,
                 bio: $scope.bio
               });
-              $http({
-                url: appConstants.apiUrl + appConstants.profile + $localStorage.uid,
-                method: 'PUT',
-                data: updateRequest,
-                headers: {'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8','Authorization':'Bearer: ' + token}
+              $http.put(appConstants.apiUrl + appConstants.profile + $localStorage.uid,updateRequest,
+                {headers: {'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8','Authorization':'Bearer: ' + token}
               }).then( function (response){
                   if (response.data.status == 200){
                       console.log('User data updated');
@@ -86,11 +81,8 @@
                     file: imgURI,
                     uid: $localStorage.uid
                  })
-                 $http({
-                   url: appConstants.apiUrl +appConstants.files + 'images64',
-                   method: 'POST',
-                   data: photoRequest,
-                   headers: {
+                 $http.post(appConstants.apiUrl +appConstants.files + 'images64',photoRequest,
+                   {headers: {
                        'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8',
                        'Authorization':'Bearer: ' + token
                    }

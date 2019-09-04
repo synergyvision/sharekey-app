@@ -32,15 +32,10 @@
                 return text;
             
             }
-    
-        
         
             // receives a random generated 12 words phrase
             $scope.generarPalabras = function (){
-              $http({
-                url: appConstants.apiUrl + 'mnemonic',
-                method: 'GET'
-              }).then(function (response){
+              $http.get(appConstants.apiUrl + 'mnemonic').then(function (response){
                 if (response.data.status == 200){
                     $scope.words = response.data.message;
                 }else{
@@ -67,10 +62,8 @@
         
             // check the existing keys on the cloud
             $scope.checkKeys = function(){
-              $http({
-                url: appConstants.apiUrl + appConstants.profile + uid + '/getKeys',
-                method: 'GET',
-                headers: {'Authorization':'Bearer: ' + token}
+              $http(appConstants.apiUrl + appConstants.profile + uid + '/getKeys',
+                {headers: {'Authorization':'Bearer: ' + token}
               }).then(function (response){
                     var keys = response.data.data;
                     $scope.keys = checkActiveKeys(keys);
@@ -103,11 +96,8 @@
               var updateDefault = $.param({
                 name: name
               })
-              $http({
-                url: appConstants.apiUrl + appConstants.profile+ uid + '/updateDefault',
-                method: 'PUT',
-                data: updateDefault,
-                headers: {'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8','Authorization':'Bearer: ' + token}
+              $http.put(appConstants.apiUrl + appConstants.profile+ uid + '/updateDefault',updateDefault,
+                {headers: {'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8','Authorization':'Bearer: ' + token}
               }).then(function (response){
                     console.log('Data updated on the cloud')
                     $state.reload();
@@ -131,11 +121,8 @@
                   keyname: name
                 })
                   
-                $http({
-                  url: appConstants.apiUrl + appConstants.profile + $localStorage.uid + '/storeKeys',
-                  method: 'POST',
-                  data: storeRequest,
-                  headers: {'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8','Authorization':'Bearer: ' + token}
+                $http.post(appConstants.apiUrl + appConstants.profile + $localStorage.uid + '/storeKeys',storeRequest,
+                  {headers: {'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8','Authorization':'Bearer: ' + token}
                 }).then(function (response){
                     if (response.data.status == 200){
                         console.log('keys stored succesfully')
@@ -232,11 +219,8 @@
                 name: name
               })
         
-              $http({
-                url: appConstants.apiUrl + appConstants.profile + $localStorage.uid + '/deleteKey',
-                method: 'DELETE',
-                data: deleteRequest,
-                headers: {'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8','Authorization':'Bearer: ' + token}
+              $http.delete(appConstants.apiUrl + appConstants.profile + $localStorage.uid + '/deleteKey',deleteRequest,
+                {headers: {'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8','Authorization':'Bearer: ' + token}
               }).then(function (response){
                     if (response.status == 200){
                       alert('Se ha borrado una llave');
@@ -282,11 +266,8 @@
                 name: name
               })
         
-              $http({
-                url: appConstants.apiUrl + appConstants.profile + $localStorage.uid + '/recoverKey',
-                method: 'POST',
-                data: recoverRequest,
-                headers: {'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8','Authorization':'Bearer: ' + token}
+              $http.post(appConstants.apiUrl + appConstants.profile + $localStorage.uid + '/recoverKey',recoverRequest,
+                {headers: {'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8','Authorization':'Bearer: ' + token}
               }).then(function (response){
                   if (response.data.status == 200){
                       console.log('the key has been retrieved from cloud');

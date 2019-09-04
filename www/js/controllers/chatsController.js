@@ -35,8 +35,8 @@
             }
 
             $scope.getContacts = function (){
-                $http.get(appConstants.apiUrl + appConstants.profile + uid + '/contacts',{headers: {'Authorization':'Bearer: ' + token}})
-                .then(function (response){
+                $http.get(appConstants.apiUrl + appConstants.profile + uid + '/contacts',{headers: {'Authorization':'Bearer: ' + token}
+            }).then(function (response){
                     $scope.contacts = response.data.data;
                 }).catch(function (error){
                     alert(error.message);
@@ -66,7 +66,6 @@
                 if (added == false){
                     $scope.name.push(id)
                 }
-                console.log($scope.name);
             } 
 
             $scope.createChat = function (){
@@ -80,11 +79,7 @@
                     title: $scope.chatTitle,
                     participants: JSON.stringify(participants)
                 })
-                $http({
-                        url: appConstants.apiUrl + appConstants.chats + uid,
-                        method: "POST",
-                        data: chatRequest,
-                        headers: {'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8', 'Authorization':'Bearer: ' + token}
+                $http.post(appConstants.apiUrl + appConstants.chats + uid,chatRequest,{headers: {'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8', 'Authorization':'Bearer: ' + token}
                     }).then(function (response){
                         console.log('chat created')
                         storeLocalChats(response.data.Id,$scope.chatTitle,participants); 
@@ -109,10 +104,7 @@
             }
 
             $scope.deleteChat = function(id_chat){
-                $http({
-                url: appConstants.apiUrl + appConstants.profile  + uid + '/chats/' + id_chat,
-                method: 'DELETE',
-                headers: {'Authorization':'Bearer: ' + token}
+                $http.detele(appConstants.apiUrl + appConstants.profile  + uid + '/chats/' + id_chat,{headers: {'Authorization':'Bearer: ' + token}
                 }).then(function (response){
                     console.log(response.data);
                     localDeleteChat(id_chat);
@@ -144,11 +136,7 @@
                 var keyRequest = $.param({
                     id: idUser
                 })
-                return await $http({
-                    url: appConstants.apiUrl + appConstants.profile  + uid + '/getPublicKey',
-                    method: 'POST',
-                    data: keyRequest,
-                    headers: {'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8', 'Authorization':'Bearer: ' + token}
+                return await $http.post(appConstants.apiUrl + appConstants.profile  + uid + '/getPublicKey',keyRequest,{headers: {'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8', 'Authorization':'Bearer: ' + token}
                 }).then(function (response){
                     console.log('retrieved public key from server')
                     var key = response.data.data;
@@ -208,11 +196,7 @@
             };
 
             var sendRequest = function(request){
-                $http({
-                    url: appConstants.apiUrl + appConstants.messages + uid + '/' + id_chat + '/messages',
-                    method: 'POST',
-                    data: request,
-                    headers:  {'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8', 'Authorization':'Bearer: ' + token}
+                $http.post(appConstants.apiUrl + appConstants.messages + uid + '/' + id_chat + '/messages',request,{headers:  {'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8', 'Authorization':'Bearer: ' + token}
                 }).then(function (response){
                     console.log(response.data);
                     $scope.chatMessage = "";
@@ -227,11 +211,7 @@
                 var keyRequest = $.param({
                     id: JSON.stringify(keys)
                 })
-                return await $http({
-                    url: appConstants.apiUrl + appConstants.profile + uid + '/getMultipleKeys',
-                    method: 'POST',
-                    data: keyRequest,
-                    headers: {'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8','Authorization':'Bearer: ' + token}
+                return await $http.post(appConstants.apiUrl + appConstants.profile + uid + '/getMultipleKeys',keyRequest,{headers: {'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8','Authorization':'Bearer: ' + token}
                 }).then(function (response){
                     console.log('retrieved public keys from server')
                     var key = response.data.data;
@@ -324,12 +304,8 @@
             } 
 
             $scope.getMessages =  function (){
-                $http({
-                  url: appConstants.apiUrl + appConstants.messages + uid + '/chat/' + id_chat,
-                  method: 'GET',
-                  headers:  {'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8','Authorization':'Bearer: ' + token}
+                $http.get(appConstants.apiUrl + appConstants.messages + uid + '/chat/' + id_chat,{headers:  {'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8','Authorization':'Bearer: ' + token}
                 }).then(function (response){
-                    console.log(response.data.data)
                     $scope.chatMessages = response.data.data;
                     if ($sessionStorage.passphrase){
                         var decripted = decryptMessages($scope.chatMessages)
@@ -346,7 +322,7 @@
                     if (error){
                         if (error.status == 401){
                             alert('Su sesion ha vencido')
-                            $state.go('dash.login');
+                            $state.go('login');
                         }
                         else{
                             console.log(error.code);

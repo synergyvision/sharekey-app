@@ -44,11 +44,7 @@
                user_id: user_id
              })
              var url = appConstants.apiUrl + appConstants.messages + user_id  + '/mail/published'
-               $http({
-                 url: url,
-                 method: 'POST',
-                 data: requestFeedback,
-                 headers: {'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8','Authorization':'Bearer: ' + token}
+               $http.post(url,requestFeedback,{headers: {'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8','Authorization':'Bearer: ' + token}
                }).then(function (response){
                    console.log(response.data.data)
                    var feedbacks = response.data.data;
@@ -59,10 +55,8 @@
             }
           
             $scope.likeFeedback = function(messageId){
-              $http({
-                url: appConstants.apiUrl + appConstants.messages + uid +'/'+ messageId + '/react',
-                method: 'PUT',
-                headers: {'Authorization':'Bearer: ' + token}
+              $http.put(appConstants.apiUrl + appConstants.messages + uid +'/'+ messageId + '/react',
+                {headers: {'Authorization':'Bearer: ' + token}
               }).then(function (response){
                  console.log(response.data);
                  $window.location.reload();
@@ -72,10 +66,7 @@
             }
           
             $scope.getUserData = function (){
-               $http({
-                 url: appConstants.apiUrl + appConstants.profile + user_id,
-                 method: 'GET',
-                 headers: {'Authorization':'Bearer: ' + token}
+               $http.get(appConstants.apiUrl + appConstants.profile + user_id,{headers: {'Authorization':'Bearer: ' + token}
                }).then(function (response){
                  if (response.data.status == 200){
                      $scope.username = response.data.content.username;
@@ -143,10 +134,8 @@
 
             $scope.logout = function(){
               $scope.closeModal('2');
-              $http({
-                  url: appConstants.apiUrl + 'logout',
-                  method: 'GET'
-              }).then(function (response){
+              $http.get(appConstants.apiUrl + 'logout')
+               .then(function (response){
                   if (response.data.status == 200){
                       delete $localStorage.uid;
                       delete $localStorage.search;

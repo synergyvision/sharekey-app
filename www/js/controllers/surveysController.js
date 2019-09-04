@@ -22,10 +22,7 @@
             $scope.answeredQuestions = []
 
             $scope.getSurveys = function (){
-                $http({
-                    url: appConstants.apiUrl + appConstants.surveys,
-                    method: 'GET',
-                    headers: {'Authorization':'Bearer: ' + token}
+                $http.get(appConstants.apiUrl + appConstants.surveys,{headers: {'Authorization':'Bearer: ' + token}
                 }).then(function (response){
                     console.log(response.data)
                     $scope.surveys = response.data.data;
@@ -60,10 +57,8 @@
             }
 
             $scope.getSurvey = function (){
-                $http({
-                    url: appConstants.apiUrl + appConstants.surveys + survey,
-                    method: 'GET',
-                    headers: {'Authorization':'Bearer: ' + token}
+                $http.get(appConstants.apiUrl + appConstants.surveys + survey,
+                    {headers: {'Authorization':'Bearer: ' + token}
                 }).then(function (response){
                     var surveyData = response.data;
                     $scope.survey = checkSurvey(surveyData)
@@ -78,11 +73,8 @@
                     content: JSON.stringify($scope.answers)
                 })
                 console.log(newAnswers);
-                $http({
-                    url: appConstants.apiUrl + appConstants.surveys + surveyId +'/question/' + questionId + '/answer',
-                    method: 'POST',
-                    data: newAnswers,
-                    headers: {'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8','Authorization':'Bearer: ' + token}
+                $http.post(appConstants.apiUrl + appConstants.surveys + surveyId +'/question/' + questionId + '/answer',newAnswers,
+                    {headers: {'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8','Authorization':'Bearer: ' + token}
                 }).then(function (response){
                     console.log(response.data)
                     $state.go('tab.surveys');
@@ -95,11 +87,8 @@
                 var newQuestion = $.param({
                     content: $scope.question.title
                 })
-                $http({
-                    url: appConstants.apiUrl + appConstants.surveys + surveyId +'/question',
-                    method: 'POST',
-                    data: newQuestion,
-                    headers: {'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8','Authorization':'Bearer: ' + token}
+                $http.post(appConstants.apiUrl + appConstants.surveys + surveyId +'/question',newQuestion,
+                    {headers: {'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8','Authorization':'Bearer: ' + token}
                 }).then(function (response){
                     console.log(response.data)
                     createAnswers(surveyId,response.data.id_question)
@@ -119,11 +108,8 @@
                     created: created,
                     expires_in: expires_in 
                 })
-                $http({
-                    url: appConstants.apiUrl + appConstants.surveys,
-                    method: 'POST',
-                    data: newSurvey,
-                    headers: {'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8','Authorization':'Bearer: ' + token}
+                $http.post(appConstants.apiUrl + appConstants.surveys,newSurvey,
+                    {headers: {'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8','Authorization':'Bearer: ' + token}
                 }).then(function (response){
                     var surveyId = response.data.key;
                     console.log('created survey')
@@ -156,12 +142,9 @@
             }
 
             $scope.fillSurvey = function (){
-                console.log($scope.answeredQuestions[0]);
                 for (var i = 0; i < $scope.answeredQuestions.length;i++){
-                    $http({
-                        url: appConstants.apiUrl + appConstants.surveys + survey +'/question/' + $scope.answeredQuestions[i].questionId + '/answer/' + $scope.answeredQuestions[i].answerId + '/vote',
-                        method: 'PUT',
-                        headers: {'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8','Authorization':'Bearer: ' + token}
+                    $http.put(appConstants.apiUrl + appConstants.surveys + survey +'/question/' + $scope.answeredQuestions[i].questionId + '/answer/' + $scope.answeredQuestions[i].answerId + '/vote',
+                        {headers: {'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8','Authorization':'Bearer: ' + token}
                     }).then(function (response){
                         console.log(response.data);
                         $state.go('tab.surveys');
@@ -172,11 +155,8 @@
                 var updateParam = $.param({
                     uid: $scope.uid
                 })
-                $http({
-                    url: appConstants.apiUrl + appConstants.surveys + survey + '/updateAnsweredBy',
-                    method: 'PUT',
-                    data: updateParam,
-                    headers: {'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8','Authorization':'Bearer: ' + token}
+                $http.put(appConstants.apiUrl + appConstants.surveys + survey + '/updateAnsweredBy',updateParam,
+                    {headers: {'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8','Authorization':'Bearer: ' + token}
                 }).then(function(response){
                     console.log(response)
                     console.log('user has answered a survey')
@@ -186,10 +166,7 @@
             }
 
             $scope.deleteSurvey = function (){
-                $http({
-                    url: appConstants.apiUrl + appConstants.surveys + survey,
-                    method: 'DELETE',
-                    headers: {'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8','Authorization':'Bearer: ' + token}
+                $http.delete(appConstants.apiUrl + appConstants.surveys + survey,{headers: {'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8','Authorization':'Bearer: ' + token}
                 }).then(function(response){
                     console.log(response.data)
                     $state.go('tab.surveys');

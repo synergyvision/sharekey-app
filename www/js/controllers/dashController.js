@@ -372,10 +372,8 @@
               }
           
               $scope.getComments = function(){
-                $http({
-                  url: appConstants.apiUrl + appConstants.comments + $scope.uid + '/' + post,
-                  method: 'GET',
-                  headers: {'Authorization':'Bearer: ' + token}
+                $http.get(appConstants.apiUrl + appConstants.comments + $scope.uid + '/' + post,
+                  {headers: {'Authorization':'Bearer: ' + token}
                 }).then(function (response){
                     console.log(response.data);
                     $scope.comments = response.data.data
@@ -390,11 +388,8 @@
                   user_id: $scope.uid,
                   post_id: post
                 })
-                $http({
-                  url: appConstants.apiUrl + appConstants.comments + '/',
-                  method: 'POST',
-                  data: commentRequest,
-                  headers: {'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8','Authorization':'Bearer: ' + token}
+                $http.post(appConstants.apiUrl + appConstants.comments + '/',commentRequest,
+                  {headers: {'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8','Authorization':'Bearer: ' + token}
                 }).then(function (response){
                   $scope.newComment = "";
                   console.log(response.data);
@@ -422,14 +417,11 @@
                             //don't allow the user to close unless he enters wifi password
                             e.preventDefault();
                           } else {
-                            return $scope.comment;
+                            $scope.editComment($scope.comment);
                           }
                         }
                       }
                     ]
-                  });
-                  myPopup.then(function(res) {
-                    $scope.editComment(res)
                   });
               }
           
@@ -437,11 +429,8 @@
                   var editRequest = $.param({
                     content: comment.content
                   })
-                  $http({
-                    url: appConstants.apiUrl + appConstants.comments + comment.id,
-                    method: 'PUT',
-                    data: editRequest,
-                    headers: {'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8','Authorization':'Bearer: ' + token}
+                  $http.put(appConstants.apiUrl + appConstants.comments + comment.id,editRequest,
+                    {headers: {'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8','Authorization':'Bearer: ' + token}
                   }).then(function (response){
                     console.log(response.data)
                     $scope.editedCommentContent = "";
@@ -454,10 +443,7 @@
               }
           
               $scope.deleteComment = function (id){
-                $http({
-                  url: appConstants.apiUrl  + appConstants.comments + id,
-                  method: 'DELETE',
-                  headers: {'Authorization':'Bearer: ' + token}
+                $http.delete(appConstants.apiUrl  + appConstants.comments + id,{headers: {'Authorization':'Bearer: ' + token}
                 }).then(function (response){
                   console.log(response.data);
                   $scope.getComments();

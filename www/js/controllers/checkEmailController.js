@@ -10,11 +10,8 @@
                 var emailRequest = $.param({
                   email: $scope.email,
                 });
-                $http({
-                  url :  appConstants.apiUrl + 'login/sendEmail',
-                  method: 'POST',
-                  data: emailRequest,
-                  headers: {'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8'}
+                $http.post(appConstants.apiUrl + 'login/sendEmail',emailRequest,
+                  {headers: {'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8'}
                 }).then(function(response){
                   if (response.data.status == 200){
                     var alertPopup = $ionicPopup.alert({

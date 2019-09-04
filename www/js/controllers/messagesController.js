@@ -136,11 +136,8 @@
                 recipient: $scope.id_recipient,
                 publish: $scope.publish
                 })
-               $http({
-                    url: appConstants.apiUrl + appConstants.messages + uid,
-                    method: "POST",
-                    data: messageRequest,
-                    headers:  {'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8','Authorization':'Bearer: ' + token}
+               $http.post(appConstants.apiUrl + appConstants.messages + uid, messageRequest,
+                    {headers:  {'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8','Authorization':'Bearer: ' + token}
                 }).then(function (response){
                     hide();
                     alert('Su mensaje se ha enviado');
@@ -155,10 +152,8 @@
             }
 
             $scope.getMessage = function (){
-                $http({
-                    url: appConstants.apiUrl + appConstants.messages + uid + '/' + $stateParams.id,
-                    method: "GET",
-                    headers:  {'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8','Authorization':'Bearer: ' + token}
+                $http.get(appConstants.apiUrl + appConstants.messages + uid + '/' + $stateParams.id,
+                    {headers:  {'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8','Authorization':'Bearer: ' + token}
                 }).then(function (response){
                     $scope.data = response.data.data
                     $scope.data = getDate($scope.data)
@@ -265,11 +260,8 @@
                 var requestMessages = $.param({
                     user_id: uid
                 })
-                $http({
-                    url: appConstants.apiUrl + appConstants.messages + uid + '/mail/' +tray,
-                    method: 'POST',
-                    data: requestMessages,
-                    headers: {'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8','Authorization':'Bearer: ' + token}
+                $http.post(appConstants.apiUrl + appConstants.messages + uid + '/mail/' +tray,requestMessages,
+                    {headers: {'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8','Authorization':'Bearer: ' + token}
                 }).then(function (response){
                     console.log(response);
                     if (response.data.status == 200){
@@ -282,10 +274,8 @@
             }
 
             $scope.deleteMessage = function (){
-                $http({
-                    url: appConstants.apiUrl + appConstants.messages + uid + '/' + $stateParams.id,
-                    method: 'DELETE',
-                    headers: {'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8','Authorization':'Bearer: ' + token}
+                $http.delete(appConstants.apiUrl + appConstants.messages + uid + '/' + $stateParams.id,
+                    {headers: {'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8','Authorization':'Bearer: ' + token}
                 }).then(function (response){
                     if (response.data.status == 200){
                         console.log(response.data);
@@ -298,10 +288,8 @@
             }
 
             var updateStatus = function(id){
-                $http({
-                    url: appConstants.apiUrl + appConstants.messages + uid + '/' + id,
-                    method: 'PUT',
-                    headers: {'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8','Authorization':'Bearer: ' + token}
+                $http.put(appConstants.apiUrl + appConstants.messages + uid + '/' + id,
+                    {headers: {'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8','Authorization':'Bearer: ' + token}
                 }).then(function (response){
                     console.log(response.data)
                 }).catch(function (error){
@@ -326,11 +314,8 @@
                     id_sender: $scope.data.id_sender,
                     content: $scope.data.content
                 })
-                $http({
-                    url: appConstants.apiUrl + appConstants.messages + uid + '/' + $stateParams.id + '/publish',
-                    method: 'POST',
-                    data: publishRequest,
-                    headers: {'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8','Authorization':'Bearer: ' + token}
+                $http.post(appConstants.apiUrl + appConstants.messages + uid + '/' + $stateParams.id + '/publish',publishRequest,
+                    {headers: {'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8','Authorization':'Bearer: ' + token}
                 }).then(function (response){
                     console.log(response);
                     $state.go('tab.messages')
