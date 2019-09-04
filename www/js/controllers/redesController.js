@@ -83,7 +83,7 @@
             }
 
             $scope.getSocials = function (){
-                $http(appConstants.apiUrl + appConstants.config + uid + '/addedSocials',{headers: {'Authorization':'Bearer: ' + token}
+                $http.get(appConstants.apiUrl + appConstants.config + uid + '/addedSocials',{headers: {'Authorization':'Bearer: ' + token}
                 }).then(function (response){
                         $scope.validFacebook = response.data.facebook
                         $scope.validTwitter = response.data.twitter

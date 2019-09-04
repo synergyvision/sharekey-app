@@ -6,6 +6,7 @@
 
     config.$inject = ['$stateProvider', '$urlRouterProvider', '$ionicConfigProvider'];
     function config($stateProvider, $urlRouterProvider, $ionicConfigProvider) {
+        $ionicConfigProvider.navBar.alignTitle('center');
         $ionicConfigProvider.tabs.position('bottom');
         $stateProvider
         .state('login',{

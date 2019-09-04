@@ -55,7 +55,7 @@
             }
           
             $scope.likeFeedback = function(messageId){
-              $http.put(appConstants.apiUrl + appConstants.messages + uid +'/'+ messageId + '/react',
+              $http.put(appConstants.apiUrl + appConstants.messages + uid +'/'+ messageId + '/react',null,
                 {headers: {'Authorization':'Bearer: ' + token}
               }).then(function (response){
                  console.log(response.data);

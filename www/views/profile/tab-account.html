@@ -8,7 +8,7 @@
                 <div class="item item-avatar">
                     <img ng-if="userPicture" id="userImage" ng-src="{{userPicture}}">
                     <img ng-if="!userPicture" id="userImage" src="../../img/default-user-icon-8.jpg">
-                    <h2>{{username}}</h2>
+                    <h3>{{username}}</h3>
                     <p>{{name}} {{lastname}}</p>
                     <p>{{bio}}</p>
                 </div>
@@ -23,20 +23,19 @@
             </div>
           </div>  
           <div ng-if="user_id == uid" class="item">
-              <button class="button button-block button-stable" ng-click="openModal(1)">
+              <button class="button button-block button-positive" ng-click="openModal(1)">
                   Editar Perfil
               </button>
           </div>
       </div>
     </div>
     <div class="list" ng-init="getFeedbacks()">
-      <div ng-repeat="feedback in feedbacks | orderBy: '-this.data.timestamp'">
-        <div class="list card">
-            <div class="item item-avatar">
+      <div class="list card" ng-repeat="feedback in feedbacks | orderBy: '-this.data.timestamp'">
+            <div id="feedback" class="item item-avatar">
               <img ng-if="feedback.picture" ng-src="{{feedback.picture}}">
               <img ng-if="!feedback.picture" src="../../img/default-user-icon-8.jpg">
 
-              <h2>{{feedback.data.sender}} te ha enviado:</h2>
+              <h3>{{feedback.data.sender}} te ha enviado:</h3>
               <p>{{feedback.data.timestamp}}</p>
             </div>
             <div class="item item-body">
@@ -46,13 +45,12 @@
               <p>
                 <div id="cardFooter">
                   <div ng-if="feedback.data.likes >= 1">
-                    <p>{{feedback.data.likes}} Likes</p>
+                    <p>{{feedback.data.likes}}</p>
                   </div>
                   <a class="button button-clear button-positive" ng-click="likeFeedback(feedback.id)"><i class="icon ion-thumbsup"></i> me gusta</a>
                 </div>
               </p>
             </div>
-          </div>
     </div>
   </ion-content>
   <script id="modifyProfile.html" type="text/ng-template">
@@ -63,12 +61,12 @@
           </ion-header-bar>
           <ion-content class="padding" ng-controller="profileController">
               <div class="list">
-                  <a class="item item-avatar">
+                  <div class="item item-avatar">
                     <img ng-if="imgSrc" data-ng-src="{{imgSrc}}">
                     <img ng-if="!imgSrc" src="../img/default-user-icon-8.jpg">
                     <p>Cambiar imagen</p>
-                    <button class="button button-small button-positive"  accept="image/*" ng-click="takePicture()">Seleccionar</button>
-                  </a>
+                    <button class="button button-small button-positive" accept="image/*" ng-click="takePicture()">Seleccionar</button>
+                  </div>
               </div>
               <div class="list" ng-init="requestData()">
                 <form ng-submit="updateData()">

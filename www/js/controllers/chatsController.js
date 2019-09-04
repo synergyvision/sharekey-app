@@ -351,7 +351,7 @@
                 buttons: [
                     { text: 'Cancelar' },
                     {
-                    text: '<b>Continuar</b>',
+                    text: '<small>Continuar</small>',
                     type: 'button-positive',
                     onTap: function(e) {
                         if (!$scope.passphrase.data) {

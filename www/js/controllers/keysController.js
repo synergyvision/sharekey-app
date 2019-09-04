@@ -62,7 +62,7 @@
         
             // check the existing keys on the cloud
             $scope.checkKeys = function(){
-              $http(appConstants.apiUrl + appConstants.profile + uid + '/getKeys',
+              $http.get(appConstants.apiUrl + appConstants.profile + uid + '/getKeys',
                 {headers: {'Authorization':'Bearer: ' + token}
               }).then(function (response){
                     var keys = response.data.data;

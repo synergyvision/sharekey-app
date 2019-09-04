@@ -1,6 +1,6 @@
-<ion-view view-title="Chats" ng-controller="chatsController" cache-view="false">
-    <ion-header-bar class="bar-subheader" ng-init="chatInfo()">
-            <h1 class="title">{{infoChat.title}}</h1>
+<ion-view view-title="{{infoChat.title}}" ng-controller="chatsController" ng-init="chatInfo()" cache-view="false">
+    <ion-header-bar class="bar-subheader" >
+
             <button class="button button-clear button-positive" ng-click="savePop()">Ver</button>
     </ion-header-bar>
     <ion-content ng-init="getMessages()">
