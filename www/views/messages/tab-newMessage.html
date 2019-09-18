@@ -1,27 +1,27 @@
-<ion-view view-title="Nuevo Correo">
+<ion-view view-title="{{'messages.new_message_title' | translate}}">
      <ion-content ng-controller="messagesController">
         <div class="list">
                 <label class="item item-input item-select" id="contactSelect" ng-init="getContacts()">
                         <div class="input-label">
-                                Destinatario
+                                {{'messages.addressee' | translate}}
                         </div>
                         <select ng-model="id_recipient">
                                 <option ng-repeat="contact in contacts" value="{{contact.id}}">{{contact.name}} {{contact.lastname}}</option>
                         </select>
                 </label>
                 <label class="item item-input" id="message">
-                        <textarea placeholder="Mensaje" ng-model="message"></textarea>
+                        <textarea placeholder="{{'message.message_placeholder' | translate}}" ng-model="message"></textarea>
                 </label>
                 <label class="item item-input item-select" id="keySelect">
                         <div class="input-label">
-                                Llave
+                                {{'messages.key' | translate}}
                         </div>
                         <select ng-model="chatKey">
                                 <option ng-repeat="key in userKeys" value="{{key.keyname}}">{{key.keyname}}</option>
                         </select>
                 </label>
                 <li class="item item-toggle" id="sign">
-                        Firmar
+                        {{'messages.sign' | translate}}
                         <label class="toggle toggle-positive">
                                 <input type="checkbox" ng-click="toggleForm()">
                                 <div class="track">
@@ -30,14 +30,14 @@
                         </label>
                 </li>
                 <label ng-show="form" class="item item-input" id="clave">
-                        <span class="input-label">Clave</span>
+                        <span class="input-label">{{'messages.pass' | translate}}</span>
                         <input type="text" ng-model="passphrase">
                 </label>
                 <ion-list>
-                        <ion-checkbox ng-model="publish">Publicable</ion-checkbox>
+                        <ion-checkbox ng-model="publish">{{'messages.publish?' | translate}}</ion-checkbox>
                 </ion-list>
                 <button id="send" class="button button-calm" ng-click="getPublicKey(id_recipient)">
-                        Enviar
+                                {{'messages.send' | translate}}
                 </button>
                               
         </div>

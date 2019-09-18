@@ -4,8 +4,11 @@
         .module('starter')
         .controller('signUpController', signUpController);
   
-        signUpController.$inject = ['$scope','$http','$location','$state','appConstants','$ionicPopup'];
-        function signUpController($scope,$http,$location,$state,appConstants,$ionicPopup){
+        signUpController.$inject = ['$scope','$http','$location','$state','appConstants','$ionicPopup','$filter'];
+        function signUpController($scope,$http,$location,$state,appConstants,$ionicPopup,$filter){
+
+            var translate = $filter('translate')
+
             $scope.sendData = function(){
                 var signUpRequest = $.param({
                     email: $scope.email,
@@ -21,23 +24,23 @@
                     console.log(response)
                     if (response.data.status == 201){
                     var alertPopup = $ionicPopup.alert({
-                        title: 'Exito!',
-                        template: 'El usuario se ha registrado exitosamente'
+                        title: translate('register.success_title'),
+                        template: translate('register.success')
                     });
                     $state.go('login');
                     }else{
                     if (response.data.status == 400){
                         var alertPopup = $ionicPopup.alert({
-                        title: 'Error',
-                        template: 'El nombre de usuario no se encuentra disponible'
+                        title: translate('register.error'),
+                        template: translate('register.username_error')
                         });
                     } else if (response.data.status === 'auth/email-already-in-use'){
                         var alertPopup = $ionicPopup.alert({
-                        title: 'Error',
-                        template: 'El correo ya se encuentra asociado a una cuenta'
+                        title: translate('register.error'),
+                        template: translate('register.email_error')
                         });
                     }else{
-                        alert('Hubo un error intentelo de nuevo')
+                        alert(translate('register.error_500'))
                         }
                     }
                 })

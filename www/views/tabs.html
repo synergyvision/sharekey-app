@@ -5,25 +5,25 @@ navigation history that also transitions its views in and out.
 -->
 <ion-tabs class="tabs-icon-top tabs-color-active-positive">
 
-  <ion-tab title="Inicio" icon="ion-home" href="#/tab/dash">
+  <ion-tab title="{{'tabs.home' | translate}}" icon="ion-home" href="#/tab/dash">
     <ion-nav-view name="tab-dash"></ion-nav-view>
   </ion-tab>
 
-  <ion-tab title="Mensajes" icon-off="ion-android-mail" icon-on="ion-android-mail" ui-sref="tab.messages">
+  <ion-tab title="{{'tabs.home' | translate}}" icon-off="ion-android-mail" icon-on="ion-android-mail" ui-sref="tab.messages">
     <ion-nav-view name="tab-messages"></ion-nav-view>
   </ion-tab>
 
 
-  <ion-tab title="Chats" icon-off="ion-ios-chatboxes-outline" icon-on="ion-ios-chatboxes" ui-sref="tab.chats">
+  <ion-tab title="{{'tabs.chats' | translate}}" icon-off="ion-ios-chatboxes-outline" icon-on="ion-ios-chatboxes" ui-sref="tab.chats">
     <ion-nav-view name="tab-chats"></ion-nav-view>
   </ion-tab>
 
 
-  <ion-tab title="Encuestas" icon="ion-document-text" ui-sref="tab.surveys">
+  <ion-tab title="{{'tabs.surveys' | translate}}" icon="ion-document-text" ui-sref="tab.surveys">
     <ion-nav-view name="tab-survey"></ion-nav-view>
   </ion-tab>
 
-  <ion-tab title="Perfil" icon-off="ion-person" icon-on="ion-person" ui-sref="tab.account({user_id: id})">
+  <ion-tab title="{{'tabs.profile' | translate}}" icon-off="ion-person" icon-on="ion-person" ui-sref="tab.account({user_id: id})">
     <ion-nav-view name="tab-account"></ion-nav-view>
   </ion-tab>
 

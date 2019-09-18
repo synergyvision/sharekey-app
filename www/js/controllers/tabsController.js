@@ -8,7 +8,7 @@
         function tabsController($scope,$localStorage){
             $scope.id = $localStorage.uid
         }
-        if (window.cordova){
+        /*if (window.cordova){
             FCMPlugin.getToken(function(token) {
                 //this is the fcm token which can be used
                 //to send notification to specific device 
@@ -29,5 +29,5 @@
                 });
             });
 
-        }
+        }*/
 })()  

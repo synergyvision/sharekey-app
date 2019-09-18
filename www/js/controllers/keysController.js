@@ -169,7 +169,6 @@
                         passphrase: $scope.passphrase,
                     }
                     var words = translate($scope.phrase);
-                    var appKey = translate($sessionStorage.appKey);
                     console.log("Generating Keys")
                     openpgp.generateKey(options).then(function(key){
                         var privkey = key.privateKeyArmored;
@@ -177,7 +176,7 @@
                         console.log('keys created')
                         console.log('keys encrypted');
                         // encrypt keys on local storage
-                        var localPrivateKey = encryptKeys(privkey,appKey)
+                        var localPrivateKey = encryptKeys(privkey,$scope.passphrase)
                         localPrivateKey = localPrivateKey.toString();
                         localStorekeys(pubkey,localPrivateKey,$scope.newName);
                         // encrypt keys and send to cloud
@@ -295,7 +294,7 @@
               $scope.data = {}
               var myPopup = $ionicPopup.show({
                 template: '<input type="password" ng-model="data.appKey">',
-                title: 'Introduzca su clave de aplicación',
+                title: 'Introduzca su clave de la llave',
                 scope: $scope,
                 buttons: [
                   { text: 'Cancelar' },
@@ -330,7 +329,7 @@
         
             $scope.newPassword = function (appKey){
               var words = translate(appKey)
-              if (words == $sessionStorage.appKey){
+              if (words){
                 var localPrivateKey = encryptKeys($localStorage.recoveryKey.PrivKey,words)
                 var localPrivateKey = localPrivateKey.toString();
                 localStorekeys($localStorage.recoveryKey.PubKey,localPrivateKey,$localStorage.recoveryKey.name,$localStorage.recoveryKey.default);

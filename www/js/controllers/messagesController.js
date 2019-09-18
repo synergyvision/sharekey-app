@@ -4,16 +4,18 @@
         .module('starter')
         .controller('messagesController', messagesController);
   
-        messagesController.$inject = ['$scope','$http','$localStorage','$state','$window','$location','$sessionStorage','$stateParams','appConstants','$ionicPopup','$ionicLoading'];
-        function messagesController($scope,$http,$localStorage,$state,$window,$location,$sessionStorage,$stateParams,appConstants,$ionicPopup,$ionicLoading){
+        messagesController.$inject = ['$scope','$http','$localStorage','$state','$window','$location','$stateParams','appConstants','$ionicPopup','$ionicLoading','$filter'];
+        function messagesController($scope,$http,$localStorage,$state,$window,$location,$stateParams,appConstants,$ionicPopup,$ionicLoading,$filter){
             var uid = $localStorage.uid
             $scope.userKeys = $localStorage[uid + 'keys'];
             var token = $localStorage.userToken;
             $scope.form = false;
 
+            var filter = $filter('translate');
+
             $scope.getPublicKey =  function (idUser){
                 if (!$scope.message){
-                alert("No puede mandar un mensaje en blanco")
+                alert(filter('messages.empty_error'))
                 }else{
                     var keyRequest = $.param({
                         id: idUser
@@ -116,7 +118,7 @@
                 var keyPublic = getPublicKey($scope.chatKey);
                 var keyPrivate = getPrivateKey($scope.chatKey);
                 var pKeys = [keyPublic,key]
-                var Private = decryptKey(keyPrivate,$sessionStorage.appKey);
+                var Private = decryptKey(keyPrivate,$scope.passphrase);
                 var message = encryptWithMultiplePublicKeys(pKeys,Private,$scope.passphrase,$scope.message);
                 message.then( function (encryptedMessage){
                     sendMessage(encryptedMessage);
@@ -140,7 +142,7 @@
                     {headers:  {'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8','Authorization':'Bearer: ' + token}
                 }).then(function (response){
                     hide();
-                    alert('Su mensaje se ha enviado');
+                    alert(filter('messages.send_success'));
                     console.log('message sent');
                 }).catch(function (error){
                     if (error){
@@ -194,12 +196,12 @@
                 $scope.something = {};
                 var myPopup = $ionicPopup.show({
                   template: '<input type="password" ng-model="something.passphrase">',
-                  title: 'Introduzca su clave para ver el mensaje',
+                  title: filter('messages.ask_pass'),
                   scope: $scope,
                   buttons: [
-                    { text: 'Cancelar' },
+                    { text: filter('messages.cancel') },
                     {
-                      text: '<b>Ver</b>',
+                      text: filter('messages.cancel'),
                       type: 'button-positive',
                       onTap: function(e) {
                         if (!$scope.something.passphrase) {
@@ -226,7 +228,7 @@
             $scope.decrypt = async (passphrase) => {
                 show()
                 var privateKey = getPrivateKey();
-                var privateKey = decryptKey(privateKey,$sessionStorage.appKey);
+                var privateKey = decryptKey(privateKey,passphrase);
                 var message = decriptMessage(privateKey,passphrase,$scope.data.content)
                 message.then(function (decrypted){
                     $scope.data.content = decrypted;
@@ -234,7 +236,7 @@
                     hide()
                     $scope.$apply();
                 }).catch(function (error){
-                    alert('Verifique que su llave y passphrase sean correctas')
+                    alert(filter('messages.pass_error'))
                 })
             } 
 
@@ -279,7 +281,7 @@
                 }).then(function (response){
                     if (response.data.status == 200){
                         console.log(response.data);
-                        alert('se ha eliminado un mensaje')
+                        alert(filter('messages.deleted'))
                         $state.go('tab.messages');
                     }
                 }).catch(function (error){
@@ -319,7 +321,7 @@
                 }).then(function (response){
                     console.log(response);
                     $state.go('tab.messages')
-                    alert('Su feedback ha sido publicado exitosamente')
+                    alert(filter('messages.publish_success'))
                 }).catch(function (error){
                     console.log(error);
                 })

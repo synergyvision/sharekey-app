@@ -4,8 +4,8 @@
         .module('starter')
         .controller('chatsController', chatsController)
 
-        chatsController.$inject = ['$scope','$http','$localStorage','$state','$sessionStorage','$stateParams','$location','appConstants','$ionicPopup','$ionicLoading'];
-        function chatsController($scope,$http,$localStorage,$state,$sessionStorage,$stateParams,$location,appConstants,$ionicPopup, $ionicLoading){
+        chatsController.$inject = ['$scope','$http','$localStorage','$state','$stateParams','$location','appConstants','$ionicPopup','$ionicLoading'];
+        function chatsController($scope,$http,$localStorage,$state,$stateParams,$location,appConstants,$ionicPopup, $ionicLoading){
             var uid = $localStorage.uid
             var token = $localStorage.userToken;
             $scope.uid =$localStorage.uid;
@@ -91,7 +91,6 @@
             }
 
             $scope.getChat = function (id){
-                delete $sessionStorage.passphrase;
                 $state.go('tab.chatsMessages',{'id_chat': id});
             }
 
@@ -104,7 +103,7 @@
             }
 
             $scope.deleteChat = function(id_chat){
-                $http.detele(appConstants.apiUrl + appConstants.profile  + uid + '/chats/' + id_chat,{headers: {'Authorization':'Bearer: ' + token}
+                $http.delete(appConstants.apiUrl + appConstants.profile  + uid + '/chats/' + id_chat,{headers: {'Authorization':'Bearer: ' + token}
                 }).then(function (response){
                     console.log(response.data);
                     localDeleteChat(id_chat);
@@ -200,7 +199,7 @@
                 }).then(function (response){
                     console.log(response.data);
                     $scope.chatMessage = "";
-                    $state.reload();
+                    $scope.getMessages()
                 }).catch(function (error){
                     console.log(error);
                     alert(error);
@@ -288,14 +287,15 @@
                 $ionicLoading.hide()
               };
 
-            var decryptMessages = async (messages) => {
+            var decryptMessages = async (messages,pass) => {
                 console.log('decripting')
                 show();
                 var privateKey = getMyPrivateKey($scope.infoChat.members[uid]);
-                privateKey = decryptKey(privateKey,$sessionStorage.appKey);
+                privateKey = decryptKey(privateKey,pass);
                 for (var i = 0; i < messages.length; i++){
-                    var message = await decriptMessage(privateKey,$sessionStorage.passphrase,messages[i].data.content)
+                    var message = await decriptMessage(privateKey,pass,messages[i].data.content)
                     messages[i].data.content = message;
+                    messages[i].decrypted = true;
                     var sent = new Date(messages[i].data.date_sent);
                     messages[i].sent = sent.toLocaleString();
                 }
@@ -307,17 +307,6 @@
                 $http.get(appConstants.apiUrl + appConstants.messages + uid + '/chat/' + id_chat,{headers:  {'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8','Authorization':'Bearer: ' + token}
                 }).then(function (response){
                     $scope.chatMessages = response.data.data;
-                    if ($sessionStorage.passphrase){
-                        var decripted = decryptMessages($scope.chatMessages)
-                        decripted.then (function (decripted){
-                            $scope.show = true;
-                            $scope.chatMessages = decripted;
-                            $scope.$apply()
-                        }).catch(function (error){
-                            console.log(error);
-                            alert(error)
-                        })
-                    }
                 }).catch(function (error){
                     if (error){
                         if (error.status == 401){
@@ -333,8 +322,7 @@
             }
 
             $scope.showMessages = function (passphrase){
-                $sessionStorage.passphrase = passphrase
-                var decripted = decryptMessages($scope.chatMessages)
+                var decripted = decryptMessages($scope.chatMessages,passphrase)
                 decripted.then(function (decripted){
                     $scope.show = true;
                     $scope.chatMessages = decripted;

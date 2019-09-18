@@ -4,8 +4,11 @@
         .module('starter')
         .controller('LoginController', loginController);
   
-        loginController.$inject = ['$scope','$http','$location','$localStorage','appConstants','$state','$ionicPopup'];
-        function loginController($scope,$http,$location,$localStorage,appConstants,$state,$ionicPopup){
+        loginController.$inject = ['$scope','$http','$location','$localStorage','appConstants','$state','$ionicPopup','$filter'];
+        function loginController($scope,$http,$location,$localStorage,appConstants,$state,$ionicPopup,$filter){
+
+          var translate = $filter('translate');
+          
             var getServerKey = function (){
                 return $http({
                   url: appConstants.apiUrl + 'config/serverKeys',
@@ -52,21 +55,21 @@
                               $state.go('tab.dash');
                           }else{
                             var alertPopup = $ionicPopup.alert({
-                              title: 'Error',
-                              template: 'Ha ocurrido un error'
+                              title: translate('login.error_title'),
+                              template: translate('login.error'),
                             });
                           }  
                         })
                       }else{
                         if (response.data.status === 'auth/wrong-password'){
                           var alertPopup = $ionicPopup.alert({
-                            title: 'Error',
-                            template: 'Su contraseña es incorrecta'
+                            title: translate('login.error_title'),
+                            template: translate('login.password_error'),
                           });
                         } else if (response.data.status === 'auth/user-not-found'){
                           var alertPopup = $ionicPopup.alert({
-                            title: 'Error',
-                            template: 'Su correo es invalido'
+                            title: translate('login.error_title'),
+                            template: translate('login.email_error'),
                           });
                         }
                       }

@@ -9,7 +9,8 @@
             <div class="item item-text-wrap" style="background-color: cornflowerblue;">
                     <p id="messageContent">
                         {{message.data.username}}<br>
-                        {{message.data.content}}
+                        <span ng-if="!message.decrypted">Mensaje encriptado</span>
+                        <span ng-if="message.decrypted">{{message.data.content}}</span>
                         <br>
                         <small id="data">{{message.sent}}</small>
                     </p>  
@@ -19,7 +20,8 @@
             <div class="item item-text-wrap">
                 <p>
                     {{message.data.username}}<br>
-                    {{message.data.content}}
+                    <span ng-if="!message.decrypted">Mensaje encriptado</span>
+                    <span ng-if="message.decrypted">{{message.data.content}}</span>
                     <br>
                     <small id="data">{{message.sent}}</small>
                 </p>    

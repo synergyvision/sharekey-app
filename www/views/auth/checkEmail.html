@@ -8,16 +8,16 @@
                     <form id="loginForm" ng-submit="sendEmail()">
                         <div class="list">
                             <label class="item item-input item-stacked-label">
-                                <span class="input-label">Correo</span>
-                                <input type="text" placeholder="example@gmail.com" ng-model="$parent.email" required>
+                                <span class="input-label">{{'recoverPassword.email' | translate}}</span>
+                                <input type="text" placeholder="{{'recoverPassword.email_placeholder' | translate}}" ng-model="$parent.email" required>
                             </label>
                         </div>
                         <button  type="submit" class="button button-full button-positive">
-                                Continuar
+                                {{'recoverPassword.button_go' | translate}}
                         </button>
                     </form>
                     <div class="text-center">
-                        <a class="btn btn-lg btn-light btn-block text-uppercase" ui-sref="login">Regresar</a>
+                        <a class="btn btn-lg btn-light btn-block text-uppercase" ui-sref="login">{{'recoverPassword.button_back' | translate}}</a>
                     </div>
                 </div>
             </div>    

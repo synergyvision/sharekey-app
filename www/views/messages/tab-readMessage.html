@@ -1,9 +1,9 @@
-<ion-view view-title="Leer mensaje">
+<ion-view view-title="{{'messages.title_read' | translate}}">
         <ion-content ng-controller="messagesController">
                 <div class="list card" ng-init="getMessage()">
                     <div class="item item-avatar">
-                        <h2 ng-if="data.sender">Mensaje de {{data.sender}}</h2>
-                        <h2 ng-if="data.r_username">Mensaje enviado a {{data.r_username}}</h2>
+                        <h2 ng-if="data.sender">{{'messages.from' | translate}} {{data.sender}}</h2>
+                        <h2 ng-if="data.r_username">{{'messages.to' | translate}} {{data.r_username}}</h2>
                         <p>{{data.sent}}</p>
                     </div>
                     
@@ -12,9 +12,9 @@
                         {{data.content}}
                         </p>
                         <p>
-                        <a class="subdued" ng-click="passPopUp()">Ver</a>
-                        <a class="subdued" ng-click="deleteMessage()">Borrar</a>
-                        <a class="subdued" ng-if="data.publish == 'true' && decrypted == true" ng-click="publishMessage()">Publicar</a>
+                        <a class="subdued" ng-click="passPopUp()">{{'messages.see' | translate}}</a>
+                        <a class="subdued" ng-click="deleteMessage()">{{'messages.delete' | translate}}</a>
+                        <a class="subdued" ng-if="data.publish == 'true' && decrypted == true" ng-click="publishMessage()">{{'messages.publish' | translate}}</a>
                         </p>
                     </div>    
                 </div>

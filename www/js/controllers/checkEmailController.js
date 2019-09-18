@@ -4,8 +4,11 @@
         .module('starter')
         .controller('CheckEmailController', CheckEmailController);
   
-        CheckEmailController.$inject = ['$scope','$http','appConstants','$ionicPopup'];
-        function CheckEmailController($scope,$http,appConstants,$ionicPopup){
+        CheckEmailController.$inject = ['$scope','$http','appConstants','$ionicPopup','$filter'];
+        function CheckEmailController($scope,$http,appConstants,$ionicPopup,$filter){
+
+          var translate = $filter('translate');
+
             $scope.sendEmail = function(){
                 var emailRequest = $.param({
                   email: $scope.email,
@@ -15,13 +18,13 @@
                 }).then(function(response){
                   if (response.data.status == 200){
                     var alertPopup = $ionicPopup.alert({
-                      title: 'Información',
-                      template: 'Se ha enviado un correo de recuperacioón a tu cuenta'
+                      title: translate('recoverPassword.title'),
+                      template: translate('recoverPassword.success'),
                     });
                   }else {
                     var alertPopup = $ionicPopup.alert({
-                      title: 'Error',
-                      template: 'Tu correo es invalido o no esta registrado'
+                      title: translate('recoverPassword.error'),
+                      template: translate('recoverPassword.error_not_found'),
                     });
                   }
                 })

@@ -1,45 +1,45 @@
-<ion-view>
+<ion-view view-title="{{'register.view_title' | translate}}">
         <ion-content style="background-color: white">
             <div class="row row-center responsive-sm" ng-controller="signUpController">
                 <div class="col col-center">
                     <div id="logoDiv">
                             <img src="../../img/vision.svg" id="logo" alt="Generic placeholder image">
                     </div>
-                    <h5 class="text-center">Crea tu cuenta</h5>
+                    <h5 class="text-center">{{'register.title' | translate}}</h5>
                     <form id="loginForm" ng-submit="sendData()">
                         <div class="list">
                             <label class="item item-input item-stacked-label">
-                                <span class="input-label">Correo</span>
-                                <input type="text" placeholder="example@gmail.com" ng-model="$parent.email" required>
+                                <span class="input-label">{{'register.email' | translate}}</span>
+                                <input type="text" placeholder="" ng-model="$parent.email" required>
                             </label>
                             <label class="item item-input item-stacked-label">
-                                    <span class="input-label">Contraseña</span>
+                                    <span class="input-label">{{'register.password' | translate}}</span>
                                     <input type="password" ng-model="$parent.password" required>
                             </label>
                             <label class="item item-input item-stacked-label">
-                                    <span class="input-label">Nombre</span>
+                                    <span class="input-label">{{'register.name' | translate}}</span>
                                     <input type="text" ng-model="$parent.name" required>
                             </label>
                             <label class="item item-input item-stacked-label">
-                                    <span class="input-label">Apellido</span>
+                                    <span class="input-label">{{'register.lastname' | translate}}</span>
                                     <input type="text" ng-model="$parent.lastname" required>
                             </label>
                             <label class="item item-input item-stacked-label">
-                                    <span class="input-label">Usuario</span>
+                                    <span class="input-label">{{'register.user' | translate}}</span>
                                     <input type="text" ng-model="$parent.username" required>
                             </label>
                             <label class="item item-input item-stacked-label">
-                                    <span class="input-label">Teléfono</span>
+                                    <span class="input-label">{{'register.phone' | translate}}</span>
                                     <input type="text" ng-model="$parent.phone" required>
                             </label>
                         </div>
                         <button  type="submit" class="button button-full button-positive">
-                                Crear
+                                        {{'register.button_continue' | translate}}
                         </button>
                     </form>
                     <div class="text-center">
                         <div class="text-center">
-                                <a class="btn btn-lg btn-light btn-block text-uppercase" ui-sref="login">Regresar</a>
+                                <a class="btn btn-lg btn-light btn-block text-uppercase" ui-sref="login">{{'register.button_back' | translate}}</a>
                         </div>
                     </div>
                 </div>

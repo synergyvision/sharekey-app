@@ -1,4 +1,4 @@
-<ion-view view-title="Ver post" cache-view="false">
+<ion-view view-title="{{'posts.post_link' | translate}}" cache-view="false">
     <ion-content ng-controller="DashCtrl">
         <div id="Posted" >
             <div id="card" class="list card" ng-init="loadPost()">
@@ -7,14 +7,17 @@
                     <img ng-if="!post.userPicture" src="../../img/default-user-icon-8.jpg">
                     <h2>{{post.name}}</h2>
                     <div id="userButtons" ng-if="post.data.user_id == uid">
-                        <a ng-if="post.data.public == 'false'" class="subdued" ng-click="askPassphrase(post.data.content)">Ver</a>
-                        <a class="subdued" ng-if="post.data.public == 'true'"  ng-click="editPop(post.data.content)">Editar</a>
-                        <a class="subdued" ng-click="deletePost(post.id)">Borrar</a>
+                        <a ng-if="post.data.public == 'false'" class="subdued" ng-click="askPassphrase(post.data.content)">{{'posts.see' | translate}}</a>
+                        <a class="subdued" ng-if="post.data.public == 'true'"  ng-click="editPop(post.data.content)">{{'posts.edit_post_button' | translate}}</a>
+                        <a class="subdued" ng-click="deletePost(post.id)">{{'posts.delete'|translate}}</a>
                     </div>    
                 </div>
                 <div class="item item-body">
-                    <p style="margin-top: -10px;">
-                    {{post.data.content}}
+                    <p ng-if="post.encrypted == true" style="margin-top: -10px;">
+                            {{'posts.private_post' | translate}}
+                    </p>
+                    <p ng-if="post.encrypted == false" style="margin-top: -10px;">
+                            {{post.data.content}}
                     </p>
                     <p>
                         <div style="display: inline-flex">
@@ -38,7 +41,7 @@
         <div class="list">
                 <div class="item item-input-inset">
                   <label class="item-input-wrapper">
-                        <input type="text" ng-model="newComment" placeholder="Comenta algo...">
+                        <input type="text" ng-model="newComment" placeholder="{{'posts.comment_placeholder' | translate}}">
                   </label>
                   <button class="button button-small button-balanced" ng-click="sendComment()">
                         <i class="ion-share"></i>
@@ -47,15 +50,15 @@
         </div>
         <div ng-init="getComments()">
                 <div class="item item-divider">
-                    Comentarios
+                    {{'posts.comments_link' | translate}}
                 </div>
                 <div class="list" >
                 <a class="item item-avatar" id="comentario" ng-repeat="comment in comments">
                       <h2>{{comment.user}}</h2>
                       <p>{{comment.comment}}</p>
                       <div id="commentButtons" ng-if="comment.userId == uid">
-                        <p class="subdued" style="margin-right: 2px;"ng-click="editCommentPop(comment.id,comment.comment)">Editar</p>
-                        <p class="subdued" style="margin-left: 2px;" ng-click="deleteComment(comment.id)"> Borrar</p>
+                        <p class="subdued" style="margin-right: 2px;"ng-click="editCommentPop(comment.id,comment.comment)">{{'posts.edit_post_button' | translate}}</p>
+                        <p class="subdued" style="margin-left: 2px;" ng-click="deleteComment(comment.id)"> {{'posts.delete' | translate}}</p>
                       </div>
                 </a>
             </div>

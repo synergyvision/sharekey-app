@@ -4,8 +4,8 @@
         .module('starter')
         .controller('DashCtrl', DashCtrl);
   
-        DashCtrl.$inject = ['$scope','$sessionStorage','$window','$localStorage','$ionicPopup','$stateParams','$http','$state','appConstants','$ionicLoading'];
-        function DashCtrl($scope,$sessionStorage,$window,$localStorage,$ionicPopup,$stateParams,$http,$state,appConstants,$ionicLoading){
+        DashCtrl.$inject = ['$scope','$window','$localStorage','$ionicPopup','$stateParams','$http','$state','appConstants','$ionicLoading','$filter'];
+        function DashCtrl($scope,$window,$localStorage,$ionicPopup,$stateParams,$http,$state,appConstants,$ionicLoading,$filter){
             var uid = $localStorage.uid
             $scope.uid = uid;
             $scope.storedKeys = $localStorage[uid+'keys'];
@@ -13,6 +13,12 @@
             var post = $stateParams.post_id;
             $scope.username = $localStorage[uid + '-username'];
             $scope.edit = false;
+            var filter = $filter('translate');
+
+            if(!$localStorage[uid+'keys']){
+              alert(filter('tabs.keys_message'))
+              $state.go('tab.keys')
+            }
 
             var encryptKeys = function (key,seed){
                 var ciphertext = CryptoJS.AES.encrypt(key,seed);
@@ -27,79 +33,7 @@
                 return text;
             
             }
-        
-              var showConfirm = function (){
-                var confirmPopup = $ionicPopup.confirm({
-                  title: 'Advertencia',
-                  template: 'Restablecer su clave de aplicación borrara toda su información en el dispositivo, es decir tendra que reactivar sus llaves.'
-                });
-                confirmPopup.then(function(res) {
-                  if(res) {
-                    resetAppKey();
-                  } else {
-                    showAppKeyPop();
-                  }
-                });
-              }
           
-              var showAppKeyPop = function (){
-                $scope.data = {}
-                var myPopup = $ionicPopup.show({
-                  template: '<input type="password" ng-model="data.appKey">',
-                  title: 'Introduzca su clave de aplicación,si es la primera vez en este dispositivo se guardara.',
-                  scope: $scope,
-                  buttons: [
-                    { text: '<small>Reiniciar</small>',
-                      onTap: function(e){
-                        showConfirm();
-                      }
-                    },
-                    {
-                      text: '<small>Continuar</small>',
-                      type: 'button-positive',
-                      onTap: function(e) {
-                        if (!$scope.data.appKey) {
-                          //don't allow the user to close unless he enters wifi password
-                          e.preventDefault();
-                        } else {
-                          $scope.setAppKey($scope.data.appKey);
-                        }
-                      }
-                    }
-                  ]
-                });
-              }
-          
-              $scope.checkAppKey = function(){
-                if (!$sessionStorage.appKey){
-                  showAppKeyPop();
-                }
-                
-            }
-          
-              $scope.setAppKey = function (words){
-                if ($localStorage[uid+'keys']){
-                  words = translate(words);
-                  try {
-                  var bytes  = CryptoJS.AES.decrypt($localStorage[uid+'keys'][0].privateKey,words);
-                  var pass = bytes.toString(CryptoJS.enc.Utf8);
-                  $sessionStorage.appKey = words;
-                  }
-                  catch (e){
-                    console.log(e);
-                    alert('La clave de aplicación es incorrecta')
-                    showAppKeyPop();
-                  }
-                }else{
-                  $sessionStorage.appKey = words;
-                }
-              }
-          
-              var resetAppKey = function (){
-                delete $localStorage[uid + 'keys'];
-                delete $sessionStorage.appKey;
-                $window.location.reload();
-              }
           
               var getMyDefaultKey = function (){
                 var userKeys = $scope.storedKeys
@@ -180,7 +114,7 @@
                     posts[i].userPicture = false;
                   }
                   var sent = new Date(posts[i].data.timestamp);
-                  posts[i].data.timestamp = sent.toLocaleString(); 
+                  posts[i].data.sent = sent.toLocaleString(); 
                 }
                 return posts
               } 
@@ -230,12 +164,12 @@
                 $scope.data.content = content;
                 var myPopup = $ionicPopup.show({
                   template: '<input type="text" ng-model="data.content">',
-                  title: 'Edita tu post',
+                  title: filter('posts.edit_text'),
                   scope: $scope,
                   buttons: [
-                    { text: 'Cancelar' },
+                    { text: filter('posts.cancel') },
                     {
-                      text: '<b>Editar</b>',
+                      text: filter('posts.edit'),
                       type: 'button-positive',
                       onTap: function(e) {
                         if (!$scope.data.content) {
@@ -293,8 +227,10 @@
                   method: 'GET',
                   headers: {'Authorization':'Bearer: ' + token} 
                 }).then(function (response){
-                  console.log(response)
-                   $scope.post = response.data.data;
+                    $scope.post = response.data.data;
+                  if ($scope.post.data.public == 'false'){
+                    $scope.post.encrypted = true;
+                  }
                 }).catch (function (error){
                   console.log(error.code)
                   console.log(error.message)
@@ -306,12 +242,12 @@
                 $scope.data = {};
                 var myPopup = $ionicPopup.show({
                   template: '<input type="password" ng-model="data.passphrase">',
-                  title: 'Introduzca su clave para ver su post',
+                  title: filter('posts.ask_pass'),
                   scope: $scope,
                   buttons: [
-                    { text: 'Cancelar' },
+                    { text: filter('posts.cancel') },
                     {
-                      text: '<b>Ver</b>',
+                      text: filter('posts.see'),
                       type: 'button-positive',
                       onTap: function(e) {
                         if (!$scope.data.passphrase) {
@@ -326,8 +262,8 @@
                 });
               }
           
-              var decryptKey = function (key) {
-                var bytes  = CryptoJS.AES.decrypt(key,$sessionStorage.appKey);
+              var decryptKey = function (key,pass) {
+                var bytes  = CryptoJS.AES.decrypt(key,pass);
                 var key = bytes.toString(CryptoJS.enc.Utf8);
                 return key;
             
@@ -360,14 +296,15 @@
               $scope.decryptPost = function (passphrase){
                 show()
                 var privateKey = getMyDefaultPrivateKey();
-                privateKey = decryptKey(privateKey);
+                privateKey = decryptKey(privateKey,passphrase);
                 var post = decryptPost(privateKey,passphrase,$scope.postContent)
                 post.then(function (content){
                   hide();
+                  $scope.post.encrypted = false;
                   $scope.post.data.content = content;
                   $scope.$apply();
                 }).catch(function (error){
-                    alert('Error: verifique que su llave y passphrase sean correctos')
+                    alert(filter('posts.error_passphrase'))
                 })
               }
           
@@ -405,12 +342,12 @@
                   $scope.comment.content = content;
                   var myPopup = $ionicPopup.show({
                     template: '<input type="text" ng-model="comment.content">',
-                    title: 'Edita tu comentario',
+                    title: filter('posts.edit_comment'),
                     scope: $scope,
                     buttons: [
-                      { text: 'Cancelar' },
+                      { text: filter('posts.cancel') },
                       {
-                        text: '<b>Editar</b>',
+                        text: filter('posts.edit'),
                         type: 'button-positive',
                         onTap: function(e) {
                           if (!$scope.comment.content) {
