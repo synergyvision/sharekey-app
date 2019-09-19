@@ -1,10 +1,10 @@
-<ion-view view-title="Encuestas">
+<ion-view view-title="{{'suveys.title' | translate}}">
     <ion-content ng-controller="surveysController">
         <div ng-init="getSurvey()">
             <div  class="list card" ng-if="survey.expired == false  && survey.answered == false">
                 <div class="item">
                 <h2>{{survey.title}}</h2>
-                <p>Creada por: {{survey.user}}</p>
+                <p>{{'suveys.body' | translate}} {{survey.user}}</p>
                 </div> 
                 <div class="item item-image" id="formBody" ng-repeat="question in survey.questions">
                     <div class="item item-divider" >
@@ -16,32 +16,32 @@
                 </div>
                 <p style="display: flex">
                     <a class="item calm" id="fill" ng-click="fillSurvey()">
-                        Finalizar
+                        {{'suveys.finish' | translate}}
                     </a>
                     <a class="item assertive" id="delete" ng-click="deleteSurvey()">
-                        Borrar
+                        {{'suveys.delete' | translate}}
                     </a>
                 </p>    
             </div>   
             <div class="card" ng-if="survey.answered == true && survey.expired == false">
                 <div class="item item-text-wrap">
-                    Ya completaste esta encuesta!
+                    {{'suveys.answered' | translate}}
                 </div>
             </div> 
             <div  class="list card" ng-if="survey.expired == true">
                     <div class="item item-divider" >
-                            Esta encuesta ha expirado
+                            {{'suveys.expired' | translate}}
                     </div>
                 <div class="item">
                     <h2>{{survey.title}}</h2>
-                    <p>Creada por: {{survey.user}}</p>
+                    <p>{{'suveys.body' | translate}} {{survey.user}}</p>
                 </div> 
                 <div class="item item-image" ng-repeat="question in survey.questions">
                     <div class="item item-divider" >
                             {{question.question}}
                     </div>
                     <ion-list ng-repeat="answer in question.answers">
-                            <div class="item" id="answers">{{answer.content}}: {{answer.votes}} voto(s)</div>
+                            <div class="item" id="answers">{{answer.content}}: {{answer.votes}} {{'suveys.votes'|translate}}</div>
                     </ion-list>
                 </div>
             </div> 

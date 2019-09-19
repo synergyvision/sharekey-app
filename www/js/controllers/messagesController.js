@@ -10,6 +10,7 @@
             $scope.userKeys = $localStorage[uid + 'keys'];
             var token = $localStorage.userToken;
             $scope.form = false;
+            $scope.decryptedContent = $stateParams.content
 
             var filter = $filter('translate');
 
@@ -192,8 +193,10 @@
                 })
             }
 
-            $scope.passPopUp = function(){
+            $scope.passPopUp = function(id,content){
                 $scope.something = {};
+                $scope.something.id = id;
+                $scope.something.content = content;
                 var myPopup = $ionicPopup.show({
                   template: '<input type="password" ng-model="something.passphrase">',
                   title: filter('messages.ask_pass'),
@@ -201,14 +204,14 @@
                   buttons: [
                     { text: filter('messages.cancel') },
                     {
-                      text: filter('messages.cancel'),
+                      text: filter('messages.continue'),
                       type: 'button-positive',
                       onTap: function(e) {
                         if (!$scope.something.passphrase) {
                           //don't allow the user to close unless he enters wifi password
                           e.preventDefault();
                         } else {
-                            $scope.decrypt($scope.something.passphrase)
+                            $scope.decrypt($scope.something)
                         }
                       }
                     }
@@ -225,18 +228,16 @@
                 $ionicLoading.hide()
               };
 
-            $scope.decrypt = async (passphrase) => {
-                show()
+            $scope.decrypt = async (data) => {
                 var privateKey = getPrivateKey();
-                var privateKey = decryptKey(privateKey,passphrase);
-                var message = decriptMessage(privateKey,passphrase,$scope.data.content)
-                message.then(function (decrypted){
-                    $scope.data.content = decrypted;
-                    $scope.decrypted = true;
-                    hide()
-                    $scope.$apply();
-                }).catch(function (error){
+                try {
+                    var privateKey = decryptKey(privateKey,data.passphrase);
+                }catch(e){
                     alert(filter('messages.pass_error'))
+                }
+                var message = decriptMessage(privateKey,data.passphrase,data.content)
+                message.then(function (decrypted){
+                    $state.go('tab.readMessage',{'id': data.id,'content': decrypted})
                 })
             } 
 
@@ -299,15 +300,15 @@
                 })
             }
 
-            $scope.readMessage =  function (id, status){
+            $scope.readMessage =  function (id, status,content){
                 if (status == 'unread'){
                     updateStatus(id);
                 }
-                $state.go('tab.readMessage',{'id': id})
+                $scope.passPopUp(id,content)
             }
 
-            $scope.readOwnMessage = function (id){
-                $state.go('tab.readMessage',{'id': id})
+            $scope.readOwnMessage = function (id,content){
+                $scope.passPopUp(id,content)
             }
 
             $scope.publishMessage = function (){

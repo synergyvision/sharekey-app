@@ -4,13 +4,14 @@
         .module('starter')
         .controller('redesController', redesController);
   
-        redesController.$inject = ['$scope','$http','$localStorage','$state','$location','$stateParams','$rootScope','$window','appConstants'];
-        function redesController($scope,$http,$localStorage,$state,$location,$stateParams,$rootScope,$window,appConstants){
+        redesController.$inject = ['$scope','$http','$localStorage','$state','$location','$stateParams','$rootScope','$window','appConstants','$filter'];
+        function redesController($scope,$http,$localStorage,$state,$location,$stateParams,$rootScope,$window,appConstants,$filter){
             
+            var filter = $filter('translate')
             var token = $localStorage.userToken;
             var uid = $localStorage.uid;
             var username = $localStorage[uid + '-username'];
-            var preMessage = 'Verificando. Soy ' + username + ' en Sharekey ';
+            var preMessage = 'Soy ' + username + ' en Sharekey ';
             $scope.fbForm = false;
             $scope.twitterForm = false;
             $scope.githubForm = false;
@@ -67,7 +68,7 @@
                     }
                 }
                 if (valid == false){
-                alert('Ha ocurrido un error, validando el mensaje, revisa que el mensaje se subio en facebook o recarga la pagina para obtener otro mensaje')
+                alert(filter('networks.fb_error'))
                 }
             }
 
@@ -75,7 +76,7 @@
                 $http.post(appConstants.apiUrl + appConstants.config + uid + '/validateFacebook',
                     {headers: {'Authorization':'Bearer: ' + token}
                 }).then(function (response){
-                    alert('Se ha validado la información de facebook exitosamente')
+                    alert(filter('networks.fb_success'))
                     $state.reload();
                 }).catch(function (error){
                     console.log(error)
@@ -106,7 +107,7 @@
                     {headers: {'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8','Authorization':'Bearer: ' + token}
                 }).then(function (response){
                     if (response.data.feed.errors){
-                        alert('No pudimos encontrar tu usuario por favor verifícalo')
+                        alert(filter('networks.tw_user_404'))
                     }else{
                         validateTweet(response.data.feed)
                     }
@@ -124,7 +125,7 @@
                     }
                 }
                 if (valid == false){
-                    alert('Ha ocurrido un error validando el mensaje, revisa que el mensaje se subio en twitter o recarga la pagina para obtener otro mensaje')
+                    alert(filter('networks.tw_error'))
                 }
             }
 
@@ -132,7 +133,7 @@
                 $http.post(appConstants.apiUrl + appConstants.config + uid + '/validateTwitter',
                     {headers: {'Authorization':'Bearer: ' + token}
                 }).then(function (response){
-                    alert('Se ha validado la información de twitter exitosamente')
+                    alert(filter('tw_success'))
                     $state.reload();
                 }).catch(function (error){
                     console.log(error)
@@ -164,7 +165,6 @@
             }
 
             $scope.getToken = function (){
-                console.log($scope.username,$scope.password)
                 var password = encryptPassword($scope.password)
                 password.then(function (password){
                     var loginGit = $.param({
@@ -177,7 +177,7 @@
                         console.log(response.data)
                         $state.reload()
                     }).catch(function (error){
-                        alert('Hubo un error creando el token verifique sus datos')
+                        alert(filter('networks.gh_error'))
                     })
                 })
             } 

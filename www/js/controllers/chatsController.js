@@ -4,8 +4,8 @@
         .module('starter')
         .controller('chatsController', chatsController)
 
-        chatsController.$inject = ['$scope','$http','$localStorage','$state','$stateParams','$location','appConstants','$ionicPopup','$ionicLoading'];
-        function chatsController($scope,$http,$localStorage,$state,$stateParams,$location,appConstants,$ionicPopup, $ionicLoading){
+        chatsController.$inject = ['$scope','$http','$localStorage','$state','$stateParams','$location','appConstants','$ionicPopup','$ionicLoading','$filter'];
+        function chatsController($scope,$http,$localStorage,$state,$stateParams,$location,appConstants,$ionicPopup, $ionicLoading,$filter){
             var uid = $localStorage.uid
             var token = $localStorage.userToken;
             $scope.uid =$localStorage.uid;
@@ -16,6 +16,8 @@
             $scope.userChats = [];
             var username =$localStorage[uid +'-username'];
             $scope.name = [];
+
+            var filter = $filter('translate')
             
             $scope.getUserChats = async () => {
             $http.get( appConstants.apiUrl + appConstants.profile +uid+ '/chats',{headers: {'Authorization':'Bearer: ' + token} 
@@ -86,7 +88,7 @@
                         $state.go('tab.chatsMessages',{'id_chat': response.data.Id});
                     }).catch(function (error){
                         console.log(error);
-                        alert('Error en la creacion de chat intenta de nuevo')
+                        alert(filter('chats.new_chat_error'))
                 })
             }
 
@@ -267,7 +269,6 @@
                     return decrypted
                 })
                 }catch(error){
-                    alert('Error: Verifique que su par de llave y passphrase sean correctos')
                 }  
             }
 
@@ -299,7 +300,6 @@
                     var sent = new Date(messages[i].data.date_sent);
                     messages[i].sent = sent.toLocaleString();
                 }
-                hide();
                 return messages
             } 
 
@@ -310,7 +310,6 @@
                 }).catch(function (error){
                     if (error){
                         if (error.status == 401){
-                            alert('Su sesion ha vencido')
                             $state.go('login');
                         }
                         else{
@@ -327,6 +326,10 @@
                     $scope.show = true;
                     $scope.chatMessages = decripted;
                     $scope.$apply();
+                }).catch(function(error){
+                    alert(filter('chats.pass_error'))
+                    hide();
+                    console.log(error)
                 })
             }
 
@@ -334,12 +337,12 @@
                 $scope.passphrase = {};
                 var myPopup = $ionicPopup.show({
                 template: '<input type="password" ng-model="passphrase.data">',
-                title: 'Inserta clave de chat',
+                title: filter('chats.ask_pass'),
                 scope: $scope,
                 buttons: [
-                    { text: 'Cancelar' },
+                    { text: filter('chats.cancel') },
                     {
-                    text: '<small>Continuar</small>',
+                    text: filter('chats.continue'),
                     type: 'button-positive',
                     onTap: function(e) {
                         if (!$scope.passphrase.data) {

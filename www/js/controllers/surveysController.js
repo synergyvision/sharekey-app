@@ -28,7 +28,6 @@
                     $scope.surveys = response.data.data;
                     $localStorage.surveys = $scope.surveys;
                 }).catch(function (error){
-                    alert('Su sesión ha vencido')
                     $state.go('login')
                     console.log(error)
                 })

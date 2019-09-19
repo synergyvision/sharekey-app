@@ -1,7 +1,7 @@
-<ion-view view-title="Contactos" cache-view="false">
+<ion-view view-title="{{'contacts.title' | translate}}" cache-view="false">
     <ion-content ng-controller="contactsController">
             <div id="friendRequest" class="item item-divider">
-                <h2>Solicitudes de amistad</h2>
+                <h2>{{'contacts.requests' | translate}}</h2>
             </div>
         <div class="list social-list" ng-init="getFriendRequest()">
             <a class="item item-thumbnail-left item-text-wrap"  ng-repeat="request in requests">
@@ -9,7 +9,7 @@
                 <img ng-if="!request.picture" class="animated zoomIn" src="../../img/default-user-icon-8.jpg">
                 <h2 >{{request.name}} {{request.lastname}}</h2>
                 </h2>
-                <p class="animated fadeIn">Te ha enviado una solicitud de amistad</p>
+                <p class="animated fadeIn">{{'contacts.request_body' | translate}}</p>
                 <button class="button button-small button-outline button-balanced" ng-click="acceptRequest(request.requestId)">
                         <i class="icon ion-checkmark"></i>
                 </button>
@@ -19,7 +19,7 @@
             </a>
         </div>
         <div id="friendRequest" class="item item-divider">
-                <h2>Contactos</h2>
+                <h2>{{'contacts.title' | translate}}</h2>
         </div>
         <div class="list social-list" ng-init="getContacts()">
                 <a class="item item-thumbnail-left item-text-wrap"  ng-repeat="contact in contacts">
@@ -29,7 +29,7 @@
                     </h2>
                     <p class="animated fadeIn">{{contact.bio}}</p>
                     <button class="button button-small button-outline button-dark" ng-click="goProfile(contact.id)">
-                            Ver perfil
+                            {{'contacts.profile_button' | translate}}
                     </button>
                 </a>
             </div>

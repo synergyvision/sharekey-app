@@ -4,10 +4,13 @@
         .module('starter')
         .controller('keysController', keysController);
   
-        keysController.$inject = ['$scope','$http','$localStorage','$state','$window','$sessionStorage','appConstants','$ionicPopup','$ionicHistory'];
-        function keysController($scope,$http,$localStorage,$state,$window,$sessionStorage,appConstants,$ionicPopup,$ionicHistory){
+        keysController.$inject = ['$scope','$http','$localStorage','$state','$window','$sessionStorage','appConstants','$ionicPopup','$ionicHistory','$filter'];
+        function keysController($scope,$http,$localStorage,$state,$window,$sessionStorage,appConstants,$ionicPopup,$ionicHistory,$filter){
             var uid = $localStorage.uid;
             var token = $localStorage.userToken;
+
+            var filter = $filter('translate');
+
             if ($localStorage[uid + 'keys']){
               $scope.userKeys = $localStorage[uid + 'keys']
             }else{
@@ -70,8 +73,8 @@
               }).catch(function (error){
                   if (error.status == 401){
                     var alertPopup = $ionicPopup.alert({
-                      title: 'Error',
-                      template: 'Su sesión ha vencido'
+                      title: filter('keys.error_title'),
+                      template: filter('keys.expired_error')
                     });
                     $state.go('login');
                   }else{
@@ -159,8 +162,8 @@
             //function that generates a new key pair
             $scope.generateKeys =  function (){
                     $scope.myPopup = $ionicPopup.show({
-                      title: 'Información',
-                      template: 'Generando llaves <ion-spinner icon="spiral"></ion-spinner>'
+                      title: filter('keys.generating'),
+                      template: '<ion-spinner icon="spiral"></ion-spinner>'
                     });
                     var uid = $localStorage.uid;
                     var options = {
@@ -217,12 +220,13 @@
               var deleteRequest = $.param({
                 name: name
               })
-        
-              $http.delete(appConstants.apiUrl + appConstants.profile + $localStorage.uid + '/deleteKey',deleteRequest,
-                {headers: {'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8','Authorization':'Bearer: ' + token}
+              $http({url:appConstants.apiUrl + appConstants.profile + $localStorage.uid + '/deleteKey',
+              method:"DELETE",
+              data:deleteRequest,
+              headers: {'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8','Authorization':'Bearer: ' + token}
               }).then(function (response){
                     if (response.status == 200){
-                      alert('Se ha borrado una llave');
+                      alert(filter('keys.key_deleted'));
                       localDelete(name)
                       $scope.checkKeys();
                     }
@@ -239,7 +243,7 @@
               $scope.data = {};
               var myPopup = $ionicPopup.show({
                 template: '<input type="password" ng-model="data.phraseRecovery">',
-                title: 'Introduzca su frase de 12 palabras para la llave',
+                title: 'Introduzca su frase de recuperacion',
                 scope: $scope,
                 buttons: [
                   { text: 'Cancelar' },
@@ -294,12 +298,12 @@
               $scope.data = {}
               var myPopup = $ionicPopup.show({
                 template: '<input type="password" ng-model="data.appKey">',
-                title: 'Introduzca su clave de la llave',
+                title: filter('keys.ask_pass'),
                 scope: $scope,
                 buttons: [
-                  { text: 'Cancelar' },
+                  { text: filter('keys.cancel') },
                   {
-                    text: '<b>Activar</b>',
+                    text: filter('keys.activate'),
                     type: 'button-positive',
                     onTap: function(e) {
                       if (!$scope.data.appKey) {
@@ -316,29 +320,46 @@
         
             $scope.checkWords = function (phraseRecovery){
               var words = translate(phraseRecovery)
-              var bytes  = CryptoJS.AES.decrypt($localStorage.recoveryKey.PrivKey,words);
-              var priv = bytes.toString(CryptoJS.enc.Utf8);
-              if (priv != ""){
-                  $localStorage.recoveryKey.PrivKey = priv;
-                  appKeyPopUp();
-              }else{
-                alert("La clave insertada no es correcta")
+              try{
+                var bytes  = CryptoJS.AES.decrypt($localStorage.recoveryKey.PrivKey,words);
+                var priv = bytes.toString(CryptoJS.enc.Utf8);
+                $localStorage.recoveryKey.PrivKey = priv;
+                appKeyPopUp();
+              }catch(e){
+                alert(filter('keys.recovery_error'));
               }
-              
             }
+
+            var encryptContent = async (privkey,pubkey,passphrase) =>{
+              const privKeyObj = (await openpgp.key.readArmored(privkey)).keys[0]
+              await privKeyObj.decrypt(passphrase)
+              const options = {
+                  message: openpgp.message.fromText('hello there'),      
+                  publicKeys: (await openpgp.key.readArmored(pubkey)).keys                              
+              }
+        
+              return openpgp.encrypt(options).then(ciphertext => {
+                var encrypted = ciphertext.data 
+                return encrypted
+        
+              })
+            }    
         
             $scope.newPassword = function (appKey){
               var words = translate(appKey)
               if (words){
-                var localPrivateKey = encryptKeys($localStorage.recoveryKey.PrivKey,words)
-                var localPrivateKey = localPrivateKey.toString();
-                localStorekeys($localStorage.recoveryKey.PubKey,localPrivateKey,$localStorage.recoveryKey.name,$localStorage.recoveryKey.default);
-                alert("LLave activada exitosamente");
-                delete $localStorage.recoveryKey
-                $state.reload();
-              }else{
-                alert('La clave de aplicacion es incorrecta')
-              }  
+                var a = encryptContent($localStorage.recoveryKey.PrivKey,$localStorage.recoveryKey.PubKey,words)
+                a.then(function (){
+                  var localPrivateKey = encryptKeys($localStorage.recoveryKey.PrivKey,words)
+                  var localPrivateKey = localPrivateKey.toString();
+                  localStorekeys($localStorage.recoveryKey.PubKey,localPrivateKey,$localStorage.recoveryKey.name,$localStorage.recoveryKey.default);
+                  alert("LLave activada exitosamente");
+                  delete $localStorage.recoveryKey
+                  $state.reload();
+                }).catch(function(error){
+                  alert(filter('keys.pass_error'))
+                })
+              }
             }
             $scope.newKey = function (){
               $state.go('tab.newKey')

@@ -143,6 +143,9 @@
                 controller: 'messagesController',
                 css: '../../css/ionic.app.min.css'
                 }
+            },
+            params: {
+                content: null 
             }
         })   
         .state('tab.surveys',{

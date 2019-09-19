@@ -5,16 +5,15 @@
                         <h2 ng-if="data.sender">{{'messages.from' | translate}} {{data.sender}}</h2>
                         <h2 ng-if="data.r_username">{{'messages.to' | translate}} {{data.r_username}}</h2>
                         <p>{{data.sent}}</p>
+                        <p>
+                                <a class="subdued" ng-click="deleteMessage()">{{'messages.delete' | translate}}</a>
+                                <a class="subdued" ng-if="data.publish == 'true' && decrypted == true" ng-click="publishMessage()">{{'messages.publish' | translate}}</a>
+                        </p>
                     </div>
                     
                     <div class="item item-body">
                         <p>
-                        {{data.content}}
-                        </p>
-                        <p>
-                        <a class="subdued" ng-click="passPopUp()">{{'messages.see' | translate}}</a>
-                        <a class="subdued" ng-click="deleteMessage()">{{'messages.delete' | translate}}</a>
-                        <a class="subdued" ng-if="data.publish == 'true' && decrypted == true" ng-click="publishMessage()">{{'messages.publish' | translate}}</a>
+                            {{decryptedContent}}
                         </p>
                     </div>    
                 </div>

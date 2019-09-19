@@ -1,25 +1,25 @@
-<ion-view view-title="Nueva llave">
+<ion-view view-title="{{'keys.newKey_title' | translate}}">
         <ion-content ng-controller="keysController">
             <div class="list" ng-init="generarPalabras()">
                 <form ng-submit="generateKeys()">
                 <label class="item item-input">
-                    <span class="input-label">Nombre llave</span>
+                    <span class="input-label">{{'keys.keyname' | translate}}</span>
                     <input type="text" id="keyname" ng-model="$parent.newName" required>
                 </label>
                 <label class="item item-input">
-                    <span class="input-label">Nombre usuario</span>
+                    <span class="input-label">{{'keys.username' | translate}}</span>
                     <input type="text" ng-model="$parent.name" id="name" required>
                 </label>
                 <label class="item item-input">
-                    <span class="input-label">Correo</span>
+                    <span class="input-label">{{'keys.correo' | translate}}</span>
                     <input type="text" ng-model="email" id="email" required>
                 </label>
                 <label class="item item-input">
-                    <span class="input-label">Passphrase</span>
+                    <span class="input-label">{{'keys.pass' | translate}}</span>
                     <input type="text" ng-model="passphrase" id="passphrase" required>
                 </label>
                 <div class="item item-divider">
-                    Clave
+                    {{'keys.words' | translate}}
                 </div>
                 <div class="card">
                     <div class="item item-text-wrap">
@@ -27,10 +27,10 @@
                     </div>
                 </div>
                 <label class="item item-input">
-                    <span class="input-label">Frase clave</span>
+                    <span class="input-label">{{'keys.keyphrase' | translate}}</span>
                     <input type="text" id="phrase" ng-model="phrase" required>
                 </label>
-                <button class="button button-full button-positive" type="submit">Generar</button>
+                <button class="button button-full button-positive" type="submit">{{'keys.generate' | translate}}</button>
                 </form>  
             </div>
         </ion-content>    

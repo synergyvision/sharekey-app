@@ -1,9 +1,9 @@
-<ion-view view-title="Tus redes" cache-view="false">
+<ion-view view-title="{{'networks.title' | translate}}" cache-view="false">
     <ion-content ng-controller="redesController">
             <div id="fb-root"></div>    
             <ul class="list" ng-init="getSocials()">
              <li ng-if="validFacebook == false" class="item item-toggle">
-                Facebook
+                {{'networks.facebook' | translate}}
                 <label class="toggle toggle-positive">
                     <input type="checkbox" ng-click="toggleFormFb()"> 
                     <div class="track">
@@ -13,13 +13,13 @@
              </li>
              <a  ng-if="validFacebook == true" class="item item-icon-right">
                     <i class="icon ion-checkmark-circled" style="color: blue"></i>
-                    Facebook
+                    {{'networks.facebook' | translate}}
             </a>
              <li class="item" ng-show="fbForm">       
-                <button class="button button-positive" ng-click="loginFacebook()">Facebook</button>
+                <button class="button button-positive" ng-click="loginFacebook()">{{'networks.facebook' | translate}}</button>
             </li>
              <li ng-if="validTwitter == false" class="item item-toggle">
-                    Twitter
+                {{'networks.twitter' | translate}}
                 <label class="toggle toggle-calm">
                     <input type="checkbox" ng-click="toggleFormTw()">
                     <div class="track">
@@ -29,17 +29,17 @@
              </li>
              <a  ng-if="validTwitter == true" class="item item-icon-right">
                     <i class="icon ion-checkmark-circled" style="color: aqua"></i>
-                    Twitter
+                    {{'networks.twitter' | translate}}
             </a>
              <li class="item" ng-if="twitterForm">
                  <form>
                     <label class="item item-input item-stacked-label" ng-init="showTwitterMessage()">
-                            <span class="input-label">Usuario en twitter</span>
+                            <span class="input-label">{{'networks.tw_username' | translate}}</span>
                             <input type="text" ng-model="$parent.twitterUsername">
                     </label>
                     <div class="card">
                             <div class="item item-text-wrap">
-                                Para validar su twitter coloque el siguiente mensaje en su timeline y oprima verificar
+                                {{'networks.tw_message' | translate}}
                             </div>
                     </div>
                     <div class="card">
@@ -47,15 +47,15 @@
                                  "{{validationMessage}}"
                             </div>
                     </div>
-                     <button class="button button-positive" ng-click="getTwitterFeed()">Verificar</button>
+                     <button class="button button-positive" ng-click="getTwitterFeed()">{{'networks.verify' | translate}}</button>
                 </form>
              </li>
              <a  ng-if="validGitHub == true" class="item item-icon-right">
                     <i class="icon ion-checkmark-circled"></i>
-                    Github
+                    {{'networks.github' | translate}}
             </a>
              <li ng-if="validGitHub == false" class="item item-toggle">
-                    Github
+                    {{'networks.github' | translate}}
                     <label class="toggle toggle-dark">
                         <input type="checkbox" ng-click="toggleFormGh()">
                         <div class="track">
@@ -65,14 +65,14 @@
              </li>
              <li class="item" ng-if="githubForm">
                 <label class="item item-input item-stacked-label" ng-init="showTwitterMessage()">
-                        <span class="input-label">Usuario en Github</span>
+                        <span class="input-label">{{'networks.gh_user' | translate}}</span>
                         <input type="text" ng-model="$parent.username">
                 </label>
                 <label class="item item-input item-stacked-label" ng-init="showTwitterMessage()">
-                    <span class="input-label">Contraseña</span>
+                    <span class="input-label">{{'networks.gh_pass' | translate}}</span>
                     <input type="text" ng-model="$parent.password">
                 </label>
-                <button class="button button-positive" id="gitButton" ng-click="getToken()">Continuar</button>
+                <button class="button button-positive" id="gitButton" ng-click="getToken()">{{'networks.continue' | translate}}</button>
              </li>
             </ul>
     </ion-content>

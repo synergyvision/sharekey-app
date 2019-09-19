@@ -1,4 +1,4 @@
-<ion-view view-title="Perfil" cache-view="false">
+<ion-view view-title="{{'publications.title'| translate}}" cache-view="false">
   <ion-content>
     <div class="list">
       <div class="list card" style="margin-bottom:0" ng-init="getUserData()">
@@ -24,7 +24,7 @@
           </div>  
           <div ng-if="user_id == uid" class="item">
               <button class="button button-block button-positive" ng-click="openModal(1)">
-                  Editar Perfil
+                  {{'publications.edit_profile_button' | translate}}
               </button>
           </div>
       </div>
@@ -35,7 +35,7 @@
               <img ng-if="feedback.picture" ng-src="{{feedback.picture}}">
               <img ng-if="!feedback.picture" src="../../img/default-user-icon-8.jpg">
 
-              <h3>{{feedback.data.sender}} te ha enviado:</h3>
+              <h3>{{feedback.data.sender}} {{'publications.feed_body' | translate}}</h3>
               <p>{{feedback.data.timestamp}}</p>
             </div>
             <div class="item item-body">
@@ -47,7 +47,7 @@
                   <div ng-if="feedback.data.likes >= 1">
                     <p>{{feedback.data.likes}}</p>
                   </div>
-                  <a class="button button-clear button-positive" ng-click="likeFeedback(feedback.id)"><i class="icon ion-thumbsup"></i> me gusta</a>
+                  <a class="button button-clear button-positive" ng-click="likeFeedback(feedback.id)"><i class="icon ion-thumbsup"></i> {{'publications.like' | translate}}</a>
                 </div>
               </p>
             </div>
@@ -56,41 +56,41 @@
   <script id="modifyProfile.html" type="text/ng-template">
     <ion-modal-view>
         <ion-header-bar class="bar bar-header bar-positive">
-            <h1 class="title">Modificar perfil</h1>
-            <button class="button button-clear button-primary" ng-click="closeModal(1)">Cancelar</button>
+            <h1 class="title">{{'personalInfo.title' | translate}}</h1>
+            <button class="button button-clear button-primary" ng-click="closeModal(1)">{{'personalInfo.cancel' | translate}}</button>
           </ion-header-bar>
           <ion-content class="padding" ng-controller="profileController">
               <div class="list">
                   <div class="item item-avatar">
                     <img ng-if="imgSrc" data-ng-src="{{imgSrc}}">
                     <img ng-if="!imgSrc" src="../img/default-user-icon-8.jpg">
-                    <p>Cambiar imagen</p>
-                    <button class="button button-small button-positive" accept="image/*" ng-click="takePicture()">Seleccionar</button>
+                    <p>{{'personalInfo.change_picture' | translate}}</p>
+                    <button class="button button-small button-positive" accept="image/*" ng-click="takePicture()">{{'personalInfo.select' | translate}}</button>
                   </div>
               </div>
               <div class="list" ng-init="requestData()">
                 <form ng-submit="updateData()">
                   <label class="item item-input">
-                    <span class="input-label">Nombre</span>
+                    <span class="input-label">{{'personalInfo.name' | translate}}</span>
                     <input ng-model="name" type="text">
                   </label>
                   <label class="item item-input">
-                    <span class="input-label">Apellido</span>
+                    <span class="input-label">{{'personalInfo.lastname' | translate}}</span>
                     <input ng-model="lastname" type="text">
                   </label>
                   <label class="item item-input">
-                    <span class="input-label">Usuario</span>
+                    <span class="input-label">{{'personalInfo.user' | translate}}</span>
                     <input ng-model="username" type="text">
                   </label>
                   <label class="item item-input">
-                      <span class="input-label">Biografía</span>
+                      <span class="input-label">{{'personalInfo.bio' | translate}}</span>
                       <input ng-model="bio" type="text">
                   </label>
                   <label class="item item-input">
-                      <span class="input-label">Teléfono</span>
+                      <span class="input-label">{{'personalInfo.phone' | translate}}</span>
                       <input ng-model="phone" type="tel">
                   </label>
-                  <button class="button button-full button-positive" type="submit">Actualizar</button>
+                  <button class="button button-full button-positive" type="submit">{{'personalInfo.update' | translate}}</button>
                 </form>  
               </div>
           </ion-content>    
@@ -99,26 +99,26 @@
   <script id="configMenu.html" type="text/ng-template">
     <ion-modal-view>
         <ion-header-bar class="bar bar-header bar-positive">
-            <h1 class="title">Configuración</h1>
-            <button class="button button-clear button-primary" ng-click="closeModal(2)">Cancelar</button>
+            <h1 class="title">{{'configMenu.title' | translate}}</h1>
+            <button class="button button-clear button-primary" ng-click="closeModal(2)">{{'configMenu.cancel' | translate}}</button>
           </ion-header-bar>
           <ion-content class="padding" ng-controller="profileController">
             <div class="list">
               <a class="item item-icon-left" ng-click="goToKeys()">
                 <i class="icon ion-key"></i>
-                Llaves
+                {{'configMenu.keys' | translate}}
               </a>  
               <a class="item item-icon-left" ng-click="goToContacts()">
                 <i class="icon ion-aperture"></i>
-                Contactos
+                {{'configMenu.contacts' | translate}}
               </a>   
               <a class="item item-icon-left" ng-click="goToNetworks()">
                 <i class="icon ion-network"></i>
-                Redes
+                {{'configMenu.networks' | translate}}
               </a>
               <a class="item item-icon-left" ng-click="logout()">
                   <i class="icon ion-log-out"></i>
-                  Cerrar sesión
+                  {{'configMenu.logout' | translate}}
                 </a>
             </div>
           </ion-content>    

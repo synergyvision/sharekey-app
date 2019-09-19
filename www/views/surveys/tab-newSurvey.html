@@ -1,19 +1,19 @@
-<ion-view view-title="Nueva Encuesta">
+<ion-view view-title="{{'suveys.new_survey' | translate}}">
         <ion-content ng-controller="surveysController">
                 <div class="list">
                     <label id="title" class="item item-input">
-                            <span class="input-label">Titulo</span>
+                            <span class="input-label">{{'suveys.new_title' | translate}}</span>
                             <input type="text" ng-model="surveyTitle" required>
                     </label>
                     <label id="question" class="item item-input">
-                        <input type="text" placeholder="Pregunta 1" ng-model="question.title" value="{{question.title}}" required>
+                        <input type="text" placeholder="{{'suveys.question' |translate}}" ng-model="question.title" value="{{question.title}}" required>
                     </label>
                     <label id="newAnswers" class="item item-input" ng-repeat="answer in answers">
-                            <input type="text" placeholder="Respuesta" ng-model="answer.content" value="" required>
+                            <input type="text" placeholder="{{'suveys.answer_placeholder' |translate}}" ng-model="answer.content" value="" required>
                     </label>
                     <label class="item item-input item-select">
                             <div class="input-label">
-                              Expiración (días)
+                              {{'suveys.expires_in' | translate}}
                             </div>
                             <select ng-model="expires" required>
                               <option>1</option>
@@ -26,8 +26,8 @@
                             </select>
                     </label>
                 </div>
-                <button id="addLenght" class="button button-positive button-small icon ion-plus-circled"  ng-click="addLenght()"></button>
-                <button type="button" ng-click="createSurvey()" class="button button-calm">Crear</button>
+                <button id="addLenght" class="button button-positive button-small icon ion-plus-circled m-1"  ng-click="addLenght()"></button>
+                <button type="button" ng-click="createSurvey()" class="button button-calm">{{'suveys.create' |translate}}</button>
         </ion-content>
     </ion-view>
       

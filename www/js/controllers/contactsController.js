@@ -4,10 +4,11 @@
         .module('starter')
         .controller('contactsController', contactsController);
   
-        contactsController.$inject = ['$scope','appConstants','$localStorage','$http','$state'];
-        function contactsController($scope,appConstants,$localStorage,$http,$state){
+        contactsController.$inject = ['$scope','appConstants','$localStorage','$http','$state','$filter'];
+        function contactsController($scope,appConstants,$localStorage,$http,$state,$filter){
             var uid = $localStorage.uid;
             var token = $localStorage.userToken;
+            var translate = $filter('translate')
           
               $scope.getFriendRequest = function (){
                 $http({
@@ -22,7 +23,6 @@
                 }).catch(function (error){
                     console.log(error);
                     if (error.status == 401){
-                      alert('Su sesion ha vencido por inactividad')
                       $state.go('login');
                     }
                 })
@@ -52,10 +52,10 @@
                     console.log(response.data)
                     if (response.data.status == 200){
                         if (response.data.accepted == true){
-                            alert('Has aceptado la solicitud de amistad')
+                            alert(translate('contacts.accept_requests'))
                             $state.reload();
                         }else{
-                            alert('Has rechazado la soliciud');
+                            alert(translate('contacts.reject_requests'));
                             $state.reload();
                         }
                     }
@@ -80,14 +80,13 @@
                   }
               }).catch(function (error){
                   if (error.status == 401){
-                    alert('Su sesion ha vencido')
+                    //alert('Su sesion ha vencido')
                     $state.go('login');
                   }
               })
            
         }
         $scope.goProfile = function(id){
-            console.log(id)
             $state.go('tab.account',{'user_id': id})
         }
 

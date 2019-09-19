@@ -1,7 +1,7 @@
 <ion-view view-title="{{infoChat.title}}" ng-controller="chatsController" ng-init="chatInfo()" cache-view="false">
     <ion-header-bar class="bar-subheader" >
 
-            <button class="button button-clear button-positive" ng-click="savePop()">Ver</button>
+            <button class="button button-clear button-positive" ng-click="savePop()">{{'chats.see' | translate}}</button>
     </ion-header-bar>
     <ion-content ng-init="getMessages()">
     <div ng-repeat="message in chatMessages | orderBy: 'this.data.date_sent'" >
@@ -9,7 +9,7 @@
             <div class="item item-text-wrap" style="background-color: cornflowerblue;">
                     <p id="messageContent">
                         {{message.data.username}}<br>
-                        <span ng-if="!message.decrypted">Mensaje encriptado</span>
+                        <span ng-if="!message.decrypted">{{'chats.encrypted' | translate}}</span>
                         <span ng-if="message.decrypted">{{message.data.content}}</span>
                         <br>
                         <small id="data">{{message.sent}}</small>
@@ -20,7 +20,7 @@
             <div class="item item-text-wrap">
                 <p>
                     {{message.data.username}}<br>
-                    <span ng-if="!message.decrypted">Mensaje encriptado</span>
+                    <span ng-if="!message.decrypted">{{'chats.encrypted' | translate}}</span>
                     <span ng-if="message.decrypted">{{message.data.content}}</span>
                     <br>
                     <small id="data">{{message.sent}}</small>
