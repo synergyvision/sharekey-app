@@ -1,8 +1,9 @@
 <ion-view view-title="{{infoChat.title}}" ng-controller="chatsController" ng-init="chatInfo()" cache-view="false">
-    <ion-header-bar class="bar-subheader" >
-
-            <button class="button button-clear button-positive" ng-click="savePop()">{{'chats.see' | translate}}</button>
-    </ion-header-bar>
+        <ion-nav-buttons side="right">
+                <button class="button" ng-click="savePop()" class="button button-positive">
+                    <i class="icon ion-eye"></i>
+                </button>
+        </ion-nav-buttons>
     <ion-content ng-init="getMessages()">
     <div ng-repeat="message in chatMessages | orderBy: 'this.data.date_sent'" >
         <div class="card" id="sentMessage" ng-if="message.data.id_sender == uid">  

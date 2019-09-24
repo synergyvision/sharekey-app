@@ -1,4 +1,9 @@
 <ion-view view-title="{{'chats.title' | translate}}" cache-view="false">
+    <ion-nav-buttons side="right">
+        <button class="button" ui-sref="tab.newChat" class="button button-positive">
+            <i class="icon ion-plus-circled"></i>
+        </button>
+</ion-nav-buttons>
   <ion-content ng-controller="chatsController">
     <ion-list ng-init="getUserChats()">
       <ion-item id="chats" ng-click="getChat(chat.chatID)" ng-repeat="chat in userChats | filter: chatSearch">
@@ -8,8 +13,5 @@
           </ion-option-button>
       </ion-item>  
     </ion-list>  
-    <div class="col col-12" id="newChatl">
-        <button id="newchat" class="button button-positive icon ion-plus-circled" ui-sref="tab.newChat"></button>
-    </div>
   </ion-content>
 </ion-view>

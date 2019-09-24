@@ -3,11 +3,11 @@
         "welcome": "Inicio de sesión",
         "email": "Correo",
         "password": "Contraseña",
-        "login_button": "Continuar",
+        "login_button": "Ingresar",
         "forgot_password": "¿Olvidé mi contraseña?",
         "register": "¿Usuario nuevo? Regístrate",
-        "password_error": "Su contraseña es incorrecta.",
-        "email_error": "Su correo es inválido.",
+        "password_error": "Sus credenciales son inválidas.",
+        "email_error": "Sus credenciales son inválidas..",
         "error": "Ha ocurrido un error intentelo mas tarde.",
         "error_title": "Error"
     },
@@ -17,7 +17,7 @@
         "button_go": "Continuar",
         "button_back": "Regresar",
         "success": "Se ha enviado un correo de recuperación a tu cuenta.",
-        "error_not_found": "Su correo es invalido o no se encuentra registrado.",
+        "error_not_found": "Su dirección de correo es inválida o no se encuentra registrada",
         "title": "Información",
         "error": "Error"
     },
@@ -33,7 +33,7 @@
         "password2": "Repetir contraseña",
         "password_error": "Las contraseñas deben coincidir",
         "user": "Usuario",
-        "phone": "Telefono",
+        "phone": "Teléfono",
         "button_continue": "Registrar",
         "button_back": "Regresar",
         "success": "Su usuario se ha creado exitosamente.",
@@ -56,20 +56,20 @@
         "new_post_placeholder": "¿En qué estás pensando?",
         "new_post_button": "Publicar",
         "comments_link": "Comentarios",
-        "private_post": "Post Privado.",
-        "post_link": "Ver post",
+        "private_post": "Publicación privada",
+        "post_link": "Ver publicación",
         "edit_post_button": "Editar",
         "comment_placeholder": "Agrega un comentario",
         "edit_comment_button": "Editar",
         "decrypt_button": "Continuar",
         "edit": "Editar",
-        "error_passphrase": "Error: verifique que su llave y passphrase sean correctos.",
+        "error_passphrase": "Error, verifique que la llave y la clave sean correctos",
         "delete": "Borrar",
         "see": "Ver",
         "edit_text": "Edita tu post",
         "edit_comment": "Edita tu comentario",
         "cancel": "Cancelar",
-        "ask_pass": "Introduzca su clave del post."
+        "ask_pass": "Introduzca la clave."
     },
     "personalInfo":{
         "title": "Modificar perfil",
@@ -89,7 +89,7 @@
     },
     "publications":{
         "title": "Perfil",
-        "expired_error": "Su sesion ha vencido",
+        "expired_error": "Su sesión ha vencido",
         "edit_profile_button": "Editar perfil",
         "feed_body": "te ha enviado:",
         "like": "me gusta"
@@ -98,24 +98,24 @@
         "title": "Llaves",
         "activate": "Activar",
         "newKey_title": "Nueva Llave",
-        "keyname": "Nombre llave",
-        "username": "Nombre Usuario",
+        "keyname": "Nombre de la llave",
+        "username": "Nombre del usuario",
         "email": "Correo",
         "pass": "Passphrase",
         "words": "Clave",
-        "keyphrase": "Frase clave",
+        "keyphrase": "Frase de recuperación",
         "generate": "Generar",
         "error_title": "Error",
-        "expired_error": "Su sesion ha vencido",
+        "expired_error": "Su sesión ha vencido",
         "info_title": "Información",
         "generating": "Generando llaves",
         "key_deleted": "Llave borrada",
-        "recovery": "Introduzca su frase de recuperacion.",
+        "recovery": "Para activar su clave, introduzca su frase de recuperación.",
         "cancel": "Cancelar",
         "continuar": "Activar",
         "ask_pass": "Introduzca su clave de la llave.",
         "pass_error": "La clave insertada no es correcta.",
-        "recovery_error": "La clave de aplicacion es incorrecta"
+        "recovery_error": "Su clave de recuperación es incorrecta."
 
     },
     "networks":{
@@ -123,7 +123,7 @@
         "facebook": "Facebook",
         "twitter": "Twitter",
         "github": "Github",
-        "tw_message": "Para validar su twitter coloque el siguiente mensaje en su timeline y oprima verificar.",
+        "tw_message": "Para validar su cuenta de twitter publique el siguiente mensaje y presione verificar.",
         "tw_username": "Usuario en twitter",
         "gh_user": "Usuario en github",
         "gh_pass": "Contraseña",
@@ -132,7 +132,7 @@
         "fb_success": "Se ha validado la información de facebook exitosamente.",
         "tw_user_404": "No pudimos encontrar tu usuario por favor verifícalo.",
         "tw_error": "Ha ocurrido un error validando el mensaje, revisa que el mensaje se subio en twitter o recarga la pagina para obtener otro mensaje.",
-        "tw_success": "Se ha validado la información de twitter exitosamente.",
+        "tw_success": "Se ha validado la cuenta de twitter exitosamente",
         "gh_error": "Hubo un error verifique sus datos.",
         "fb_error": "Ha ocurrido un error, validando el mensaje, revisa que el mensaje se subio en facebook o recarga la pagina para obtener otro mensaje."
 
@@ -154,15 +154,15 @@
         "title_read": "Leer mensaje",
         "delete": "Borrar",
         "see": "Ver",
-        "publish": "Publicar",
+        "publish": "Públicar",
         "empty_error": "No puede mandar un mensaje en blanco.",
         "send_success": "Su mensaje se ha enviado.",
         "ask_pass": "Introduzca su clave para ver el mensaje.",
         "cancel": "Cancelar",
         "continue": "Continuar",
-        "pass_error": "Verifique que su llave y passphrase sean correctas.",
+        "pass_error": "Verifique que la llave y la clave sean correctas.",
         "deleted": "Se ha borrado un mensaje.",
-        "publish_success": "Su feedback ha sido publicado."
+        "publish_success": "Su mensaje se ha publicado exitosamente."
 
     },
     "chats":{
@@ -175,7 +175,7 @@
         "chatKey": "Llave",
         "create": "Crear",
         "new_chat_error": "Error en la creacion de chat intenta de nuevo.",
-        "pass_error": "Error: Verifique que su par de llave y passphrase sean correctos.",
+        "pass_error": "Verifique que su par de llave y passphrase sean correctos.",
         "ask_pass": "Inserta clave de chat",
         "cancel": "Cancelar",
         "continue": "Continuar"
@@ -202,7 +202,7 @@
         "keys": "Llaves",
         "contacts": "Contactos",
         "networks": "Conectar redes",
-        "logout": "Cerrar sesión"
+        "logout": "Salir"
     },
     "contacts":{
         "title": "Contactos",

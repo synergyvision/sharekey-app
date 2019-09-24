@@ -10,18 +10,26 @@
         </label>
       </div>
       <div class="item item-divider" id="newPostsFooter">
-          <button class="button button-small button-calm" id="newPost" ng-click="newPost()" ng-disabled="!status">{{'posts.public_check' | translate}}</button>
-          <ion-checkbox value="false" id="public" ng-model="public">{{'posts.new_post_button' | translate}}</ion-checkbox>
+          <button class="button button-small button-calm" id="newPost" ng-click="newPost()" ng-disabled="!status">{{'posts.new_post_button' | translate}}</button>
+          <ion-checkbox value="false" id="public" ng-model="public">{{'posts.public_check' | translate}}</ion-checkbox>
       </div>
     </div>
     <div id="Posted" ng-init="getPosts()">
           <div id="card" class="list card" ng-repeat="post in posts | orderBy: '-this.data.timestamp'" ng-if="(post.data.public == 'false' && post.data.user_id == uid) ||post.data.public == 'true' ">
               <div class="item item-avatar">
-                <img ng-if="post.userPicture" ng-src="{{post.userPicture}}">
-                <img ng-if="!post.userPicture" src="../../img/default-user-icon-8.jpg">
-                <h2>{{post.name}}</h2>
-                <p>{{post.data.sent}}</p>
+                  <img ng-if="post.userPicture" ng-src="{{post.userPicture}}">
+                  <img ng-if="!post.userPicture" src="../../img/default-user-icon-8.jpg">
+                  <div class="row .responsive-md">
+                    <div class="col">
+                      <h2>{{post.name}}</h2>
+                      <p>{{post.data.sent}}</p>
+                    </div> 
+                    <div class="col col-50 col-offset-10">
+                        <a class="button button-small button-positive" ng-click="goToPost(post.id)"><i class="ion ion-eye"></i></a>
+                    </div> 
+                  </div>  
               </div>
+              
               <div class="item item-body">
                 <p ng-if="post.data.public == 'true'">
                     {{post.data.content}}
@@ -43,8 +51,6 @@
                         <a class="subdued" ng-click="likeStatus('like',post.id)">{{post.data.likes}} <i class="icon ion-thumbsup"></i></a>
                         <a class="subdued" ng-click="likeStatus('dislike',post.id)">{{post.data.dislikes}} <i class="icon ion-thumbsdown"></i></a>
                     </div>    
-                    <a style="margin-left: 5px;" class="subdued" ng-if="post.data.user_id == uid" ng-click="goToPost(post.id)">{{'posts.post_link' | translate}}</a>
-                    <a style="margin-left: 5px;"  class="subdued" ng-if="post.data.user_id != uid" ng-click="goToPost(post.id)">{{'posts.comments_link' | translate}}</a>
                   </div>  
                 </p>
               </div>      

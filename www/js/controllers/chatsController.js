@@ -323,6 +323,7 @@
             $scope.showMessages = function (passphrase){
                 var decripted = decryptMessages($scope.chatMessages,passphrase)
                 decripted.then(function (decripted){
+                    hide();
                     $scope.show = true;
                     $scope.chatMessages = decripted;
                     $scope.$apply();

@@ -176,16 +176,12 @@
                           //don't allow the user to close unless he enters wifi password
                           e.preventDefault();
                         } else {
-                          return $scope.data.content;
+                          editPost($scope.data.content);
                         }
                       }
                     }
                   ]
                 });
-                myPopup.then(function(res) {
-                  editPost(res)
-                });
-          
               }
           
               var editPost = function(content){

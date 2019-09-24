@@ -4,10 +4,19 @@
         .module('starter')
         .controller('LoginController', loginController);
   
-        loginController.$inject = ['$scope','$http','$location','$localStorage','appConstants','$state','$ionicPopup','$filter'];
-        function loginController($scope,$http,$location,$localStorage,appConstants,$state,$ionicPopup,$filter){
+        loginController.$inject = ['$scope','$http','$location','$localStorage','appConstants','$state','$ionicPopup','$filter','$ionicLoading'];
+        function loginController($scope,$http,$location,$localStorage,appConstants,$state,$ionicPopup,$filter,$ionicLoading){
 
           var translate = $filter('translate');
+
+            var show = function() {
+              $ionicLoading.show({
+                template: '<ion-spinner icon="spiral"></ion-spinner>'
+              })
+            };
+            var hide = function(){
+              $ionicLoading.hide()
+            };
           
             var getServerKey = function (){
                 return $http({
@@ -36,6 +45,7 @@
               }
             
               $scope.sendData = function(){
+                show()
                 var password = encryptPassword($scope.password)
                 password.then(function (password){
                     var loginRequest = $.param({
@@ -50,6 +60,7 @@
                         $http.get(appConstants.apiUrl +  appConstants.profile + $localStorage.uid, {headers: {'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8','Authorization': 'Bearer: ' + $localStorage.userToken}
                         }).then(function (response){
                           if (response.data.status == 200){
+                              hide()
                               $localStorage[$localStorage.uid + '-username'] = response.data.content.username;
                               $localStorage.userPicture = response.data.content.profileUrl;
                               $state.go('tab.dash');
@@ -62,11 +73,13 @@
                         })
                       }else{
                         if (response.data.status === 'auth/wrong-password'){
+                          hide()
                           var alertPopup = $ionicPopup.alert({
                             title: translate('login.error_title'),
                             template: translate('login.password_error'),
                           });
                         } else if (response.data.status === 'auth/user-not-found'){
+                          hide()
                           var alertPopup = $ionicPopup.alert({
                             title: translate('login.error_title'),
                             template: translate('login.email_error'),

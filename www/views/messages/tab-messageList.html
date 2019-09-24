@@ -1,8 +1,13 @@
 <ion-view view-title="{{'messages.title' | translate}}">
-    <ion-content ng-controller="messagesController" ng-init="getMessages('inbox')">
+    <ion-nav-buttons side="right">
+                <button class="button" ng-click="newMessage()" class="button button-positive">
+                    <i class="icon ion-plus-circled"></i>
+                </button>
+    </ion-nav-buttons>
+    <ion-content ng-controller="messagesController" ng-init="getMessages('inbox')" class="has-header">
         <div class="button-bar">
-            <a ng-if="tray == 'inbox'" style="color: blue" id="inbox" class="button">{{'messages.tab-inbox' | translate}}</a>
-            <a ng-if="tray != 'inbox'" id="inbox" class="button" ng-click="getMessages('inbox')">{{'messages.tab-inbox' | translate}}</a>
+            <a ng-if="tray == 'inbox'" style="color: blue; border-right: 1px solid lightgray" id="inbox" class="button">{{'messages.tab-inbox' | translate}}</a>
+            <a ng-if="tray != 'inbox'" id="inbox" style="border-right: 2px solid lightgray" class="button" ng-click="getMessages('inbox')">{{'messages.tab-inbox' | translate}}</a>
             <a ng-if="tray == 'outbox'" style="color: blue" class="button">{{'messages.tab_outbox' | translate}}</a>
             <a ng-if="tray != 'outbox'" class="button" ng-click="getMessages('outbox')">{{'messages.tab_outbox' | translate}}</a>
         </div>
@@ -28,9 +33,6 @@
                     </a>
                 </div>
         </div>     
-        <div class="col col-12" id="newMail">
-            <button id="newMail" class="button button-positive icon ion-plus-circled" ng-click="newMessage()"></button>
-        </div>
     </ion-content>
  </ion-view>
       

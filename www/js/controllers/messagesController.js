@@ -160,7 +160,9 @@
                 }).then(function (response){
                     $scope.data = response.data.data
                     $scope.data = getDate($scope.data)
-                    console.log($scope.data)
+                    if($scope.data.status == "unread"){
+                        updateStatus($stateParams.id)
+                    }
                 }).catch(function (error){
                     if (error){
                             console.log(error.code);
@@ -291,19 +293,16 @@
             }
 
             var updateStatus = function(id){
-                $http.put(appConstants.apiUrl + appConstants.messages + uid + '/' + id,
-                    {headers: {'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8','Authorization':'Bearer: ' + token}
+                $http({url: appConstants.apiUrl + appConstants.messages + uid + '/' + id, method: 'PUT',
+                    headers: {'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8','Authorization':'Bearer: ' + token}
                 }).then(function (response){
                     console.log(response.data)
                 }).catch(function (error){
-                    alert(error)
+                    console.log(error)
                 })
             }
 
             $scope.readMessage =  function (id, status,content){
-                if (status == 'unread'){
-                    updateStatus(id);
-                }
                 $scope.passPopUp(id,content)
             }
 

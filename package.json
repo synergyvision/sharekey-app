@@ -1,9 +1,9 @@
 {
-  "name": "sharekey-app",
+  "name": "secureshare-app",
   "private": true,
   "version": "1.0.0",
-  "description": "mobile app for sharekey",
-  "repository": "https://github.com/synergyvision/sharekey-app",
+  "description": "mobile app for secureshare",
+  "repository": "https://github.com/synergyvision/secureshare-app",
   "license": "MIT",
   "devDependencies": {
     "@ionic/v1-toolkit": "^1.0.0",

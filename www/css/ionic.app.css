@@ -18,7 +18,7 @@ ion-header-bar {
 
 /*-===========================ion-content ===================================-*/
 ion-content {
-  background: #edf2f5; }
+  background: #FFFFFF; }
 
 /*-===========================.dashboard-main-container =====================-*/
 .dashboard-main-container {
@@ -130,7 +130,7 @@ ion-content {
   font-size: 10px; }
 
 .chat-item {
-  background: #edf2f5 !important; }
+  background: #FFFFFF !important; }
 
 .green-notify {
   background: #19b608; }
@@ -224,7 +224,7 @@ ion-header-bar {
 
 /*-===========================ion-content ===================================-*/
 ion-content {
-  background: #edf2f5; }
+  background: #FFFFFF; }
 
 /*-===========================.dashboard-main-container =====================-*/
 .dashboard-main-container {
@@ -336,7 +336,7 @@ ion-content {
   font-size: 10px; }
 
 .chat-item {
-  background: #edf2f5 !important; }
+  background: #FFFFFF !important; }
 
 .green-notify {
   background: #19b608; }
@@ -10346,13 +10346,11 @@ a.button {
   margin: 5px; }
 
 #comentario {
-  margin-left: -55px;
   border: 2px solid;
   border-color: whitesmoke; }
 
-#commentButtons {
-  float: right;
-  display: flex; }
+.item-checkbox {
+  padding-left: 50px; }
 
 #profileInfo {
   display: flex;

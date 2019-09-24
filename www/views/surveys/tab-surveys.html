@@ -1,19 +1,17 @@
 <ion-view view-title="{{'suveys.title' | translate}}" cache-view="false">
-        <ion-content ng-controller="surveysController">
-            <ul class="list" ng-init="getSurveys()">
-              <div ng-repeat="survey in surveys">
-                <li class="item item-button-right" id="surveys">
-                    {{survey.data.title}}
-                    <p>{{'suveys.body' | translate}} {{survey.name}}</p>
-                    <button class="button button-balanced" ui-sref="tab.survey({surveyId: survey.id})">
-                      <i class="icon ion-arrow-right-a"></i>
-                    </button>
-                </li>
-              </div>  
-            </ul>
-            <div class="col col-12" id="newSurvey">
-                <button id="newSurvey" class="button button-positive icon ion-plus-circled" ui-sref="tab.newSurvey"></button>
-            </div>  
-          </ion-content>
-      </ion-view>
+  <ion-nav-buttons side="right">
+      <button class="button" ui-sref="tab.newSurvey" class="button button-positive">
+          <i class="icon ion-plus-circled"></i>
+      </button>
+  </ion-nav-buttons>
+  <ion-content ng-controller="surveysController">
+      <ion-list ng-init="getSurveys()">
+      <ion-item id="chats" ui-sref="tab.survey({surveyId: survey.id})" ng-repeat="survey in surveys">
+          {{survey.data.title}}
+          <p>{{'suveys.body' | translate}} {{survey.name}}</p>
+      </ion-item>  
+    </ion-list>  
+
+  </ion-content>
+</ion-view>
       
