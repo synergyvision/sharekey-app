@@ -66,13 +66,13 @@
                         <div class="row">
                             <div class="col" style="margin-left: -15px;">
                                 <h2>{{comment.username}}</h2>
-                                <p>{{comment.comment}}</p>
                             </div>
                             <div ng-if="comment.userId == uid" class="col col-50 col-offset-10">
                                 <a class="button button-small button-balanced" ng-click="editCommentPop(comment.id,comment.comment)"><i class="ion ion-edit"></i></a>
                                 <a class="button button-small button-assertive" ng-click="deleteComment(comment.id)"><i class="ion ion-trash-a"></i></a>
                             </div>    
                         </div>
+                        <p>{{comment.comment}}</p>
                     </div>
                 </div>
         </div> 
