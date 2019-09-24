@@ -3,11 +3,15 @@
         <div ng-init="getSurvey()">
             <div  class="list card" ng-if="survey.expired == false  && survey.answered == false">
                 <div class="item">
-                    <div class="col">
-                        <h2>{{survey.title}}</h2>
-                        <button class="button" ng-if="survey.userId == uid" ng-click="deleteSurvey()" class="button button-assertive">
-                                <i class="icon ion-trash-b"></i>
-                        </button>
+                    <div class="row">
+                        <div class="col col-75">
+                            <h2>{{survey.title}}</h2>
+                        </div>    
+                        <div class="col">
+                            <button class="button button-small button-assertive" ng-if="survey.userId == uid" ng-click="deleteSurvey()" class="button button-assertive">
+                                    <i class="icon ion-trash-b"></i>
+                            </button>
+                        </div>    
                     </div>    
                 <p>{{'suveys.body' | translate}} {{survey.user}}</p>
                 </div> 
@@ -27,22 +31,30 @@
             </div>   
             <div class="card" ng-if="survey.answered == true && survey.expired == false">
                 <div class="item item-text-wrap">
-                    <div class="col">
-                        {{'suveys.answered' | translate}}
-                        <button class="button button-small button-assertive" ng-if="survey.userId == uid"  ng-click="deleteSurvey()" class="button button-positive">
-                                <i class="icon ion-trash-b"></i>
-                        </button>
+                    <div class="row">
+                        <div class="col col-75">
+                            {{'suveys.answered' | translate}}
+                        </div>   
+                        <div class="col">
+                            <button class="button button-small button-assertive" ng-if="survey.userId == uid"  ng-click="deleteSurvey()" class="button button-positive">
+                                    <i class="icon ion-trash-b"></i>
+                            </button>
+                        </div>    
                     </div>    
                 </div>
             </div> 
             <div  class="list card" ng-if="survey.expired == true">
                     <div class="item item-divider" >
-                        <div class="col">
-                            {{'suveys.expired' | translate}}
-                            <button class="button button-small button-assertive" ng-if="survey.userId == uid"  ng-click="deleteSurvey()" class="button button-positive">
-                                    <i class="icon ion-trash-b"></i>
-                            </button>
-                        </div>
+                        <div class="row">
+                            <div class="col col-75">
+                                {{'suveys.expired' | translate}}
+                            </div>
+                            <div class="col">
+                                <button class="button button-small button-assertive" ng-if="survey.userId == uid"  ng-click="deleteSurvey()" class="button button-positive">
+                                        <i class="icon ion-trash-b"></i>
+                                </button>
+                            </div>
+                        </div>    
                     </div>
                 <div class="item">
                     <h2>{{survey.title}}</h2>

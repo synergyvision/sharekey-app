@@ -26,8 +26,14 @@
                             </select>
                     </label>
                 </div>
-                <button id="addLenght" class="button button-positive button-small icon ion-plus-circled m-1"  ng-click="addLenght()"></button>
-                <button type="button" ng-click="createSurvey()" class="button button-calm">{{'suveys.create' |translate}}</button>
+                <div class="row">
+                        <div class="col">
+                                <button id="addLenght" class="button button-positive button-small icon ion-plus-circled m-1"  ng-click="addLenght()"></button>
+                        </div>
+                </div>        
+                <div class="row">
+                        <button type="button" ng-click="createSurvey()" class="button button-calm">{{'suveys.create' |translate}}</button>
+                </div>
         </ion-content>
     </ion-view>
       

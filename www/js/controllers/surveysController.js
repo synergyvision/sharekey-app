@@ -142,8 +142,9 @@
 
             $scope.fillSurvey = function (){
                 for (var i = 0; i < $scope.answeredQuestions.length;i++){
-                    $http.put(appConstants.apiUrl + appConstants.surveys + survey +'/question/' + $scope.answeredQuestions[i].questionId + '/answer/' + $scope.answeredQuestions[i].answerId + '/vote',
-                        {headers: {'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8','Authorization':'Bearer: ' + token}
+                    $http({url: appConstants.apiUrl + appConstants.surveys + survey +'/question/' + $scope.answeredQuestions[i].questionId + '/answer/' + $scope.answeredQuestions[i].answerId + '/vote',
+                        method: 'PUT',
+                        headers: {'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8','Authorization':'Bearer: ' + token}
                     }).then(function (response){
                         console.log(response.data);
                         $state.go('tab.surveys');
