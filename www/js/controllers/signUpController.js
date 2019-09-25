@@ -9,6 +9,8 @@
 
             var translate = $filter('translate')
 
+            //function that register a new user
+
             $scope.sendData = function(){
                 var signUpRequest = $.param({
                     email: $scope.email,

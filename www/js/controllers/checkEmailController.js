@@ -9,6 +9,8 @@
 
           var translate = $filter('translate');
 
+            //functions sends an email address to server so it can send a recovery email
+
             $scope.sendEmail = function(){
                 var emailRequest = $.param({
                   email: $scope.email,

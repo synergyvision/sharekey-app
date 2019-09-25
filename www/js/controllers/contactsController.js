@@ -10,7 +10,10 @@
             var token = $localStorage.userToken;
             var translate = $filter('translate')
           
-              $scope.getFriendRequest = function (){
+
+            //function makes an http call to server to retrieve users pending friend requests
+            
+            $scope.getFriendRequest = function (){
                 $http({
                     url: appConstants.apiUrl + appConstants.contacts + uid + '/requests',
                     method: 'GET',
@@ -28,12 +31,15 @@
                 })
             }
           
+            //function allows users to accept a requests
               $scope.acceptRequest = function (id){
                   var updateStatus = $.param({
                       status: true
                   })
                   sendStatus(id,updateStatus)
               }
+
+            //function allows  users to reject a requests
           
               $scope.rejectRequest = function (id){
                   var updateStatus = $.param({
@@ -42,6 +48,8 @@
                   sendStatus(id,updateStatus)
               }
           
+              //function sends a status to the backend server to update the status of a requesrs
+
             var sendStatus = function (id,status){ 
                 $http({
                     url: appConstants.apiUrl + appConstants.contacts + uid + '/requests/' + id,
@@ -67,6 +75,8 @@
                 })
             }
           
+            //function loads user contacts
+
             $scope.getContacts = function (){
           
               $http({
@@ -86,6 +96,9 @@
               })
            
         }
+
+        //function to go to a profile
+
         $scope.goProfile = function(id){
             $state.go('tab.account',{'user_id': id})
         }

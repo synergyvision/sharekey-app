@@ -13,6 +13,8 @@
             $scope.user_id = user_id
             $scope.username = $localStorage[uid + '-username'];
           
+            //check the scope of publication which of then are liked by the user
+
              var checkLike = function (reactions){
                if (reactions[uid]){
                  return reactions[uid];
@@ -21,7 +23,8 @@
                }
              }
            
-          
+             //convert the timestamp to date
+
              var getDates = function (feedbacks){
              for (var i = 0; i < feedbacks.length; i++){
                if (feedbacks[i].data.reactions){
@@ -38,6 +41,8 @@
              return feedbacks;
            } 
           
+           //function that retrieves the user published messages
+
             $scope.getFeedbacks = function(){
           
              var requestFeedback = $.param({
@@ -54,6 +59,8 @@
                })
             }
           
+            //user likes a feedback
+
             $scope.likeFeedback = function(messageId){
               $http.put(appConstants.apiUrl + appConstants.messages + uid +'/'+ messageId + '/react',null,
                 {headers: {'Authorization':'Bearer: ' + token}
@@ -64,6 +71,8 @@
                 console.log(error);
               })
             }
+
+            // retrieves the user data
           
             $scope.getUserData = function (){
                $http.get(appConstants.apiUrl + appConstants.profile + user_id,{headers: {'Authorization':'Bearer: ' + token}
@@ -90,6 +99,8 @@
                    }
                  })    
             }
+
+            //this function manage the two modals
           
             $scope.openModal = function(index) {
               if (index == 1) $scope.modal1.show();
@@ -131,6 +142,8 @@
               $scope.closeModal('2');
               $state.go('tab.networks');
             }
+
+            //function that log outs user
 
             $scope.logout = function(){
               $scope.closeModal('2');

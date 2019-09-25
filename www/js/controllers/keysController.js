@@ -11,17 +11,21 @@
 
             var filter = $filter('translate');
 
+          // check if keys exists
+
             if ($localStorage[uid + 'keys']){
               $scope.userKeys = $localStorage[uid + 'keys']
             }else{
               $scope.userKeys = [];
             }
         
+            //toggles the password field
+
             $scope.toggleShowPassword = function() {
               $scope.showPassword = !$scope.showPassword;
             }
 
-
+            // encrypt a private key with a has
            var encryptKeys = function (key,seed){
             var ciphertext = CryptoJS.AES.encrypt(key,seed);
             return ciphertext
@@ -47,6 +51,8 @@
               })
                   
             }
+
+            //check the received keys from the server to see which one is active
         
             var checkActiveKeys = function (keys){
               for (var i = 0; i < keys.length; i++){
@@ -216,6 +222,8 @@
               }
             }
         
+            //deletes a key on the cloud
+
             $scope.deleteKeys  =  function (name){
               var deleteRequest = $.param({
                 name: name
@@ -238,6 +246,8 @@
                     }
                   })
             }
+
+            //show recovery modal
         
             var showRecoverPopUp = function(){
               $scope.data = {};
@@ -262,6 +272,8 @@
                 ]
               });
             }
+
+            //start the recovery key flow
         
             $scope.recoverKeys = function (){
               name = $localStorage.KeyRecover;
@@ -288,11 +300,15 @@
                   })
         
             }
+
+            //deletes the recovery key recovered after succesfully activating it
         
             $scope.closeRecover = function (){
               delete $localStorage.KeyRecover;
               delete $localStorage.recoveryKey;
             }
+
+            //opens passphrase modal
         
             var appKeyPopUp = function(){
               $scope.data = {}
@@ -317,6 +333,8 @@
                 ]
               });
             }
+
+            //function that validates the recovery password
         
             $scope.checkWords = function (phraseRecovery){
               var words = translate(phraseRecovery)
@@ -329,6 +347,8 @@
                 alert(filter('keys.recovery_error'));
               }
             }
+
+            //function that validates a passphrase by encripting a string
 
             var encryptContent = async (privkey,pubkey,passphrase) =>{
               const privKeyObj = (await openpgp.key.readArmored(privkey)).keys[0]
@@ -344,6 +364,8 @@
         
               })
             }    
+
+            //funciton that encrypts the activated key with its passphrase
         
             $scope.newPassword = function (appKey){
               var words = translate(appKey)

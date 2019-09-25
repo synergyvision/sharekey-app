@@ -8,6 +8,8 @@
         function profileController($scope,$http,$localStorage,$state,$location,$stateParams,$ionicPopup,$window,appConstants,$cordovaCamera,$ionicPlatform){
             var token = $localStorage.userToken;
 
+            //function retrieves user data from serve
+
             $scope.requestData = function(){
               $http.get(appConstants.apiUrl + appConstants.profile + $localStorage.uid,
                 {headers: {'Authorization':'Bearer: ' + token}
@@ -32,6 +34,8 @@
                   }
                 })
             }
+
+            //function updates the data of the user
           
             $scope.updateData =  function(){
               var updateRequest = $.param({
@@ -52,6 +56,8 @@
                   }
               })
             }
+
+            //cordova plugin to select a picture from the camera
 
             $scope.takePicture = function() {
               var options = {
@@ -75,6 +81,8 @@
                 });
               })
           }
+
+          //uploads the newly elected photo
           
             $scope.uploadPhoto = function (imgURI){
                  var photoRequest = $.param({

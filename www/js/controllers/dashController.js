@@ -15,15 +15,16 @@
             $scope.edit = false;
             var filter = $filter('translate');
 
+
+            //check if keys exists if not go to keys
+
             if(!$localStorage[uid+'keys']){
               alert(filter('tabs.keys_message'))
               $state.go('tab.keys')
             }
 
-            var encryptKeys = function (key,seed){
-                var ciphertext = CryptoJS.AES.encrypt(key,seed);
-                return ciphertext
-                }
+            // elimina acentos y ñ de las claves
+
             
             var translate = function(phrase){
                 var chars={
@@ -34,7 +35,7 @@
             
             }
           
-          
+            // get user default public key
               var getMyDefaultKey = function (){
                 var userKeys = $scope.storedKeys
                 for (var i = 0 ; i <= userKeys.length; i++){
@@ -43,6 +44,8 @@
                     }
                 }
               }
+
+              //get user default private key
           
               var getMyDefaultPrivateKey = function (){
                 var userKeys = $scope.storedKeys;
@@ -52,6 +55,8 @@
                     }
                 }
               }
+
+              //encripts a post with the users key
           
               var encryptStatus = async (status) => {
                   //const privKeyObj = (await openpgp.key.readArmored(privkey)).keys[0]
@@ -71,6 +76,8 @@
                   })
                 }
           
+                // function takes the parameters of a new post encript it and send it to server
+
               $scope.newPost = async () =>{
                 if (!$scope.public){
                   $scope.public = false;
@@ -93,6 +100,8 @@
                     console.log(error)
                 })
               }
+
+              // check the post scope to see if the user has liked a post
           
                 var checkLike = function (reactions){
                   if (reactions[uid]){
@@ -102,6 +111,7 @@
                   }
                 }
           
+              //converts the posts timestamps to date
           
               var getDates = function (posts){
                 for (var i = 0; i < posts.length; i++){
@@ -119,6 +129,8 @@
                 return posts
               } 
           
+              //get the posts from the server
+
               $scope.getPosts = function (){
                 $http({
                   url: appConstants.apiUrl + appConstants.posts,
@@ -133,7 +145,35 @@
                     console.log(error)
                 })
               }
+
+              // changes the likes of the posts on the scope
+
+              var changeReaction = function(post_id,status){
+                for (var i = 0; i < $scope.posts.length; i++){
+                  if ($scope.posts[i].id == post_id){
+                    if (!$scope.posts[i].reactions){
+                      if (status == 'like'){
+                        $scope.posts[i].reactions = 'liked'
+                        $scope.posts[i].data.likes += 1;
+                      }else{
+                        $scope.posts[i].reactions = 'disliked'
+                        $scope.posts[i].data.dislikes += 1;
+                      }
+                    } else if ($scope.posts[i].reactions == 'liked' && status != 'like') {
+                        $scope.posts[i].reactions = 'disliked'
+                        $scope.posts[i].data.likes -= 1;
+                        $scope.posts[i].data.dislikes += 1;
+                    } else if ($scope.posts[i].reactions == 'disliked' && status == 'like'){
+                      $scope.posts[i].reactions = 'liked'
+                      $scope.posts[i].data.likes += 1;
+                      $scope.posts[i].data.dislikes -= 1;
+                    }
+                  }
+                }
+              }
           
+              //updates likes on the server
+
               $scope.likeStatus = function (status,post_id){
                 if (status == 'like'){
                     var statusRequest = $.param({
@@ -153,12 +193,14 @@
                   headers: {'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8','Authorization':'Bearer: ' + token}
                 }).then(function (response){
                   console.log(response.data);
-                  $state.reload();
+                  changeReaction(post_id,status);
                 }).catch(function (error){
                   console.log(error)
                 })
               }
           
+              //opens edit post modal
+
               $scope.editPop =  function (content){
                 $scope.data = {};
                 $scope.data.content = content;
@@ -184,6 +226,8 @@
                 });
               }
           
+              //sends edited post data to server
+
               var editPost = function(content){
                 var editRequest = $.param({
                   content: content
@@ -200,6 +244,8 @@
                   console.log(error)
                 })
               }
+
+              //deletes a post
           
               $scope.deletePost = function (id){
                 $http({
@@ -213,9 +259,13 @@
                 })
               }
           
+              //goes to post
+
               $scope.goToPost = function (id){
                 $state.go('tab.post',{'post_id': id})
               }
+
+              //retrieves data of a single post
           
               $scope.loadPost = function (){
                 $http({
@@ -233,6 +283,8 @@
                 })
               }
           
+              // opens passphrase modal
+
               $scope.askPassphrase = function (content){
                 $scope.postContent = content;
                 $scope.data = {};
@@ -257,6 +309,8 @@
                   ]
                 });
               }
+
+              //decrypts a localstored private key
           
               var decryptKey = function (key,pass) {
                 var bytes  = CryptoJS.AES.decrypt(key,pass);
@@ -264,6 +318,8 @@
                 return key;
             
               }
+
+              // decrypts a post
           
               var decryptPost = async (privateKey,passphrase,mensaje) => {
                 const privKeyObj = (await openpgp.key.readArmored(privateKey)).keys[0]
@@ -279,16 +335,24 @@
                     var decrypted = plaintext.data;
                     return decrypted
                 })
-            }
+             }
+
+             // load spiner modal
+
               var show = function() {
                 $ionicLoading.show({
                   template: '<ion-spinner icon="spiral"></ion-spinner>'
                 })
               };
+
+              // hides spinner modal
+
               var hide = function(){
                 $ionicLoading.hide()
               };
           
+              //decrypts a post
+
               $scope.decryptPost = function (passphrase){
                 show()
                 var privateKey = getMyDefaultPrivateKey();
@@ -304,6 +368,8 @@
                 })
               }
           
+              //retrieves a posts comments
+
               $scope.getComments = function(){
                 $http.get(appConstants.apiUrl + appConstants.comments + $scope.uid + '/' + post,
                   {headers: {'Authorization':'Bearer: ' + token}
@@ -314,6 +380,8 @@
                   console.log(error)
                 })
               }
+
+              //publishes new comments
           
               $scope.sendComment = function(){
                 var commentRequest = $.param({
@@ -332,6 +400,8 @@
                 })
               } 
           
+              // edit comment modal
+
               $scope.editCommentPop = function (id,content){
                   $scope.comment = {};
                   $scope.comment.id = id;
@@ -357,6 +427,8 @@
                     ]
                   });
               }
+
+              //edits a comment
           
               $scope.editComment = function(comment){
                   var editRequest = $.param({
@@ -374,6 +446,8 @@
                   })
                   
               }
+
+              //deletes a comment
           
               $scope.deleteComment = function (id){
                 $http.delete(appConstants.apiUrl  + appConstants.comments + id,{headers: {'Authorization':'Bearer: ' + token}

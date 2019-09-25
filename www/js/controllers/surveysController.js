@@ -21,6 +21,8 @@
 
             $scope.answeredQuestions = []
 
+            //function that retrieves the lists of surveys
+
             $scope.getSurveys = function (){
                 $http.get(appConstants.apiUrl + appConstants.surveys,{headers: {'Authorization':'Bearer: ' + token}
                 }).then(function (response){
@@ -32,6 +34,8 @@
                     console.log(error)
                 })
             }
+
+            //function that checks if the user has answered a survey or if it its expired
 
             var checkSurvey = function (survey){
                 var now = new Date();
@@ -55,6 +59,8 @@
                 }    
             }
 
+            //funciton retrieves data from a single survey
+
             $scope.getSurvey = function (){
                 $http.get(appConstants.apiUrl + appConstants.surveys + survey,
                     {headers: {'Authorization':'Bearer: ' + token}
@@ -66,6 +72,8 @@
                     console.log(error)
                 })
             }
+
+            //function stores the answers of a new survey
 
             var createAnswers = function (surveyId,questionId) {
                 var newAnswers = $.param({
@@ -82,6 +90,8 @@
                 })
             }
 
+            //function stores the questions of a new survey
+
             var createQuestion = function (surveyId){
                 var newQuestion = $.param({
                     content: $scope.question.title
@@ -96,6 +106,9 @@
                 })
 
             }
+
+
+            //function that creates a new survey
 
             $scope.createSurvey = function (){
                 var created = new Date();
@@ -118,10 +131,14 @@
                 })
             }
 
+            //add more ansers
+
             $scope.addLenght =  function (){
                 var answer = {};
                 $scope.answers.push(answer)
             }
+
+            //puts together an array of the id of the question with its answer
 
             $scope.getId = function (questionId,answer){
                 var exists = false;
@@ -139,6 +156,8 @@
                     $scope.answeredQuestions.push(answeredQuestion);
                 }
             }
+
+            //fills a survey
 
             $scope.fillSurvey = function (){
                 for (var i = 0; i < $scope.answeredQuestions.length;i++){
@@ -164,6 +183,8 @@
                     console.log(error)
                 })
             }
+
+            //deletes a survey
 
             $scope.deleteSurvey = function (){
                 $http.delete(appConstants.apiUrl + appConstants.surveys + survey,{headers: {'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8','Authorization':'Bearer: ' + token}

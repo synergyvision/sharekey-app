@@ -2,7 +2,7 @@
     <ion-content ng-controller="redesController">
             <div id="fb-root"></div>    
             <ul class="list" ng-init="getSocials()">
-             <li ng-if="validFacebook == false" class="item item-toggle">
+           <!---  <li ng-if="validFacebook == false" class="item item-toggle">
                 {{'networks.facebook' | translate}}
                 <label class="toggle toggle-positive">
                     <input type="checkbox" ng-click="toggleFormFb()"> 
@@ -10,7 +10,7 @@
                     <div class="handle"></div>
                     </div>
                 </label>
-             </li>
+             </li>-->
              <a  ng-if="validFacebook == true" class="item item-icon-right">
                     <i class="icon ion-checkmark-circled" style="color: blue"></i>
                     {{'networks.facebook' | translate}}

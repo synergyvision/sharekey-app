@@ -18,6 +18,8 @@
               $ionicLoading.hide()
             };
           
+
+            //function that retrieves the server public key
             var getServerKey = function (){
                 return $http({
                   url: appConstants.apiUrl + 'config/serverKeys',
@@ -28,6 +30,8 @@
                   console.log(error)
                 })
               }
+
+              //function that encripts the password with the server public key
             
               var encryptPassword = function(password){
                 var publicKey = getServerKey()
@@ -44,6 +48,8 @@
                 })
               }
             
+              // function that sends the credentials for login
+
               $scope.sendData = function(){
                 show()
                 var password = encryptPassword($scope.password)

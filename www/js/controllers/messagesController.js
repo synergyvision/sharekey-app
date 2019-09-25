@@ -14,6 +14,8 @@
 
             var filter = $filter('translate');
 
+            //retrives the recipient public key
+
             $scope.getPublicKey =  function (idUser){
                 if (!$scope.message){
                 alert(filter('messages.empty_error'))
@@ -42,6 +44,8 @@
                 }
             }
 
+            //retrieves public key from the locally stored ones
+
             var getPublicKey = function (name){
                 for (var i = 0 ; i < $scope.userKeys.length; i++){
                     if ($scope.userKeys[i].keyname ==name){
@@ -49,6 +53,8 @@
                     }
                 }
             }
+
+             //retrieves private key from the locally stored ones
 
             var getPrivateKey = function (name){
                 for (var i = 0 ; i < $scope.userKeys.length; i++){
@@ -58,12 +64,17 @@
                 }
             }
 
+            //decrypts the hashed private key
+
             var decryptKey = function (key,password) {
                 var bytes  = CryptoJS.AES.decrypt(key,password);
                 var key = bytes.toString(CryptoJS.enc.Utf8);
                 return key;
 
             }
+
+            //encrypts the body of the message with the sender and recipients public keys, 
+            //if passphrase is received it signs the message
 
             var encryptWithMultiplePublicKeys  = async (pubkeys, privkey, passphrase = null, message) => {
                     pubkeys = pubkeys.map(async (key) => {
@@ -94,6 +105,8 @@
                 }  
             };
 
+            //retrieves list of contacts
+
             $scope.getContacts = function (){
 
                 $http({
@@ -113,6 +126,8 @@
 
             } 
 
+            //function that starts the encription flow then passes the data to be sent
+
             $scope.encrypt = function (key) {
                 console.log('begin encription')
                 show();
@@ -127,6 +142,8 @@
                     alert(error)
                 })
             }
+
+            //function that sends the message to the server
 
             var sendMessage = function (messageEncrypted){
                 if (!$scope.publish){
@@ -154,6 +171,8 @@
                 })
             }
 
+            //function that retrives a single message
+
             $scope.getMessage = function (){
                 $http.get(appConstants.apiUrl + appConstants.messages + uid + '/' + $stateParams.id,
                     {headers:  {'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8','Authorization':'Bearer: ' + token}
@@ -172,6 +191,8 @@
                 })
             }
 
+            //function that retrieves a default private key
+
             var getPrivateKey = function (){
                 for (var i = 0 ; i < $scope.userKeys.length; i++){
                     if ($scope.userKeys[i].default == true){
@@ -179,6 +200,8 @@
                     }
                 }
             }
+
+            //function decrypts the body of the messahe to be read
 
             var decriptMessage = async (privateKey,passphrase,mensaje) => {
                 const privKeyObj = (await openpgp.key.readArmored(privateKey)).keys[0]
@@ -194,6 +217,8 @@
                     return decrypted
                 })
             }
+
+            //passphrase modal
 
             $scope.passPopUp = function(id,content){
                 $scope.something = {};
@@ -221,6 +246,8 @@
                 });
             }
 
+            //spiner modal
+
             var show = function() {
                 $ionicLoading.show({
                   template: '<ion-spinner icon="spiral"></ion-spinner>'
@@ -229,6 +256,8 @@
               var hide = function(){
                 $ionicLoading.hide()
               };
+
+             //function that starts the decrypt flow 
 
             $scope.decrypt = async (data) => {
                 var privateKey = getPrivateKey();
@@ -243,10 +272,14 @@
                 })
             } 
 
+            //function that changes the page from read to respond
+
             $scope.respond = function(name,id) {
                 console.log(name,id)
                 $state.go('dash.messages',{'id_user': id,'name': name});
             }
+
+            //function transforms the timestamp to dates
 
             var getDate = function (messages){
                 for (var i = 0; i < messages.length; i++){
@@ -259,6 +292,8 @@
                 }
                 return messages
             }
+
+            //function gets users list of messages by the tray
 
             $scope.getMessages = function (tray){
                 $scope.tray = tray;
@@ -278,6 +313,8 @@
                 })
             }
 
+            //function deletes a message
+
             $scope.deleteMessage = function (){
                 $http.delete(appConstants.apiUrl + appConstants.messages + uid + '/' + $stateParams.id,
                     {headers: {'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8','Authorization':'Bearer: ' + token}
@@ -292,6 +329,8 @@
                 })
             }
 
+            //function changes status of message from new to read
+
             var updateStatus = function(id){
                 $http({url: appConstants.apiUrl + appConstants.messages + uid + '/' + id, method: 'PUT',
                     headers: {'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8','Authorization':'Bearer: ' + token}
@@ -302,6 +341,8 @@
                 })
             }
 
+            //functions that read messages
+
             $scope.readMessage =  function (id, status,content){
                 $scope.passPopUp(id,content)
             }
@@ -309,6 +350,8 @@
             $scope.readOwnMessage = function (id,content){
                 $scope.passPopUp(id,content)
             }
+
+            //function that allows users to publish a received message
 
             $scope.publishMessage = function (){
                 var publishRequest = $.param({
@@ -327,10 +370,14 @@
                 })
             }
 
+            //go to ne message tab
+
 
             $scope.newMessage = function (){
                 $state.go('tab.newMessage');
             }
+
+            // in case of signing
 
             $scope.toggleForm = function(){
                 $scope.form = !$scope.form;

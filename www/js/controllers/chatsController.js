@@ -18,6 +18,9 @@
             $scope.name = [];
 
             var filter = $filter('translate')
+
+            //Funtion that makes http call to retrieve user chats and store then in loclahost
+            
             
             $scope.getUserChats = async () => {
             $http.get( appConstants.apiUrl + appConstants.profile +uid+ '/chats',{headers: {'Authorization':'Bearer: ' + token} 
@@ -36,6 +39,8 @@
                 })
             }
 
+            //function that gets the user contacts for the purpose of creating a new chat
+
             $scope.getContacts = function (){
                 $http.get(appConstants.apiUrl + appConstants.profile + uid + '/contacts',{headers: {'Authorization':'Bearer: ' + token}
             }).then(function (response){
@@ -44,6 +49,8 @@
                     alert(error.message);
                 })
             }
+
+            // function that stores chats localy
 
             var storeLocalChats = function (id,title,participants,last_modified = null){
                 var chat = {
@@ -57,6 +64,8 @@
 
             }
 
+            //function that add a participants to a array of posible chat users
+
             $scope.addId = function(id){
                 
                 var added = false;
@@ -69,6 +78,8 @@
                     $scope.name.push(id)
                 }
             } 
+
+           // function that creates a chat, then stores the info locally 
 
             $scope.createChat = function (){
                 var participants = {}
@@ -92,9 +103,13 @@
                 })
             }
 
+
+
             $scope.getChat = function (id){
                 $state.go('tab.chatsMessages',{'id_chat': id});
             }
+
+            //function retrieves chat info from the ones stores locally
 
             $scope.chatInfo = function (){
                 for (var i = 0; i < $localStorage[uid + '-chats'].length; i++){
@@ -103,6 +118,8 @@
                     }
                 }
             }
+
+            //function deletes a chat
 
             $scope.deleteChat = function(id_chat){
                 $http.delete(appConstants.apiUrl + appConstants.profile  + uid + '/chats/' + id_chat,{headers: {'Authorization':'Bearer: ' + token}
@@ -115,6 +132,9 @@
                 })
             }
 
+
+            //function deletes a locally stored chat
+
             var localDeleteChat = function(id){
                 for (var i = 0 ; i < $localStorage[uid + '-chats'].length; i++){
                 if ($localStorage[uid + '-chats'][i].chatID == id){
@@ -122,6 +142,8 @@
                 }
                 }
             }
+
+            //function gets the id of the users of a chat
 
             var getRecipientId = function(){
                 var ids = Object.keys($scope.infoChat.members)
@@ -132,6 +154,8 @@
                     }
                 }
             }
+
+            //function thats gets the public keys of an array of users
 
             var getRecipientKey =  async (idUser) => {
                 var keyRequest = $.param({
@@ -147,6 +171,8 @@
                 })
                 
             }
+
+            // function retrieves the user public key by name or the default one
 
             var getMyKey = function (name){
                 if (name != 'default'){  
@@ -164,6 +190,8 @@
                 }  
             }
 
+            // function retrieves the user private key by name or the default one
+
             var getMyPrivateKey = function (name){
                 if (name != 'default'){
                 for (var i = 0 ; i < $scope.keys.length; i++){
@@ -180,6 +208,7 @@
                 }  
             }
 
+            //function encripts a message using multiple public keys
 
             var encryptMessage = async (pubkeys, message) => {
 
@@ -196,6 +225,8 @@
                 })
             };
 
+            //function send a message to chat
+
             var sendRequest = function(request){
                 $http.post(appConstants.apiUrl + appConstants.messages + uid + '/' + id_chat + '/messages',request,{headers:  {'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8', 'Authorization':'Bearer: ' + token}
                 }).then(function (response){
@@ -207,6 +238,8 @@
                     alert(error);
                 })
             }
+
+            //function retrieves multiple public keys from the server
 
             var getMultipleKeys = async(keys)=>{
                 var keyRequest = $.param({
@@ -221,6 +254,8 @@
                     console.log(error);
                 })
             }
+
+            //function takes a newle written message to encrypt it
 
             $scope.sendToChat = function (){
                 var recipientId = getRecipientId($stateParams.id_chat);
@@ -253,6 +288,8 @@
                 })
             }
         
+            //function decrypts a mesage
+
             var decriptMessage = async (privateKey,passphrase,mensaje) => {
                 try{
                 const privKeyObj = (await openpgp.key.readArmored(privateKey)).keys[0]
@@ -272,12 +309,16 @@
                 }  
             }
 
+            //function decryps a private key stored locally
+
             var decryptKey = function (key,password) {
                 var bytes  = CryptoJS.AES.decrypt(key,password);
                 var key = bytes.toString(CryptoJS.enc.Utf8);
                 return key;
             
             }
+
+            //function open modal
 
             var show = function() {
                 $ionicLoading.show({
@@ -287,6 +328,8 @@
               var hide = function(){
                 $ionicLoading.hide()
               };
+
+            //function takes an array of messages to decrypt then
 
             var decryptMessages = async (messages,pass) => {
                 console.log('decripting')
@@ -302,6 +345,8 @@
                 }
                 return messages
             } 
+
+            //function gets the messages of a chat
 
             $scope.getMessages =  function (){
                 $http.get(appConstants.apiUrl + appConstants.messages + uid + '/chat/' + id_chat,{headers:  {'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8','Authorization':'Bearer: ' + token}
@@ -320,6 +365,8 @@
                 })
             }
 
+            //funciton show the newly decripted messages
+
             $scope.showMessages = function (passphrase){
                 var decripted = decryptMessages($scope.chatMessages,passphrase)
                 decripted.then(function (decripted){
@@ -333,6 +380,9 @@
                     console.log(error)
                 })
             }
+
+
+            //function opens a modal
 
             $scope.savePop = function(){
                 $scope.passphrase = {};

@@ -4,8 +4,8 @@
         .module('starter')
         .controller('redesController', redesController);
   
-        redesController.$inject = ['$scope','$http','$localStorage','$state','$location','$stateParams','$rootScope','$window','appConstants','$filter'];
-        function redesController($scope,$http,$localStorage,$state,$location,$stateParams,$rootScope,$window,appConstants,$filter){
+        redesController.$inject = ['$scope','$http','$localStorage','$state','$location','$stateParams','$rootScope','$window','appConstants','$filter','$ionicPlatform'];
+        function redesController($scope,$http,$localStorage,$state,$location,$stateParams,$rootScope,$window,appConstants,$filter,$ionicPlatform){
             
             var filter = $filter('translate')
             var token = $localStorage.userToken;
@@ -46,18 +46,17 @@
                 })
             };
 
-
-
-            /*$scope.verify = function (){
-                FB.api(
-                "me/feed?limit=5",
-                function (response) {
-                    if (response && !response.error) {
-                    validateFeed(response.data)
-                    }
+            $ionicPlatform.ready(function(){
+                var fbLoginSuccess = function (userData) {
+                    alert("UserInfo: " + JSON.stringify(userData));
                 }
-            );
-            }*/
+                
+                facebookConnectPlugin.login(["public_profile"],
+                    fbLoginSuccess,
+                    function (error) { alert("" + error) }
+                );
+                
+            })
 
             var validateFeed =  function (feed){
                 var valid = false
