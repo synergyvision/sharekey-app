@@ -10303,7 +10303,7 @@ a.button {
   background-color: white; }
 
 #read {
-  background: lightgray; }
+  background: rgba(242, 245, 245, 0.8); }
 
 #contactSelect {
   border: 4px solid;
@@ -10379,7 +10379,7 @@ a.button {
   border-color: whitesmoke; }
 
 #answers {
-  margin-left: -150px;
+  margin-left: -90px;
   border: 0; }
 
 #title {

@@ -6,36 +6,38 @@
                     <div class="row">
                         <div class="col col-75">
                             <h2>{{survey.title}}</h2>
+                            <p>{{'suveys.body' | translate}} {{survey.user}}</p>
                         </div>    
-                        <div class="col">
+                        <div class="col col-25 col-offset-10">
                             <button class="button button-small button-assertive" ng-if="survey.userId == uid" ng-click="deleteSurvey()" class="button button-assertive">
                                     <i class="icon ion-trash-b"></i>
                             </button>
                         </div>    
                     </div>    
-                <p>{{'suveys.body' | translate}} {{survey.user}}</p>
                 </div> 
-                <div class="item item-image" id="formBody" ng-repeat="question in survey.questions">
+                <div ng-repeat="question in survey.questions">
                     <div class="item item-divider" >
                             {{question.question}}
                     </div>
-                    <ion-list ng-repeat="answer in question.answers">
-                            <ion-radio id="answers" ng-click="getId(question.questionId,answer)">{{answer.content}}</ion-radio>
+                    <ion-list style="float: left; width: 100%;">
+                            <ion-radio ng-repeat="answer in question.answers" ng-click="getId(question.questionId,answer)">
+                                {{answer.content}}
+                            </ion-radio>
                     </ion-list>
-                </div>
-                <p style="display: flex">
+                </div>       
+                <div class="item">
                     <a class="item calm" id="fill" ng-click="fillSurvey()">
                         {{'suveys.finish' | translate}}
                     </a>
-                </p>    
-            </div>   
+                </div>
+            </div>        
             <div class="card" ng-if="survey.answered == true && survey.expired == false">
                 <div class="item item-text-wrap">
                     <div class="row">
                         <div class="col col-75">
                             {{'suveys.answered' | translate}}
                         </div>   
-                        <div class="col">
+                        <div class="col col-25">
                             <button class="button button-small button-assertive" ng-if="survey.userId == uid"  ng-click="deleteSurvey()" class="button button-positive">
                                     <i class="icon ion-trash-b"></i>
                             </button>
@@ -49,7 +51,7 @@
                             <div class="col col-75">
                                 {{'suveys.expired' | translate}}
                             </div>
-                            <div class="col">
+                            <div class="col col-25">
                                 <button class="button button-small button-assertive" ng-if="survey.userId == uid"  ng-click="deleteSurvey()" class="button button-positive">
                                         <i class="icon ion-trash-b"></i>
                                 </button>
@@ -65,7 +67,7 @@
                             {{question.question}}
                     </div>
                     <ion-list ng-repeat="answer in question.answers">
-                            <div class="item" id="answers">{{answer.content}}: {{answer.votes}} {{'suveys.votes'|translate}}</div>
+                            <div class="item" id="answers"><b>{{answer.content}}</b> {{answer.votes}}</div>
                     </ion-list>
                 </div>
             </div> 

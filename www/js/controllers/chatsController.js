@@ -16,6 +16,7 @@
             $scope.userChats = [];
             var username =$localStorage[uid +'-username'];
             $scope.name = [];
+            $scope.decrypted = false;
 
             var filter = $filter('translate')
 
@@ -372,6 +373,7 @@
                 decripted.then(function (decripted){
                     hide();
                     $scope.show = true;
+                    $scope.decrypted = true;
                     $scope.chatMessages = decripted;
                     $scope.$apply();
                 }).catch(function(error){

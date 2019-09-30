@@ -6,11 +6,11 @@
                     <img ng-if="post.userPicture" ng-src="{{post.userPicture}}">
                     <img ng-if="!post.userPicture" src="../../img/default-user-icon-8.jpg">
                     <div class="row">
-                        <div class="col">
+                        <div class="col col-75">
                                 <h2>{{post.name}}</h2>
                         </div>
-                        <div id="userButtons" class="col col-33" ng-if="post.data.user_id == uid">
-                            <a ng-if="post.data.public == 'false'" class="button button-small button-positive" ng-click="askPassphrase(post.data.content)"><i class="ion ion-eye"></i></a>
+                        <div id="userButtons" class="col col-25" ng-if="post.data.user_id == uid">
+                            <a ng-if="post.data.public == 'false'" class="button button-small button-positive" ng-disabled="decrypted" ng-click="askPassphrase(post.data.content)"><i class="ion ion-eye"></i></a>
                             <a class="button button-small button-balanced" ng-if="post.data.public == 'true'"  ng-click="editPop(post.data.content)"><i class="ion ion-edit"></i></a>
                             <a class="button button-small button-assertive" ng-click="deletePost(post.id)"><i class="ion ion-trash-a"></i></a>
                         </div>    
@@ -64,10 +64,10 @@
                         <img ng-if="comment.picture" ng-src="{{comment.picture}}">
                         <img ng-if="!comment.picture" src="../../img/default-user-icon-8.jpg">
                         <div class="row">
-                            <div class="col" style="margin-left: -15px;">
+                            <div class="col col-75" style="margin-left: -15px;">
                                 <h2>{{comment.username}}</h2>
                             </div>
-                            <div ng-if="comment.userId == uid" class="col col-50 col-offset-10">
+                            <div ng-if="comment.userId == uid" class="col col-25 col-offset-10">
                                 <a class="button button-small button-balanced" ng-click="editCommentPop(comment.id,comment.comment)"><i class="ion ion-edit"></i></a>
                                 <a class="button button-small button-assertive" ng-click="deleteComment(comment.id)"><i class="ion ion-trash-a"></i></a>
                             </div>    

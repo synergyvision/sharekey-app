@@ -44,7 +44,7 @@
             $scope.generarPalabras = function (){
               $http.get(appConstants.apiUrl + 'mnemonic').then(function (response){
                 if (response.data.status == 200){
-                    $scope.words = response.data.message;
+                    $scope.phrase = response.data.message;
                 }else{
                   alert(response.data.message);
                 }  
@@ -386,5 +386,14 @@
             $scope.newKey = function (){
               $state.go('tab.newKey')
             }
+
+
+            $scope.copy = function(){
+              var copyText = document.getElementById('phrase');
+              copyText.select(); 
+              copyText.setSelectionRange(0, 99999); /*For mobile devices*/
+              document.execCommand("copy");
+            }
+
         }    
 })()  

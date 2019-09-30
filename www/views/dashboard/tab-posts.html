@@ -19,12 +19,12 @@
               <div class="item item-avatar">
                   <img ng-if="post.userPicture" ng-src="{{post.userPicture}}">
                   <img ng-if="!post.userPicture" src="../../img/default-user-icon-8.jpg">
-                  <div class="row .responsive-md">
-                    <div class="col">
+                  <div class="row">
+                    <div class="col col-75">
                       <h2>{{post.name}}</h2>
                       <p>{{post.data.sent}}</p>
                     </div> 
-                    <div class="col col-50 col-offset-10">
+                    <div class="col col-25 col-offset-10" >
                         <a class="button button-small button-positive" ng-click="goToPost(post.id)"><i class="ion ion-eye"></i></a>
                     </div> 
                   </div>  

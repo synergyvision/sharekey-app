@@ -1,21 +1,29 @@
-<ion-view view-title="{{'suveys.new_survey' | translate}}">
-        <ion-content ng-controller="surveysController">
+<ion-view view-title="{{'suveys.new_survey' | translate}}" ng-controller="surveysController">
+        <ion-nav-buttons side="right">
+                <button class="button" ng-click="createSurvey()"  class="button button-positive">
+                        {{'suveys.create' |translate}}
+                </button>
+        </ion-nav-buttons>
+        <ion-content>
                 <div class="list">
                     <label id="title" class="item item-input">
                             <span class="input-label">{{'suveys.new_title' | translate}}</span>
-                            <input type="text" ng-model="surveyTitle" required>
+                            <input type="text" ng-model="$parent.surveyTitle" required>
                     </label>
                     <label id="question" class="item item-input">
-                        <input type="text" placeholder="{{'suveys.question' |translate}}" ng-model="question.title" value="{{question.title}}" required>
+                        <input type="text" placeholder="{{'suveys.question' |translate}}" ng-model="$parent.question.title" value="{{$parent.question.title}}" required>
                     </label>
-                    <label id="newAnswers" class="item item-input" ng-repeat="answer in answers">
-                            <input type="text" placeholder="{{'suveys.answer_placeholder' |translate}}" ng-model="answer.content" value="" required>
-                    </label>
+                    <div id="newAnswers" class="item item-input-inset" ng-repeat="answer in answers">
+                             <label class="item-input-wrapper" style="background: white">
+                                  <input type="text" ng-model="answer.content" value="{{answer.content}}" required placeholder="{{'suveys.answer_placeholder' |translate}}">
+                             </label>
+                             <button class="button button-positive button-small icon ion-plus-circled m-1" ng-click="addLenght()"></button>
+                    </div>
                     <label class="item item-input item-select">
                             <div class="input-label">
                               {{'suveys.expires_in' | translate}}
                             </div>
-                            <select ng-model="expires" required>
+                            <select ng-model="$parent.expires" required>
                               <option>1</option>
                               <option>2</option>
                               <option>3</option>
@@ -25,15 +33,7 @@
                               <option>7</option>
                             </select>
                     </label>
-                </div>
-                <div class="row">
-                        <div class="col">
-                                <button id="addLenght" class="button button-positive button-small icon ion-plus-circled m-1"  ng-click="addLenght()"></button>
-                        </div>
-                </div>        
-                <div class="row">
-                        <button type="button" ng-click="createSurvey()" class="button button-calm">{{'suveys.create' |translate}}</button>
-                </div>
+                </div>    
         </ion-content>
     </ion-view>
       

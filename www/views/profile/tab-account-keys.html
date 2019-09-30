@@ -1,4 +1,9 @@
 <ion-view view-title="Llaves" cache-view="false">
+    <ion-nav-buttons side="right">
+            <button class="button" ng-click="newKey()"class="button button-positive">
+                <i class="icon ion-plus-circled"></i>
+            </button>
+        </ion-nav-buttons>
     <ion-content ng-controller="keysController">
         <div id="keys" class="list" ng-init="checkKeys()">
           <div ng-repeat="key in keys">
@@ -15,9 +20,6 @@
               </a>
           </div>    
         </div> 
-        <div class="col col-12" id="newKeyContainer">
-            <button id="newKey" class="button button-positive icon ion-plus-circled" ng-click="newKey()"></button>
-        </div>
       </ion-content>
   </ion-view>
   

@@ -14,6 +14,7 @@
             $scope.username = $localStorage[uid + '-username'];
             $scope.edit = false;
             var filter = $filter('translate');
+            $scope.decrypted = false;
 
 
             //check if keys exists if not go to keys
@@ -142,8 +143,10 @@
                     $scope.posts = getDates(posts);
                     console.log($scope.posts)
                 }).catch(function (error){
-                    console.log(error)
-                })
+                    if(error.code == 401){
+                      $state.go('login')
+                    }
+                })  
               }
 
               // changes the likes of the posts on the scope
@@ -362,6 +365,7 @@
                   hide();
                   $scope.post.encrypted = false;
                   $scope.post.data.content = content;
+                  $scope.decrypted = true;
                   $scope.$apply();
                 }).catch(function (error){
                     alert(filter('posts.error_passphrase'))

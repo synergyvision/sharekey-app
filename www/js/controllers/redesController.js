@@ -46,7 +46,7 @@
                 })
             };
 
-            $ionicPlatform.ready(function(){
+           /* $ionicPlatform.ready(function(){
                 var fbLoginSuccess = function (userData) {
                     alert("UserInfo: " + JSON.stringify(userData));
                 }
@@ -56,7 +56,7 @@
                     function (error) { alert("" + error) }
                 );
                 
-            })
+            })*/
 
             var validateFeed =  function (feed){
                 var valid = false

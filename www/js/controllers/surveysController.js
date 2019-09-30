@@ -15,7 +15,6 @@
             }
 
             $scope.answers = [
-                {},
                 {}
             ];
 
@@ -93,6 +92,7 @@
             //function stores the questions of a new survey
 
             var createQuestion = function (surveyId){
+                console.log($scope.question)
                 var newQuestion = $.param({
                     content: $scope.question.title
                 })
@@ -111,6 +111,7 @@
             //function that creates a new survey
 
             $scope.createSurvey = function (){
+                console.log($scope.answers)
                 var created = new Date();
                 var expires_in = new Date();
                 expires_in.setDate(expires_in .getDate() + parseInt($scope.expires));

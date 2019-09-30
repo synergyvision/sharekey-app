@@ -6,10 +6,11 @@
   </ion-nav-buttons>
   <ion-content ng-controller="surveysController">
       <ion-list ng-init="getSurveys()">
-      <ion-item id="chats" ui-sref="tab.survey({surveyId: survey.id})" ng-repeat="survey in surveys">
-          {{survey.data.title}}
-          <p>{{'suveys.body' | translate}} {{survey.name}}</p>
-      </ion-item>  
+        <ion-item class="item item-icon-right" id="chats" ui-sref="tab.survey({surveyId: survey.id})" ng-repeat="survey in surveys">
+            {{survey.data.title}}
+            <p>{{'suveys.body' | translate}} {{survey.name}}</p>
+            <i class="icon ion-edit"></i>
+        </ion-item>  
     </ion-list>  
 
   </ion-content>

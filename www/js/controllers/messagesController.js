@@ -30,7 +30,10 @@
                         headers: {'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8','Authorization':'Bearer: ' + token}
                     }).then(function (response){
                         console.log('retrieved public key from server')
-                        $scope.encrypt(response.data.data);
+                        var userData = {
+                            [idUser]: response.data.name
+                          }
+                        $scope.encrypt(response.data.data,userData);
                     }).catch(function (error){
                         if (error){
                             if (error.status == 401){
@@ -128,16 +131,18 @@
 
             //function that starts the encription flow then passes the data to be sent
 
-            $scope.encrypt = function (key) {
+            $scope.encrypt = function (key,userdata) {
                 console.log('begin encription')
                 show();
                 var keyPublic = getPublicKey($scope.chatKey);
                 var keyPrivate = getPrivateKey($scope.chatKey);
                 var pKeys = [keyPublic,key]
-                var Private = decryptKey(keyPrivate,$scope.passphrase);
+                if ($scope.passphrase){
+                    var Private = decryptKey(keyPrivate,$scope.passphrase);
+                }
                 var message = encryptWithMultiplePublicKeys(pKeys,Private,$scope.passphrase,$scope.message);
                 message.then( function (encryptedMessage){
-                    sendMessage(encryptedMessage);
+                    sendMessage(encryptedMessage,userdata);
                 }).catch(function (error){
                     alert(error)
                 })
@@ -145,7 +150,7 @@
 
             //function that sends the message to the server
 
-            var sendMessage = function (messageEncrypted){
+            var sendMessage = function (messageEncrypted,userdata){
                 if (!$scope.publish){
                     $scope.publish = false;
                 }
@@ -154,20 +159,18 @@
                 username: $localStorage[uid + '-username'],
                 content: messageEncrypted,
                 recipient: $scope.id_recipient,
-                publish: $scope.publish
+                publish: $scope.publish,
+                userKeys: JSON.stringify(userdata)
                 })
                $http.post(appConstants.apiUrl + appConstants.messages + uid, messageRequest,
                     {headers:  {'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8','Authorization':'Bearer: ' + token}
                 }).then(function (response){
                     hide();
                     alert(filter('messages.send_success'));
+                    $state.go('tab.messages');
                     console.log('message sent');
                 }).catch(function (error){
-                    if (error){
-                            console.log(error.code);
-                            console.log(error.message);
-                        
-                    } 
+                    console.log(error)
                 })
             }
 
@@ -268,7 +271,7 @@
                 }
                 var message = decriptMessage(privateKey,data.passphrase,data.content)
                 message.then(function (decrypted){
-                    $state.go('tab.readMessage',{'id': data.id,'content': decrypted})
+                    $state.go('tab.messages')
                 })
             } 
 
