@@ -44,6 +44,7 @@
            //function that retrieves the user published messages
 
             $scope.getFeedbacks = function(){
+              $scope.spinner = true;
           
              var requestFeedback = $.param({
                user_id: user_id
@@ -51,6 +52,7 @@
              var url = appConstants.apiUrl + appConstants.messages + user_id  + '/mail/published'
                $http.post(url,requestFeedback,{headers: {'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8','Authorization':'Bearer: ' + token}
                }).then(function (response){
+                 $scope.spinner = false;
                    console.log(response.data.data)
                    var feedbacks = response.data.data;
                    $scope.feedbacks = getDates(feedbacks);

@@ -24,11 +24,13 @@
             
             
             $scope.getUserChats = async () => {
+                $scope.spinner = true
             $http.get( appConstants.apiUrl + appConstants.profile +uid+ '/chats',{headers: {'Authorization':'Bearer: ' + token} 
                 }).then(function (response){
+                    $scope.spinner = false
                 if (response.data.data){
                     var userChats = response.data.data
-                    console.log(userChats)
+                    $scope.data = userChats;
                     for (var i = 0; i < userChats.length; i++){
                     storeLocalChats(userChats[i].chatID,userChats[i].title,userChats[i].members,userChats[i].last_modified)
                     }
@@ -36,6 +38,7 @@
                     $scope.userChats = []
                 }
                 }).catch(function(error){
+                    $scope.spinner = false
                     console.log(error);
                 })
             }
@@ -350,10 +353,13 @@
             //function gets the messages of a chat
 
             $scope.getMessages =  function (){
+                $scope.spinner = true;
                 $http.get(appConstants.apiUrl + appConstants.messages + uid + '/chat/' + id_chat,{headers:  {'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8','Authorization':'Bearer: ' + token}
                 }).then(function (response){
+                    $scope.spinner = false;
                     $scope.chatMessages = response.data.data;
                 }).catch(function (error){
+                    $scope.spinner = false;
                     if (error){
                         if (error.status == 401){
                             $state.go('login');

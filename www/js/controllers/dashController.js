@@ -21,7 +21,7 @@
 
             if(!$localStorage[uid+'keys']){
               alert(filter('tabs.keys_message'))
-              $state.go('tab.keys')
+              $state.go('tab.account',{'user_id': uid})
             }
 
             // elimina acentos y ñ de las claves
@@ -133,18 +133,21 @@
               //get the posts from the server
 
               $scope.getPosts = function (){
+                $scope.spinner = true
                 $http({
                   url: appConstants.apiUrl + appConstants.posts,
                   method: 'GET',
                   headers: {'Authorization':'Bearer: ' + token}
                 }).then(function (response){
                     var posts = response.data.data;
-                    console.log(posts)
                     $scope.posts = getDates(posts);
-                    console.log($scope.posts)
+                    $scope.spinner = false;
                 }).catch(function (error){
+                  $scope.spinner = false;
                     if(error.code == 401){
                       $state.go('login')
+                    }else{
+                      alert(filter('posts.error'))
                     }
                 })  
               }

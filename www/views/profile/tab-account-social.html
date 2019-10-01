@@ -11,6 +11,9 @@
                     </div>
                 </label>
              </li>-->
+             <div class="row" ng-if="spinner" style="justify-content: center">
+                    <ion-spinner icon="ripple"></ion-spinner>
+            </div>
              <a  ng-if="validFacebook == true" class="item item-icon-right">
                     <i class="icon ion-checkmark-circled" style="color: blue"></i>
                     {{'networks.facebook' | translate}}
@@ -42,12 +45,17 @@
                                 {{'networks.tw_message' | translate}}
                             </div>
                     </div>
-                    <div class="card">
-                            <div class="item item-text-wrap">
-                                 "{{validationMessage}}"
-                            </div>
+                    <div class="item item-input-inset">
+                        <label class="item-input-wrapper">
+                            <input type="text" id="validationMessage" value="{{validationMessage}}">
+                        </label> 
+                        <button type="button" class="button button-small" ng-click="copy()">
+                            <i class="icon ion-clipboard"></i>
+                        </button>
                     </div>
-                     <button class="button button-positive" ng-click="getTwitterFeed()">{{'networks.verify' | translate}}</button>
+                    <div class="row">
+                        <button class="button button-positive" id="verifyTwButton" ng-click="getTwitterFeed()">{{'networks.verify' | translate}}</button>
+                    </div>
                 </form>
              </li>
              <a  ng-if="validGitHub == true" class="item item-icon-right">

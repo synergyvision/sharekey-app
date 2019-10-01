@@ -23,8 +23,10 @@
             //function that retrieves the lists of surveys
 
             $scope.getSurveys = function (){
+                $scope.spinner = true;
                 $http.get(appConstants.apiUrl + appConstants.surveys,{headers: {'Authorization':'Bearer: ' + token}
                 }).then(function (response){
+                    $scope.spinner = false;
                     console.log(response.data)
                     $scope.surveys = response.data.data;
                     $localStorage.surveys = $scope.surveys;

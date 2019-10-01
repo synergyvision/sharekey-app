@@ -5,6 +5,9 @@
                 </button>
         </ion-nav-buttons>
     <ion-content ng-init="getMessages()">
+    <div class="row" ng-if="spinner" style="justify-content: center">
+            <ion-spinner icon="ripple"></ion-spinner>
+    </div>
     <div ng-repeat="message in chatMessages | orderBy: 'this.data.date_sent'" >
         <div class="card" id="sentMessage" ng-if="message.data.id_sender == uid">  
             <div class="item item-text-wrap" style="background-color: cornflowerblue;">
@@ -22,7 +25,7 @@
                 <p>
                     <font size="2">{{message.data.username}}</font><br>
                     <span ng-if="!message.decrypted">{{'chats.encrypted' | translate}}</span>
-                    <font ng-if="message.decrypted" size="4"><b>{{message.data.content}}</b>></font>
+                    <font ng-if="message.decrypted" size="4"><b>{{message.data.content}}</b></font>
                     <br>
                     <small id="data">{{message.sent}}</small>
                 </p>    

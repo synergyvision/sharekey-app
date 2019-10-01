@@ -4,6 +4,9 @@
                 <h2>{{'contacts.requests' | translate}}</h2>
             </div>
         <div class="list social-list" ng-init="getFriendRequest()">
+                <div class="row" ng-if="!requests" style="justify-content: center">
+                        <ion-spinner icon="ripple"></ion-spinner>
+                </div>
             <a class="item item-thumbnail-left item-text-wrap"  ng-repeat="request in requests">
                 <img ng-if="request.picture" class="animated zoomIn" ng-src="{{request.picture}}">
                 <img ng-if="!request.picture" class="animated zoomIn" src="../../img/default-user-icon-8.jpg">
@@ -22,6 +25,9 @@
                 <h2>{{'contacts.title' | translate}}</h2>
         </div>
         <div class="list social-list" ng-init="getContacts()">
+                <div class="row" ng-if="!contacts" style="justify-content: center">
+                        <ion-spinner icon="ripple"></ion-spinner>
+                </div>
                 <a class="item item-thumbnail-left item-text-wrap"  ng-repeat="contact in contacts">
                     <img ng-if="contact.photo" class="animated zoomIn" ng-src="{{contact.photo}}">
                     <img ng-if="!contact.photo" class="animated zoomIn" src="../../img/default-user-icon-8.jpg">

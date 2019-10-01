@@ -11,7 +11,7 @@
             var token = $localStorage.userToken;
             var uid = $localStorage.uid;
             var username = $localStorage[uid + '-username'];
-            var preMessage = 'Soy ' + username + ' en Sharekey ';
+            var preMessage = 'Soy ' + username + ' en SecureShare ';
             $scope.fbForm = false;
             $scope.twitterForm = false;
             $scope.githubForm = false;
@@ -83,8 +83,10 @@
             }
 
             $scope.getSocials = function (){
+                $scope.spinner = true;
                 $http.get(appConstants.apiUrl + appConstants.config + uid + '/addedSocials',{headers: {'Authorization':'Bearer: ' + token}
                 }).then(function (response){
+                    $scope.spinner = false;
                         $scope.validFacebook = response.data.facebook
                         $scope.validTwitter = response.data.twitter
                         $scope.validGitHub = response.data.github
@@ -117,7 +119,7 @@
             
             var validateTweet = function (feed){
                 var valid = false
-                for (i = 0; i < feed.length; i ++){
+                for (var i = 0; i < feed.length; i ++){
                     if( feed[i].text == $scope.validationMessage){
                         valid = true;
                         validateTwitter();
@@ -129,10 +131,11 @@
             }
 
             var validateTwitter = function (){
-                $http.post(appConstants.apiUrl + appConstants.config + uid + '/validateTwitter',
+                var data = ""
+                $http.post(appConstants.apiUrl + appConstants.config + uid + '/validateTwitter',data,
                     {headers: {'Authorization':'Bearer: ' + token}
                 }).then(function (response){
-                    alert(filter('tw_success'))
+                    alert(filter('networks.tw_success'))
                     $state.reload();
                 }).catch(function (error){
                     console.log(error)
@@ -179,6 +182,13 @@
                         alert(filter('networks.gh_error'))
                     })
                 })
-            } 
+            }
+            
+            $scope.copy = function(){
+                var copyText = document.getElementById('validationMessage');
+                copyText.select(); 
+                copyText.setSelectionRange(0, 99999); /*For mobile devices*/
+                document.execCommand("copy");
+              }
      }    
 })()  

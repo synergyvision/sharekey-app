@@ -15,6 +15,26 @@
       </div>
     </div>
     <div id="Posted" ng-init="getPosts()">
+        <div id="posts">
+            <div ng-if="spinner" class="timeline-wrapper">
+                <div class="timeline-item">
+                    <div class="animated-background">
+                        <div class="background-masker header-top"></div>
+                        <div class="background-masker header-left"></div>
+                        <div class="background-masker header-right"></div>
+                        <div class="background-masker header-bottom"></div>
+                        <div class="background-masker subheader-left"></div>
+                        <div class="background-masker subheader-right"></div>
+                        <div class="background-masker subheader-bottom"></div>
+                        <div class="background-masker content-top"></div>
+                        <div class="background-masker content-first-end"></div>
+                        <div class="background-masker content-second-line"></div>
+                        <div class="background-masker content-second-end"></div>
+                        <div class="background-masker content-third-line"></div>
+                        <div class="background-masker content-third-end"></div>
+                    </div>
+                </div>
+            </div>
           <div id="card" class="list card" ng-repeat="post in posts | orderBy: '-this.data.timestamp'" ng-if="(post.data.public == 'false' && post.data.user_id == uid) ||post.data.public == 'true' ">
               <div class="item item-avatar">
                   <img ng-if="post.userPicture" ng-src="{{post.userPicture}}">

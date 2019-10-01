@@ -69,7 +69,8 @@
         "edit_text": "Edita tu post",
         "edit_comment": "Edita tu comentario",
         "cancel": "Cancelar",
-        "ask_pass": "Introduzca la clave."
+        "ask_pass": "Introduzca la clave.",
+        "error": "Ha ocurrido un error intentelo mas tarde."
     },
     "personalInfo":{
         "title": "Modificar perfil",

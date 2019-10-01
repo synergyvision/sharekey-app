@@ -299,6 +299,8 @@
             //function gets users list of messages by the tray
 
             $scope.getMessages = function (tray){
+                $scope.correos = "";
+                $scope.spinner = true;
                 $scope.tray = tray;
                 var requestMessages = $.param({
                     user_id: uid
@@ -306,12 +308,13 @@
                 $http.post(appConstants.apiUrl + appConstants.messages + uid + '/mail/' +tray,requestMessages,
                     {headers: {'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8','Authorization':'Bearer: ' + token}
                 }).then(function (response){
-                    console.log(response);
                     if (response.data.status == 200){
+                        $scope.spinner = false;
                         var messages = response.data.data;
                         $scope.correos = getDate(messages);
                     }
                 }).catch(function (error){
+                    $scope.spinner = false;
                     console.log(error);
                 })
             }

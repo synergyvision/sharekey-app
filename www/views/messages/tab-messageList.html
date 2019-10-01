@@ -11,6 +11,9 @@
             <a ng-if="tray == 'outbox'" style="color: blue" class="button">{{'messages.tab_outbox' | translate}}</a>
             <a ng-if="tray != 'outbox'" class="button" ng-click="getMessages('outbox')">{{'messages.tab_outbox' | translate}}</a>
         </div>
+        <div class="row" ng-if="spinner" style="justify-content: center">
+                <ion-spinner icon="ripple"></ion-spinner>
+          </div>
         <div ng-if="tray == 'inbox'" ng-repeat="correo in correos |  orderBy: '-this.data.timestamp'">
             <div class="list social-list"  ng-if="correo.data.status == 'unread'">
                 <a class="item item-text-wrap" ng-click="readMessage(correo.id,correo.data.status,correo.data.content)"  id="unread">
