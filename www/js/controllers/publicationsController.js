@@ -33,7 +33,7 @@
                  feedbacks[i].reactions = null;
                }
                var sent = new Date(feedbacks[i].data.timestamp);
-               feedbacks[i].data.timestamp = sent.toLocaleString();
+               feedbacks[i].date_sent = sent.toLocaleString();
                if (!feedbacks[i].picture){
                  feedbacks[i].picture = null;
                }

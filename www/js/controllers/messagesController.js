@@ -271,7 +271,7 @@
                 }
                 var message = decriptMessage(privateKey,data.passphrase,data.content)
                 message.then(function (decrypted){
-                    $state.go('tab.messages')
+                    $state.go('tab.readMessage',{'id': data.id,'content': decrypted})
                 })
             } 
 
@@ -363,7 +363,7 @@
                 var publishRequest = $.param({
                     sender: $scope.data.sender,
                     id_sender: $scope.data.id_sender,
-                    content: $scope.data.content
+                    content: $stateParams.content
                 })
                 $http.post(appConstants.apiUrl + appConstants.messages + uid + '/' + $stateParams.id + '/publish',publishRequest,
                     {headers: {'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8','Authorization':'Bearer: ' + token}
