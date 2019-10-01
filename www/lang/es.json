@@ -12,6 +12,7 @@
         "error_title": "Error"
     },
     "recoverPassword":{
+        "view_title": "Recuperar Contraseña",
         "email": "Correo electrónico",
         "email_placeholder": "ejemplo@hotmail.com",
         "button_go": "Continuar",
