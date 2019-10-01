@@ -143,11 +143,11 @@
                     $scope.posts = getDates(posts);
                     $scope.spinner = false;
                 }).catch(function (error){
-                  $scope.spinner = false;
+                    $scope.spinner = false;
                     if(error.code == 401){
                       $state.go('login')
                     }else{
-                      alert(filter('posts.error'))
+                     console.log(error)
                     }
                 })  
               }

@@ -1,7 +1,12 @@
-<ion-view view-title="{{'keys.newKey_title' | translate}}">
-        <ion-content ng-controller="keysController">
+<ion-view view-title="{{'keys.newKey_title' | translate}}" ng-controller="keysController">
+        <ion-nav-buttons side="right">
+                <button class="button" ng-click="generateKeys()"  class="button button-positive">
+                        {{'keys.generate' | translate}}
+                </button>
+        </ion-nav-buttons>
+        <ion-content>
             <div class="list" ng-init="generarPalabras()">
-                <form ng-submit="generateKeys()">
+                <form>
                 <label class="item item-input">
                     <span class="input-label">{{'keys.keyname' | translate}}</span>
                     <input type="text" id="keyname" ng-model="$parent.newName" required>
@@ -12,24 +17,23 @@
                 </label>
                 <label class="item item-input">
                     <span class="input-label">{{'keys.email' | translate}}</span>
-                    <input type="text" ng-model="email" id="email" required>
+                    <input type="text" ng-model="$parent.email" id="email" required>
                 </label>
                 <label class="item item-input">
                     <span class="input-label">{{'keys.pass' | translate}}</span>
-                    <input type="text" ng-model="passphrase" id="passphrase" required>
+                    <input type="text" ng-model="$parent.passphrase" id="passphrase" required>
                 </label>
                 <div class="item item-divider">
                         {{'keys.keyphrase' | translate}}
                 </div>
                 <div class="item item-input-inset">
                     <label class="item-input-wrapper">
-                        <input type="text" id="phrase" ng-model="phrase" value="{{words}}">
+                        <input type="text" id="phrase" ng-model="$parent.phrase" value="{{phrase}}">
                     </label> 
                     <button type="button" class="button button-small" ng-click="copy()">
                         <i class="icon ion-clipboard"></i>
                     </button>
                 </div>
-                <button class="button button-full button-positive" type="submit">{{'keys.generate' | translate}}</button>
                 </form>  
             </div>
         </ion-content>    

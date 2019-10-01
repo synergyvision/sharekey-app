@@ -15,6 +15,7 @@
 
             if ($localStorage[uid + 'keys']){
               $scope.userKeys = $localStorage[uid + 'keys']
+              console.log($scope.userKeys)
             }else{
               $scope.userKeys = [];
             }
@@ -184,11 +185,11 @@
                     openpgp.generateKey(options).then(function(key){
                         var privkey = key.privateKeyArmored;
                         var pubkey = key.publicKeyArmored;
-                        console.log('keys created')
-                        console.log('keys encrypted');
                         // encrypt keys on local storage
                         var localPrivateKey = encryptKeys(privkey,$scope.passphrase)
+                        console.log(localPrivateKey)
                         localPrivateKey = localPrivateKey.toString();
+                        console.log(localPrivateKey)
                         localStorekeys(pubkey,localPrivateKey,$scope.newName);
                         // encrypt keys and send to cloud
                         var privateKey = encryptKeys(privkey,words)
@@ -379,7 +380,7 @@
                   localStorekeys($localStorage.recoveryKey.PubKey,localPrivateKey,$localStorage.recoveryKey.name,$localStorage.recoveryKey.default);
                   alert("LLave activada exitosamente");
                   delete $localStorage.recoveryKey
-                  $state.reload();
+                  $state.go('tab.keys');
                 }).catch(function(error){
                   alert(filter('keys.pass_error'))
                 })
