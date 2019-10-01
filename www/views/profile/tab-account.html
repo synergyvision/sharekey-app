@@ -52,7 +52,7 @@
       <div class="list card" ng-repeat="feedback in feedbacks | orderBy: '-this.data.timestamp'">
             <div id="feedback" class="item item-avatar">
               <img ng-if="feedback.picture" ng-src="{{feedback.picture}}">
-              <img ng-if="!feedback.picture" src="../../img/default-user-icon-8.jpg">
+              <img ng-if="!feedback.picture" src="./../img/default-user-icon-8.jpg">
 
               <h3>{{feedback.data.sender}} {{'publications.feed_body' | translate}}</h3>
               <p>{{feedback.data.timestamp}}</p>
