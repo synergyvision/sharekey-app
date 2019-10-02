@@ -29,12 +29,12 @@
                     <p>
                         <div style="display: inline-flex">
                           <div  ng-if="post.reactions == 'liked'">
-                            <a class="subdued">{{post.data.likes}} <i class="icon ion-thumbsup"></i></a>
+                            <a class="subdued">{{post.data.likes}} <i class="icon ion-thumbsup" style="color: blue"></i></a>
                             <a class="subdued" ng-click="likeStatus('dislike',post.id)">{{post.data.dislikes}} <i class="icon ion-thumbsdown"></i></a>
                           </div>  
                           <div  ng-if="post.reactions == 'disliked'">
                               <a class="subdued" ng-click="likeStatus('like',post.id)">{{post.data.likes}} <i class="icon ion-thumbsup"></i></a>
-                              <a class="subdued">{{post.data.dislikes}} <i class="icon ion-thumbsdown" ></i></a>
+                              <a class="subdued">{{post.data.dislikes}} <i class="icon ion-thumbsdown" style="color: red" ></i></a>
                           </div>
                           <div  ng-if="post.reactions == null">
                               <a class="subdued" ng-click="likeStatus('like',post.id)">{{post.data.likes}} <i class="icon ion-thumbsup"></i></a>

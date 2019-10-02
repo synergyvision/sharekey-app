@@ -155,27 +155,31 @@
               // changes the likes of the posts on the scope
 
               var changeReaction = function(post_id,status){
-                for (var i = 0; i < $scope.posts.length; i++){
-                  if ($scope.posts[i].id == post_id){
-                    if (!$scope.posts[i].reactions){
-                      if (status == 'like'){
+                if ($scope.posts){
+                  for (var i = 0; i < $scope.posts.length; i++){
+                    if ($scope.posts[i].id == post_id){
+                      if (!$scope.posts[i].reactions){
+                        if (status == 'like'){
+                          $scope.posts[i].reactions = 'liked'
+                          $scope.posts[i].data.likes += 1;
+                        }else{
+                          $scope.posts[i].reactions = 'disliked'
+                          $scope.posts[i].data.dislikes += 1;
+                        }
+                      } else if ($scope.posts[i].reactions == 'liked' && status != 'like') {
+                          $scope.posts[i].reactions = 'disliked'
+                          $scope.posts[i].data.likes -= 1;
+                          $scope.posts[i].data.dislikes += 1;
+                      } else if ($scope.posts[i].reactions == 'disliked' && status == 'like'){
                         $scope.posts[i].reactions = 'liked'
                         $scope.posts[i].data.likes += 1;
-                      }else{
-                        $scope.posts[i].reactions = 'disliked'
-                        $scope.posts[i].data.dislikes += 1;
+                        $scope.posts[i].data.dislikes -= 1;
                       }
-                    } else if ($scope.posts[i].reactions == 'liked' && status != 'like') {
-                        $scope.posts[i].reactions = 'disliked'
-                        $scope.posts[i].data.likes -= 1;
-                        $scope.posts[i].data.dislikes += 1;
-                    } else if ($scope.posts[i].reactions == 'disliked' && status == 'like'){
-                      $scope.posts[i].reactions = 'liked'
-                      $scope.posts[i].data.likes += 1;
-                      $scope.posts[i].data.dislikes -= 1;
                     }
                   }
-                }
+                }else{
+                  $scope.loadPost();
+                }  
               }
           
               //updates likes on the server
@@ -280,6 +284,7 @@
                   headers: {'Authorization':'Bearer: ' + token} 
                 }).then(function (response){
                     $scope.post = response.data.data;
+                    $scope.post.reactions = checkLike($scope.post.data.reactions)
                   if ($scope.post.data.public == 'false'){
                     $scope.post.encrypted = true;
                   }
