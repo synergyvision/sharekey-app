@@ -4,8 +4,8 @@
         .module('starter')
         .controller('profileController', profileController);
   
-        profileController.$inject = ['$scope','$http','$localStorage','$state','$location','$stateParams','$ionicPopup','$window','appConstants','$cordovaCamera','$ionicPlatform'];
-        function profileController($scope,$http,$localStorage,$state,$location,$stateParams,$ionicPopup,$window,appConstants,$cordovaCamera,$ionicPlatform){
+        profileController.$inject = ['$scope','$http','$localStorage','$state','$location','$stateParams','$ionicPopup','$window','appConstants','$cordovaCamera','$ionicPlatform','$ionicModal'];
+        function profileController($scope,$http,$localStorage,$state,$location,$stateParams,$ionicPopup,$window,appConstants,$cordovaCamera,$ionicPlatform,$ionicModal){
             var token = $localStorage.userToken;
 
             //function retrieves user data from serve
@@ -35,6 +35,7 @@
                 })
             }
 
+
             //function updates the data of the user
           
             $scope.updateData =  function(){
@@ -50,6 +51,7 @@
               }).then( function (response){
                   if (response.data.status == 200){
                       console.log('User data updated');
+                      $scope.$parent.modal1.hide()
                       $state.reload()
                   }else{
                     console.log(response.data.message)
@@ -98,6 +100,7 @@
                .then(function (response) {
                  $scope.imgSrc = imgURI;
                  $localStorage.userPicture = imgURI;
+                 $scope.$parent.modal1.hide()
                  $state.reload()
                })
                .catch(function (error) {

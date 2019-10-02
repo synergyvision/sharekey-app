@@ -51,22 +51,26 @@
                             <div class="col col-75">
                                 {{'suveys.expired' | translate}}
                             </div>
-                            <div class="col col-25">
-                                <button class="button button-small button-assertive" ng-if="survey.userId == uid"  ng-click="deleteSurvey()" class="button button-positive">
-                                        <i class="icon ion-trash-b"></i>
-                                </button>
-                            </div>
                         </div>    
                     </div>
                 <div class="item">
-                    <h2>{{survey.title}}</h2>
-                    <p>{{'suveys.body' | translate}} {{survey.user}}</p>
+                    <div class="row">
+                        <div class="col col-75">
+                                <h2>{{survey.title}}</h2>
+                                <p>{{'suveys.body' | translate}} {{survey.user}}</p>
+                        </div>   
+                        <div class="col col-25">
+                                <button class="button button-small button-assertive" ng-if="survey.userId == uid"  ng-click="deleteSurvey()" class="button button-positive">
+                                        <i class="icon ion-trash-b"></i>
+                                </button>
+                        </div>
+                    </div>    
                 </div> 
-                <div class="item item-image" ng-repeat="question in survey.questions">
+                <div ng-repeat="question in survey.questions">
                     <div class="item item-divider" >
                             {{question.question}}
                     </div>
-                    <ion-list ng-repeat="answer in question.answers">
+                    <ion-list style="float: left; width: 100%;" ng-repeat="answer in question.answers">
                             <div class="item" id="answers"><b>{{answer.content}}</b> {{answer.votes}}</div>
                     </ion-list>
                 </div>

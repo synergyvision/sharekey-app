@@ -14,6 +14,7 @@
       'repos' : 'repositories/',
       'config' : 'config/',
       'baseUrl' : '/',
+      'language': 'es'
     })
   })();
   

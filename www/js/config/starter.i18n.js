@@ -4,8 +4,8 @@
       .module('starter')
       .config(translator);
   
-      translator.$inject = ['$translateProvider'];
-      function translator($translateProvider) {
+      translator.$inject = ['$translateProvider','appConstants'];
+      function translator($translateProvider,appConstants) {
   
         $translateProvider.useSanitizeValueStrategy('sanitizeParameters');
   
@@ -14,7 +14,7 @@
           suffix: ".json"
         });
   
-        $translateProvider.preferredLanguage('es');
+        $translateProvider.preferredLanguage(appConstants.language);
       }
   
   })();

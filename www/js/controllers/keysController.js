@@ -380,7 +380,7 @@
                   localStorekeys($localStorage.recoveryKey.PubKey,localPrivateKey,$localStorage.recoveryKey.name,$localStorage.recoveryKey.default);
                   alert("LLave activada exitosamente");
                   delete $localStorage.recoveryKey
-                  $state.go('tab.keys');
+                  $state.reload();
                 }).catch(function(error){
                   alert(filter('keys.pass_error'))
                 })
