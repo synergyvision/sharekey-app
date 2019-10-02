@@ -10,6 +10,7 @@
             var uid = $localStorage.uid;
             $scope.uid = uid;
             var user_id = $stateParams.user_id;
+            console.log(user_id )
             $scope.user_id = user_id
             $scope.username = $localStorage[uid + '-username'];
           
@@ -43,19 +44,32 @@
           
            //function that retrieves the user published messages
 
+           var changeFeedbackReaction = function(messageId){
+                for (var i = 0; i < $scope.feedbacks.length;i++ ){
+                  if ($scope.feedbacks[i].id == messageId){
+                    if($scope.feedbacks[i].reactions == true){
+                      $scope.feedbacks[i].reactions = null
+                      $scope.feedbacks[i].data.likes -=1;
+                    }else{
+                      $scope.feedbacks[i].reactions = true
+                      $scope.feedbacks[i].data.likes +=1;
+                    }
+                  }
+                }
+           }
+
             $scope.getFeedbacks = function(){
               $scope.spinner = true;
-          
              var requestFeedback = $.param({
                user_id: user_id
              })
-             var url = appConstants.apiUrl + appConstants.messages + user_id  + '/mail/published'
+             var url = appConstants.apiUrl + appConstants.messages + uid + '/mail/published'
                $http.post(url,requestFeedback,{headers: {'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8','Authorization':'Bearer: ' + token}
                }).then(function (response){
-                 $scope.spinner = false;
-                   console.log(response.data.data)
+                   $scope.spinner = false;
                    var feedbacks = response.data.data;
                    $scope.feedbacks = getDates(feedbacks);
+                   console.log($scope.feedbacks);
                }).catch(function(error){
                  console.log(error);
                })
@@ -68,7 +82,7 @@
                 {headers: {'Authorization':'Bearer: ' + token}
               }).then(function (response){
                  console.log(response.data);
-                 $window.location.reload();
+                  changeFeedbackReaction(messageId)
               }).catch(function (error){
                 console.log(error);
               })
