@@ -4,8 +4,8 @@
         .module('starter')
         .controller('tabsController', tabsController);
   
-        tabsController.$inject = ['$scope','$localStorage'];
-        function tabsController($scope,$localStorage){
+        tabsController.$inject = ['$scope','$localStorage','$state'];
+        function tabsController($scope,$localStorage,$state){
             var id = $localStorage.uid
 
             $scope.goToProfile = function(){
