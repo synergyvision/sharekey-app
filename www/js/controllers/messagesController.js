@@ -4,8 +4,8 @@
         .module('starter')
         .controller('messagesController', messagesController);
   
-        messagesController.$inject = ['$scope','$http','$localStorage','$state','$window','$location','$stateParams','appConstants','$ionicPopup','$ionicLoading','$filter'];
-        function messagesController($scope,$http,$localStorage,$state,$window,$location,$stateParams,appConstants,$ionicPopup,$ionicLoading,$filter){
+        messagesController.$inject = ['$scope','$http','$localStorage','$state','$window','$location','$stateParams','appConstants','$ionicPopup','$ionicLoading','$filter','ionicAlertPopup'];
+        function messagesController($scope,$http,$localStorage,$state,$window,$location,$stateParams,appConstants,$ionicPopup,$ionicLoading,$filter,ionicAlertPopup){
             var uid = $localStorage.uid
             $scope.userKeys = $localStorage[uid + 'keys'];
             var token = $localStorage.userToken;
@@ -16,7 +16,7 @@
             var filter = $filter('translate');
 
             if(!$localStorage[uid+'keys']){
-                alert(filter('tabs.keys_message'))
+                ionicAlertPopup.alertPop(filter('keys.info_title'),filter('tabs.keys_message'))
                 $state.go('tab.account',{'user_id': uid})
               }
 
@@ -24,7 +24,7 @@
 
             $scope.getPublicKey =  function (idUser){
                 if (!$scope.message){
-                alert(filter('messages.empty_error'))
+                    ionicAlertPopup.alertPop('error',filter('messages.empty_error'))
                 }else{
                     var keyRequest = $.param({
                         id: idUser
@@ -150,7 +150,7 @@
                 message.then( function (encryptedMessage){
                     sendMessage(encryptedMessage,userdata);
                 }).catch(function (error){
-                    alert(error)
+                    ionicAlertPopup.alertPop('error',error)
                 })
             }
 
@@ -172,7 +172,7 @@
                     {headers:  {'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8','Authorization':'Bearer: ' + token}
                 }).then(function (response){
                     hide();
-                    alert(filter('messages.send_success'));
+                    ionicAlertPopup.alertPop('Mensaje',filter('messages.send_success'))
                     $state.go('tab.messages');
                     console.log('message sent');
                 }).catch(function (error){
@@ -274,7 +274,7 @@
                 try {
                     var privateKey = decryptKey(privateKey,data.passphrase);
                 }catch(e){
-                    alert(filter('messages.pass_error'))
+                    ionicAlertPopup.alertPop('error',filter('messages.pass_error'))
                 }
                 var message = decriptMessage(privateKey,data.passphrase,data.content)
                 message.then(function (decrypted){
@@ -333,11 +333,11 @@
                 }).then(function (response){
                     if (response.data.status == 200){
                         console.log(response.data);
-                        alert(filter('messages.deleted'))
+                        ionicAlertPopup.alertPop('Mensaje',filter('messages.deleted'))
                         $state.go('tab.messages');
                     }
                 }).catch(function (error){
-                    alert(error)
+                    console.log(error)
                 })
             }
 
@@ -376,7 +376,7 @@
                 }).then(function (response){
                     console.log(response);
                     $state.go('tab.messages')
-                    alert(filter('messages.publish_success'))
+                    ionicAlertPopup.alertPop('Mensaje',filter('messages.publish_success'))
                 }).catch(function (error){
                     console.log(error);
                 })

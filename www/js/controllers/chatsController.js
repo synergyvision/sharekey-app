@@ -4,8 +4,8 @@
         .module('starter')
         .controller('chatsController', chatsController)
 
-        chatsController.$inject = ['$scope','$http','$localStorage','$state','$stateParams','$location','appConstants','$ionicPopup','$ionicLoading','$filter'];
-        function chatsController($scope,$http,$localStorage,$state,$stateParams,$location,appConstants,$ionicPopup, $ionicLoading,$filter){
+        chatsController.$inject = ['$scope','$http','$localStorage','$state','$stateParams','$location','appConstants','$ionicPopup','$ionicLoading','$filter','ionicAlertPopup'];
+        function chatsController($scope,$http,$localStorage,$state,$stateParams,$location,appConstants,$ionicPopup, $ionicLoading,$filter,ionicAlertPopup){
             var uid = $localStorage.uid
             var token = $localStorage.userToken;
             $scope.uid =$localStorage.uid;
@@ -21,7 +21,7 @@
             var filter = $filter('translate')
 
             if(!$localStorage[uid+'keys']){
-                alert(filter('tabs.keys_message'))
+                ionicAlertPopup.alertPop(filter('keys.info_title'),filter('tabs.keys_message'))
                 $state.go('tab.account',{'user_id': uid})
               }
 

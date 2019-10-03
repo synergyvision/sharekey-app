@@ -4,8 +4,8 @@
         .module('starter')
         .controller('LoginController', loginController);
   
-        loginController.$inject = ['$scope','$http','$location','$localStorage','appConstants','$state','$ionicPopup','$filter','$ionicLoading'];
-        function loginController($scope,$http,$location,$localStorage,appConstants,$state,$ionicPopup,$filter,$ionicLoading){
+        loginController.$inject = ['$scope','$http','$location','$localStorage','appConstants','$state','$ionicPopup','$filter','$ionicLoading','ionicAlertPopup'];
+        function loginController($scope,$http,$location,$localStorage,appConstants,$state,$ionicPopup,$filter,$ionicLoading,ionicAlertPopup){
 
           var translate = $filter('translate');
 
@@ -71,27 +71,25 @@
                               $localStorage.userPicture = response.data.content.profileUrl;
                               $state.go('tab.dash');
                           }else{
-                            var alertPopup = $ionicPopup.alert({
-                              title: translate('login.error_title'),
-                              template: translate('login.error'),
-                            });
+                            ionicAlertPopup.alertPop(translate('login.error_title'),translate('login.error'))
                           }  
+                        }).catch(function (error){
+                          console.log(error)
                         })
                       }else{
                         if (response.data.status === 'auth/wrong-password'){
                           hide()
-                          var alertPopup = $ionicPopup.alert({
-                            title: translate('login.error_title'),
-                            template: translate('login.password_error'),
-                          });
+                          ionicAlertPopup.alertPop(translate('login.error_title'),translate('login.password_error'))
                         } else if (response.data.status === 'auth/user-not-found'){
                           hide()
-                          var alertPopup = $ionicPopup.alert({
-                            title: translate('login.error_title'),
-                            template: translate('login.email_error'),
-                          });
+                          ionicAlertPopup.alertPop(translate('login.error_title'),translate('login.email_error'))
+                        }else if(response.data.status === 'auth/invalid-email'){
+                          hide()
+                          ionicAlertPopup.alertPop(translate('login.error_title'),translate('login.email_error'))
                         }
                       }
+                    }).catch(function (error){
+                      console.log(error)
                     })
                   })  
                 }

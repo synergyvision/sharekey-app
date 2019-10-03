@@ -4,8 +4,8 @@
         .module('starter')
         .controller('DashCtrl', DashCtrl);
   
-        DashCtrl.$inject = ['$scope','$window','$localStorage','$ionicPopup','$stateParams','$http','$state','appConstants','$ionicLoading','$filter'];
-        function DashCtrl($scope,$window,$localStorage,$ionicPopup,$stateParams,$http,$state,appConstants,$ionicLoading,$filter){
+        DashCtrl.$inject = ['$scope','$window','$localStorage','$ionicPopup','$stateParams','$http','$state','appConstants','$ionicLoading','$filter','ionicAlertPopup'];
+        function DashCtrl($scope,$window,$localStorage,$ionicPopup,$stateParams,$http,$state,appConstants,$ionicLoading,$filter,ionicAlertPopup){
             var uid = $localStorage.uid
             $scope.uid = uid;
             $scope.storedKeys = $localStorage[uid+'keys'];
@@ -20,7 +20,7 @@
             //check if keys exists if not go to keys
 
             if(!$localStorage[uid+'keys']){
-              alert(filter('tabs.keys_message'))
+              ionicAlertPopup.alertPop(filter('keys.info_title'),filter('tabs.keys_message'))
               $state.go('tab.account',{'user_id': uid})
             }
 

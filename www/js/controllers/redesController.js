@@ -4,8 +4,8 @@
         .module('starter')
         .controller('redesController', redesController);
   
-        redesController.$inject = ['$scope','$http','$localStorage','$state','$location','$stateParams','$rootScope','$window','appConstants','$filter','$ionicPlatform'];
-        function redesController($scope,$http,$localStorage,$state,$location,$stateParams,$rootScope,$window,appConstants,$filter,$ionicPlatform){
+        redesController.$inject = ['$scope','$http','$localStorage','$state','$location','$stateParams','$rootScope','$window','appConstants','$filter','$ionicPlatform','ionicAlertPopup'];
+        function redesController($scope,$http,$localStorage,$state,$location,$stateParams,$rootScope,$window,appConstants,$filter,$ionicPlatform,ionicAlertPopup){
             
             var filter = $filter('translate')
             var token = $localStorage.userToken;
@@ -39,12 +39,12 @@
                 return result;
             }
         
-            $scope.loginFacebook = function(){
+           /* $scope.loginFacebook = function(){
                 facebookConnectPlugin.login(["public_profile"], function success (response){
                 alert(response)}, function fail (response){
                     alert(response)
                 })
-            };
+            };*/
 
            /* $ionicPlatform.ready(function(){
                 var fbLoginSuccess = function (userData) {
@@ -67,7 +67,7 @@
                     }
                 }
                 if (valid == false){
-                alert(filter('networks.fb_error'))
+                    ionicAlertPopup.alertPop(filter('networks.github'),filter('networks.fb_error'))
                 }
             }
 
@@ -75,7 +75,7 @@
                 $http.post(appConstants.apiUrl + appConstants.config + uid + '/validateFacebook',
                     {headers: {'Authorization':'Bearer: ' + token}
                 }).then(function (response){
-                    alert(filter('networks.fb_success'))
+                    ionicAlertPopup.alertPop(filter('networks.facebook'),filter('networks.fb_success'))
                     $state.reload();
                 }).catch(function (error){
                     console.log(error)
@@ -108,7 +108,7 @@
                     {headers: {'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8','Authorization':'Bearer: ' + token}
                 }).then(function (response){
                     if (response.data.feed.errors){
-                        alert(filter('networks.tw_user_404'))
+                        ionicAlertPopup.alertPop(filter('networks.twitter'),filter('networks.tw_user_404'))
                     }else{
                         validateTweet(response.data.feed)
                     }
@@ -126,7 +126,7 @@
                     }
                 }
                 if (valid == false){
-                    alert(filter('networks.tw_error'))
+                    ionicAlertPopup.alertPop(filter('networks.twitter'),filter('networks.tw_error'))
                 }
             }
 
@@ -135,7 +135,7 @@
                 $http.post(appConstants.apiUrl + appConstants.config + uid + '/validateTwitter',data,
                     {headers: {'Authorization':'Bearer: ' + token}
                 }).then(function (response){
-                    alert(filter('networks.tw_success'))
+                    ionicAlertPopup.alertPop(filter('networks.twitter'),filter('networks.tw_success'))
                     $state.reload();
                 }).catch(function (error){
                     console.log(error)
@@ -179,7 +179,7 @@
                         console.log(response.data)
                         $state.reload()
                     }).catch(function (error){
-                        alert(filter('networks.gh_error'))
+                        ionicAlertPopup.alertPop(filter('networks.twitter'),filter('networks.gh_error'))
                     })
                 })
             }

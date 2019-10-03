@@ -4,8 +4,8 @@
         .module('starter')
         .controller('keysController', keysController);
   
-        keysController.$inject = ['$scope','$http','$localStorage','$state','$window','$sessionStorage','appConstants','$ionicPopup','$ionicHistory','$filter'];
-        function keysController($scope,$http,$localStorage,$state,$window,$sessionStorage,appConstants,$ionicPopup,$ionicHistory,$filter){
+        keysController.$inject = ['$scope','$http','$localStorage','$state','$window','$sessionStorage','appConstants','$ionicPopup','$ionicHistory','$filter','ionicAlertPopup'];
+        function keysController($scope,$http,$localStorage,$state,$window,$sessionStorage,appConstants,$ionicPopup,$ionicHistory,$filter,ionicAlertPopup){
             var uid = $localStorage.uid;
             var token = $localStorage.userToken;
 
@@ -47,7 +47,7 @@
                 if (response.data.status == 200){
                     $scope.phrase = response.data.message;
                 }else{
-                  alert(response.data.message);
+                  ionicAlertPopup.alertPop('error',response.data.message)
                 }  
               })
                   
@@ -81,10 +81,7 @@
                     $scope.keys = checkActiveKeys(keys);
               }).catch(function (error){
                   if (error.status == 401){
-                    var alertPopup = $ionicPopup.alert({
-                      title: filter('keys.error_title'),
-                      template: filter('keys.expired_error')
-                    });
+                    ionicAlertPopup.alertPop(filter('keys.error_title'),filter('keys.expired_error'))
                     $state.go('login');
                   }else{
                     console.log(error.data);
@@ -141,7 +138,7 @@
                         closePop();
                         $ionicHistory.goBack();
                     }else{
-                      alert(response.data.message);
+                      ionicAlertPopup.alertPop('error',response.data.message)
                     }
                 }).catch(function (e){
                   if (e.status == 401){
@@ -237,7 +234,7 @@
               headers: {'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8','Authorization':'Bearer: ' + token}
               }).then(function (response){
                     if (response.status == 200){
-                      alert(filter('keys.key_deleted'));
+                      ionicAlertPopup.alertPop('Llaves',filter('keys.key_deleted'))
                       localDelete(name)
                       $scope.checkKeys();
                     }
@@ -347,7 +344,7 @@
                 $localStorage.recoveryKey.PrivKey = priv;
                 appKeyPopUp();
               }catch(e){
-                alert(filter('keys.recovery_error'));
+                ionicAlertPopup.alertPop('Llaves',filter('keys.recovery_error'))
               }
             }
 
@@ -378,11 +375,11 @@
                   var localPrivateKey = encryptKeys($localStorage.recoveryKey.PrivKey,words)
                   var localPrivateKey = localPrivateKey.toString();
                   localStorekeys($localStorage.recoveryKey.PubKey,localPrivateKey,$localStorage.recoveryKey.name,$localStorage.recoveryKey.default);
-                  alert("LLave activada exitosamente");
+                  ionicAlertPopup.alertPop('Llaves',"LLave activada exitosamente")
                   delete $localStorage.recoveryKey
                   $state.reload();
                 }).catch(function(error){
-                  alert(filter('keys.pass_error'))
+                  ionicAlertPopup.alertPop('error',filter('keys.pass_error'))
                 })
               }
             }

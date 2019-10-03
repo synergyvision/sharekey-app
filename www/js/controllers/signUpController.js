@@ -4,8 +4,8 @@
         .module('starter')
         .controller('signUpController', signUpController);
   
-        signUpController.$inject = ['$scope','$http','$location','$state','appConstants','$ionicPopup','$filter'];
-        function signUpController($scope,$http,$location,$state,appConstants,$ionicPopup,$filter){
+        signUpController.$inject = ['$scope','$http','$location','$state','appConstants','$ionicPopup','$filter','ionicAlertPopup'];
+        function signUpController($scope,$http,$location,$state,appConstants,$ionicPopup,$filter,ionicAlertPopup){
 
             var translate = $filter('translate')
 
@@ -25,24 +25,15 @@
                 }).then(function(response){
                     console.log(response)
                     if (response.data.status == 201){
-                    var alertPopup = $ionicPopup.alert({
-                        title: translate('register.success_title'),
-                        template: translate('register.success')
-                    });
+                        ionicAlertPopup.alertPop(translate('register.success_title'),translate('register.success'))
                     $state.go('login');
                     }else{
                     if (response.data.status == 400){
-                        var alertPopup = $ionicPopup.alert({
-                        title: translate('register.error'),
-                        template: translate('register.username_error')
-                        });
+                        ionicAlertPopup.alertPop(translate('register.error'),translate('register.username_error'))
                     } else if (response.data.status === 'auth/email-already-in-use'){
-                        var alertPopup = $ionicPopup.alert({
-                        title: translate('register.error'),
-                        template: translate('register.email_error')
-                        });
+                        ionicAlertPopup.alertPop(translate('register.error'),translate('register.email_error'))
                     }else{
-                        alert(translate('register.error_500'))
+                        ionicAlertPopup.alertPop('error',translate('register.error_500'))
                         }
                     }
                 })
