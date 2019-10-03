@@ -49,6 +49,13 @@
                 </div>
             </div>
         </div>
+        <div ng-if="empty">
+          <div class="card">
+            <div class="item item-text-wrap">
+              {{'publications.empty' | translate}}
+            </div>
+          </div>
+        </div>
       <div class="list card" ng-repeat="feedback in feedbacks | orderBy: '-this.data.timestamp'">
             <div id="feedback" class="item item-avatar">
               <img ng-if="feedback.picture" ng-src="{{feedback.picture}}">

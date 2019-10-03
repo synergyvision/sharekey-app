@@ -10,7 +10,6 @@
             var uid = $localStorage.uid;
             $scope.uid = uid;
             var user_id = $stateParams.user_id;
-            console.log(user_id )
             $scope.user_id = user_id
             $scope.username = $localStorage[uid + '-username'];
           
@@ -71,7 +70,10 @@
                    $scope.feedbacks = getDates(feedbacks);
                    console.log($scope.feedbacks);
                }).catch(function(error){
-                 console.log(error);
+                  $scope.spinner = false;
+                  if (error.status = 404){
+                    $scope.empty = true
+                  }
                })
             }
           
@@ -167,7 +169,6 @@
                .then(function (response){
                   if (response.data.status == 200){
                       delete $localStorage.uid;
-                      delete $localStorage.search;
                       delete $localStorage.userToken;
                       console.log('Users has logged out')
                       $state.go('login');

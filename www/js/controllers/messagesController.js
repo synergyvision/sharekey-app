@@ -11,8 +11,14 @@
             var token = $localStorage.userToken;
             $scope.form = false;
             $scope.decryptedContent = $stateParams.content
+            $scope.messages = null;
 
             var filter = $filter('translate');
+
+            if(!$localStorage[uid+'keys']){
+                alert(filter('tabs.keys_message'))
+                $state.go('tab.account',{'user_id': uid})
+              }
 
             //retrives the recipient public key
 
@@ -192,6 +198,7 @@
                         
                     } 
                 })
+                 
             }
 
             //function that retrieves a default private key
@@ -299,24 +306,23 @@
             //function gets users list of messages by the tray
 
             $scope.getMessages = function (tray){
-                $scope.correos = "";
-                $scope.spinner = true;
-                $scope.tray = tray;
-                var requestMessages = $.param({
-                    user_id: uid
-                })
-                $http.post(appConstants.apiUrl + appConstants.messages + uid + '/mail/' +tray,requestMessages,
-                    {headers: {'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8','Authorization':'Bearer: ' + token}
-                }).then(function (response){
-                    if (response.data.status == 200){
+                    $scope.spinner = true;
+                    $scope.tray = tray;
+                    var requestMessages = $.param({
+                        user_id: uid
+                    })
+                    $http.post(appConstants.apiUrl + appConstants.messages + uid + '/mail/' +tray,requestMessages,
+                        {headers: {'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8','Authorization':'Bearer: ' + token}
+                    }).then(function (response){
+                        if (response.data.status == 200){
+                            $scope.spinner = false;
+                            var messages = response.data.data;
+                            $scope.correos = getDate(messages);
+                        }
+                    }).catch(function (error){
                         $scope.spinner = false;
-                        var messages = response.data.data;
-                        $scope.correos = getDate(messages);
-                    }
-                }).catch(function (error){
-                    $scope.spinner = false;
-                    console.log(error);
-                })
+                        console.log(error);
+                    })
             }
 
             //function deletes a message

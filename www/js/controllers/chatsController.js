@@ -20,6 +20,11 @@
 
             var filter = $filter('translate')
 
+            if(!$localStorage[uid+'keys']){
+                alert(filter('tabs.keys_message'))
+                $state.go('tab.account',{'user_id': uid})
+              }
+
             //Funtion that makes http call to retrieve user chats and store then in loclahost
             
             
