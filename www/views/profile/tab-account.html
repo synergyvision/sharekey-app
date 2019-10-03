@@ -51,9 +51,12 @@
         </div>
         <div ng-if="empty">
           <div class="card">
-            <div class="item item-text-wrap">
+            <div ng-if="user_id == uid" class="item item-text-wrap">
               {{'publications.empty' | translate}}
             </div>
+            <div ng-if="user_id != uid" class="item item-text-wrap">
+                {{'publications.empty_other_user' | translate}}
+              </div>
           </div>
         </div>
       <div class="list card" ng-repeat="feedback in feedbacks | orderBy: '-this.data.timestamp'">

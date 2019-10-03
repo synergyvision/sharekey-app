@@ -95,7 +95,8 @@
         "expired_error": "Su sesión ha vencido",
         "edit_profile_button": "Editar perfil",
         "feed_body": "te ha enviado:",
-        "empty": "Aquí veras tus mensajes publicados."
+        "empty": "Aquí veras tus mensajes publicados.",
+        "empty_other_user": "Este usuario no ha publicado mensajes."
     },
     "keys":{
         "title": "Llaves",
