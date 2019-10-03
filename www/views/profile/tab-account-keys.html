@@ -17,8 +17,8 @@
                 <button ng-if="key.activated == true" class="button button-small button-assertive" ng-click="deleteKeys(key.name)">
                     <i class="icon ion-trash-b"></i>
                   </button>
-                  <button ng-if="key.activated == false" class="button button-small button-clear button-positive" ng-click="getRecover(key.name)">
-                      {{'keys.activate' | translate}}
+                  <button ng-if="key.activated == false" class="button button-small button-positive" ng-click="getRecover(key.name)">
+                      <i class="icon ion-power"></i>
                   </button>
               </a>
           </div>    
