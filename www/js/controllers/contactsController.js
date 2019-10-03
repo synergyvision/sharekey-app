@@ -14,16 +14,19 @@
             //function makes an http call to server to retrieve users pending friend requests
             
             $scope.getFriendRequest = function (){
+                $scope.spinner = true
                 $http({
                     url: appConstants.apiUrl + appConstants.contacts + uid + '/requests',
                     method: 'GET',
                     headers: {'Authorization':'Bearer: ' + token}
                 }).then(function (response){
                     if (response.data.status == 200){
+                        $scope.spinner = false;
                         $scope.requests = response.data.data;
                         console.log($scope.requests )
                     }
                 }).catch(function (error){
+                    $scope.spinner = false;
                     console.log(error);
                     if (error.status == 401){
                       $state.go('login');
@@ -78,17 +81,19 @@
             //function loads user contacts
 
             $scope.getContacts = function (){
-          
+              $scope.spinner = true;
               $http({
                   url: appConstants.apiUrl + appConstants.profile + uid + '/contacts',
                   method: 'GET',
                   headers: {'Authorization':'Bearer: ' + token}
               }).then(function (response){
+                  $scope.spinner = false;
                   if (response.data.status == 200){
                       console.log(response.data.data)
                       $scope.contacts = response.data.data
                   }
               }).catch(function (error){
+                $scope.spinner = false;
                   if (error.status == 401){
                     //alert('Su sesion ha vencido')
                     $state.go('login');

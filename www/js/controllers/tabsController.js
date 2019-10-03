@@ -6,6 +6,10 @@
   
         tabsController.$inject = ['$scope','$localStorage'];
         function tabsController($scope,$localStorage){
-            $scope.id = $localStorage.uid
+            var id = $localStorage.uid
+
+            $scope.goToProfile = function(){
+                $state.go('tab.account',{'user_id': id})
+            }
         }
 })()  

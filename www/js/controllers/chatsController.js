@@ -55,7 +55,7 @@
             }).then(function (response){
                     $scope.contacts = response.data.data;
                 }).catch(function (error){
-                    alert(error.message);
+                    console.log(error.message);
                 })
             }
 

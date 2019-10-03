@@ -4,7 +4,7 @@
                 <h2>{{'contacts.requests' | translate}}</h2>
             </div>
         <div class="list social-list" ng-init="getFriendRequest()">
-                <div class="row" ng-if="!requests" style="justify-content: center">
+                <div class="row" ng-if="spinner" style="justify-content: center">
                         <ion-spinner icon="ripple"></ion-spinner>
                 </div>
             <a class="item item-thumbnail-left item-text-wrap"  ng-repeat="request in requests">
