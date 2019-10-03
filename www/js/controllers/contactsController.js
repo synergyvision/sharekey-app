@@ -63,10 +63,10 @@
                     console.log(response.data)
                     if (response.data.status == 200){
                         if (response.data.accepted == true){
-                            ionicAlertPopup.alertPop('solicitud','contacts.accept_requests')
+                            ionicAlertPopup.alertPop('solicitud',filter('contacts.accept_requests'))
                             $state.reload();
                         }else{
-                            ionicAlertPopup.alertPop('solicitud','contacts.reject_requests')
+                            ionicAlertPopup.alertPop('solicitud',filter('contacts.reject_requests'))
                             $state.reload();
                         }
                     }
@@ -107,57 +107,5 @@
         $scope.goProfile = function(id){
             $state.go('tab.account',{'user_id': id})
         }
-
-        /*$scope.getUsers = function (){
-            $scope.search = $localStorage.search
-            $http({
-                url: appConstants.apiUrl + appConstants.contacts + uid + '/users',
-                method: 'GET',
-                headers: {'Authorization':'Bearer: ' + token}
-            }).then(function (response){
-                if (response.data.status == 200){
-                    $scope.users = response.data.data;
-                }
-            }).catch(function (error){
-                if (error){
-                if (error.status == 401){
-                    alert('Su sesion ha vencido')
-                    $state.go('login');
-                }
-                else{
-                    console.log(error.code);
-                    console.log(error.message);
-                }
-                }  
-            }) 
-        }
-
-        $scope.sendRequest =  function(id){
-            var request = $.param({
-                id_to: id
-            })
-
-            $http({
-                url: appConstants.apiUrl + appConstants.contacts + uid + '/requests',
-                method: 'POST',
-                data: request,
-                headers: {'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8','Authorization':'Bearer: ' + token}
-            }).then(function (response){
-                if (response.data.status == 201){
-                    alert('Se ha enviado una solicitud de amistad');
-                }
-            }).catch(function (error){
-                    if (error){
-                        if (error.status == 401){
-                            alert('Su sesion ha vencido')
-                            $state.go('login');
-                        }
-                        else{
-                            console.log(error.code);
-                            console.log(error.message);
-                        }
-                    }  
-                }) 
-        }*/
     }    
 })()  

@@ -48,6 +48,7 @@
         "messages": "Mensajes",
         "chats": "Chats",
         "surveys": "Encuestas",
+        "search": "Buscar",
         "keys_message": "Por favor cree o active una llave."
     },
     "posts":{
@@ -212,5 +213,13 @@
         "profile_button": "Ver perfil",
         "accept_requests": "Has aceptado la solicitud de amistad.",
         "reject_requests": "Has rechazado la solicitud."
+    },
+    "search":{
+        "view_title": "Busqueda",
+        "see_profile": "Ver perfíl",
+        "send_request": "Enviar solicitud",
+        "sent_request": "Solicitud de amistad enviada",
+        "search_placeholder": "Buscar usuario",
+        "pop_title": "Solicitud"
     }
 }

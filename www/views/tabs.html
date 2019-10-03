@@ -23,10 +23,12 @@ navigation history that also transitions its views in and out.
     <ion-nav-view name="tab-survey"></ion-nav-view>
   </ion-tab>
 
+  <ion-tab title="{{'tabs.search' | translate}}" icon-off="ion-search" icon-on="ion-search" ui-sref="tab.search">
+      <ion-nav-view name="tab-search"></ion-nav-view>
+  </ion-tab>  
+
   <ion-tab title="{{'tabs.profile' | translate}}" icon-off="ion-person" icon-on="ion-person" ng-click="goToProfile()">
     <ion-nav-view name="tab-account"></ion-nav-view>
   </ion-tab>
-
-
 
 </ion-tabs>

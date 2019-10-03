@@ -1,0 +1,35 @@
+<ion-view view-title="{{'search.view_title' | translate}}" cache-view="false">
+        <ion-content ng-controller="searchController">
+                <div class="bar bar-header item-input-inset">
+                    <label class="item-input-wrapper">
+                        <i class="icon ion-ios-search placeholder-icon"></i>
+                        <input type="search" ng-model="search" placeholder="{{'search.search_placeholder' | translate}}">
+                    </label>
+                    <button class="button button-clear">
+                        <i class="icon ion-ios-search placeholder-icon"></i>
+                    </button>
+                </div>
+            <div class="list social-list" ng-init="getUsers()">
+                    <div class="row" ng-if="spinner" style="justify-content: center">
+                            <ion-spinner icon="ripple"></ion-spinner>
+                    </div>
+                <a class="item item-thumbnail-left item-text-wrap"  ng-repeat="user in users | filter: {name: search} | orderBy: 'this.name'">
+                    <img ng-if="user.photo" class="animated zoomIn" ng-src="{{user.photo}}">
+                    <img ng-if="!user.photo" class="animated zoomIn" src="img/default-user-icon-8.jpg">
+                    <h2 >{{user.name}} {{user.lastname}}</h2>
+                    </h2>
+                    <div ng-if="user.contact == true">
+                        <button class="button button-small button-outline button-dark" ng-click="goProfile(user.id)">
+                                {{'search.see_profile' | translate}}
+                        </button>
+                    </div>
+                    <div ng-if="user.contact == false && user.id != uid">
+                        <button class="button button-small button-outline button-dark" ng-click="sendRequest(user.id)">
+                                {{'search.send_request' | translate}}
+                        </button>
+                    </div>  
+                </a>
+            </div>
+          </ion-content>
+      </ion-view>
+      

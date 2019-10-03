@@ -208,6 +208,16 @@
                 }
             }
         })
+        .state('tab.search',{
+            url: '/search',
+            views: {
+                'tab-search':{
+                    templateUrl: 'views/search/tab-search.html',
+                    controller: 'searchController',
+                    css: '../../css/ionic.app.min.css'
+                }
+            }
+        })
         $urlRouterProvider.otherwise('/auth/login');
     }
 })()
