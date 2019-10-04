@@ -6,9 +6,10 @@
   
         searchController.$inject = ['$scope','appConstants','$localStorage','$http','$state','$filter','ionicAlertPopup'];
         function searchController($scope,appConstants,$localStorage,$http,$state,$filter,ionicAlertPopup){
+            $scope.uid = $localStorage.uid;
             var uid = $localStorage.uid;
             var token = $localStorage.userToken;
-            var translate = $filter('translate')
+            var filter = $filter('translate')
            
             $scope.getUsers = function (){
                 $scope.search = $localStorage.search

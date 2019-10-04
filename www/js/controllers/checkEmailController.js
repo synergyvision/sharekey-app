@@ -20,8 +20,10 @@
                 }).then(function(response){
                   if (response.data.status == 200){
                     ionicAlertPopup.alertPop(translate('recoverPassword.title'),translate('recoverPassword.success'));
+                    $state.go('login');
                   }else {
-                    ionicAlertPopup.alertPop(translate('recoverPassword.error'),translate('recoverPassword.error_not_found'));
+                    ionicAlertPopup.alertPop(translate('recoverPassword.title'),translate('recoverPassword.success'));
+                    $state.go('login');
                   }
                 })
               }  

@@ -7,7 +7,7 @@
         "forgot_password": "¿Olvidé mi contraseña?",
         "register": "¿Usuario nuevo? Regístrate",
         "password_error": "Sus credenciales son inválidas.",
-        "email_error": "Sus credenciales son inválidas..",
+        "email_error": "Sus credenciales son inválidas.",
         "error": "Ha ocurrido un error intentelo mas tarde.",
         "error_title": "Error"
     },
@@ -17,8 +17,7 @@
         "email_placeholder": "ejemplo@hotmail.com",
         "button_go": "Continuar",
         "button_back": "Regresar",
-        "success": "Se ha enviado un correo de recuperación a tu cuenta.",
-        "error_not_found": "Su dirección de correo es inválida o no se encuentra registrada",
+        "success": "Se ha enviado un correo de recuperación a su cuenta.",
         "title": "Información",
         "error": "Error"
     },
@@ -117,7 +116,7 @@
         "recovery": "Para activar su clave, introduzca su frase de recuperación.",
         "cancel": "Cancelar",
         "continuar": "Activar",
-        "ask_pass": "Introduzca su clave de la llave.",
+        "ask_pass": "Introduzca su clave de la llave",
         "pass_error": "La clave insertada no es correcta.",
         "recovery_error": "Su clave de recuperación es incorrecta."
 
@@ -136,7 +135,7 @@
         "fb_success": "Se ha validado la información de facebook exitosamente.",
         "tw_user_404": "No pudimos encontrar tu usuario por favor verifícalo.",
         "tw_error": "Ha ocurrido un error validando el mensaje, revisa que el mensaje se subio en twitter o recarga la pagina para obtener otro mensaje.",
-        "tw_success": "Se ha validado la cuenta de twitter exitosamente",
+        "tw_success": "Se ha validado la cuenta de twitter exitosamente.",
         "gh_error": "Hubo un error verifique sus datos.",
         "fb_error": "Ha ocurrido un error, validando el mensaje, revisa que el mensaje se subio en facebook o recarga la pagina para obtener otro mensaje."
 
@@ -147,7 +146,7 @@
         "tab_outbox": "Enviados",
         "from": "De:",
         "to": "A:",
-        "new_message_title": "Nuevo Correo",
+        "new_message_title": "Nuevo mensaje",
         "addressee": "Destinatario",
         "message_placeholder": "Mensaje",
         "key": "Llave",
@@ -166,7 +165,11 @@
         "continue": "Continuar",
         "pass_error": "Verifique que la llave y la clave sean correctas.",
         "deleted": "Se ha borrado un mensaje.",
-        "publish_success": "Su mensaje se ha publicado exitosamente."
+        "publish_success": "Su mensaje se ha publicado exitosamente.",
+        "confirm_title": "Advertencia",
+        "confirm_text": "¿Quiere borrar este mensaje?",
+        "confirm_button_no": "Cancelar",
+        "confirm_button_yes": "Borrar"
 
     },
     "chats":{
@@ -180,7 +183,7 @@
         "create": "Crear",
         "new_chat_error": "Error en la creacion de chat intenta de nuevo.",
         "pass_error": "Verifique que su par de llave y passphrase sean correctos.",
-        "ask_pass": "Inserta la clave de chat",
+        "ask_pass": "Introduzca su clave de chat",
         "cancel": "Cancelar",
         "continue": "Continuar"
     },
@@ -216,7 +219,7 @@
         "reject_requests": "Has rechazado la solicitud."
     },
     "search":{
-        "view_title": "Busqueda",
+        "view_title": "Bùsqueda",
         "see_profile": "Ver perfíl",
         "send_request": "Enviar solicitud",
         "sent_request": "Solicitud de amistad enviada",

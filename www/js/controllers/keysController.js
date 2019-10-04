@@ -253,7 +253,7 @@
               $scope.data = {};
               var myPopup = $ionicPopup.show({
                 template: '<input type="password" ng-model="data.phraseRecovery">',
-                title: 'Introduzca su frase de recuperacion',
+                title: 'Introduzca su frase de recuperación',
                 scope: $scope,
                 buttons: [
                   { text: 'Cancelar' },

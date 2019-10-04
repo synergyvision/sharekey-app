@@ -79,7 +79,7 @@
                     var imgURI = 'data:image/jpeg;base64,' + imageData;
                     $scope.uploadPhoto(imgURI);
                 }, function(err) {
-                    alert(err)
+                    console.log(err)
                 });
               })
           }

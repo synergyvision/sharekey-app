@@ -153,7 +153,8 @@
                 message.then( function (encryptedMessage){
                     sendMessage(encryptedMessage,userdata);
                 }).catch(function (error){
-                    ionicAlertPopup.alertPop('error',error)
+                    hide();
+                    ionicAlertPopup.alertPop('error','Verifica todos los campos')
                 })
             }
 
@@ -179,6 +180,7 @@
                     $state.go('tab.messages');
                     console.log('message sent');
                 }).catch(function (error){
+                    hide();
                     console.log(error)
                 })
             }
@@ -189,6 +191,7 @@
                 $http.get(appConstants.apiUrl + appConstants.messages + uid + '/' + $stateParams.id,
                     {headers:  {'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8','Authorization':'Bearer: ' + token}
                 }).then(function (response){
+                    $scope.photo = response.data.photo;
                     $scope.data = response.data.data
                     $scope.data = getDate($scope.data)
                     if($scope.data.status == "unread"){
@@ -330,7 +333,22 @@
 
             //function deletes a message
 
-            $scope.deleteMessage = function (){
+            $scope.deleteMessage = function() {
+                var confirmPopup = $ionicPopup.confirm({
+                  title: filter('messages.confirm_title'),
+                  template: filter('messages.confirm_text'),
+                  cancelText: filter('messages.confirm_button_no'),
+                  okText: filter('messages.confirm_button_yes')
+                });
+             
+                confirmPopup.then(function(res) {
+                  if(res) {
+                    deleteMessage();
+                  }
+                });
+              };
+
+            var deleteMessage = function (){
                 $http.delete(appConstants.apiUrl + appConstants.messages + uid + '/' + $stateParams.id,
                     {headers: {'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8','Authorization':'Bearer: ' + token}
                 }).then(function (response){

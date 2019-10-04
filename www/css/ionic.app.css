@@ -10325,6 +10325,9 @@ a.button {
 #send {
   margin: 10px; }
 
+#picture {
+  margin-top: 4px; }
+
 #verifyTwButton {
   margin-top: 3px; }
 
@@ -10485,6 +10488,9 @@ a.button {
 
 #gitButton {
   margin-top: 7px; }
+
+#userImage {
+  margin-top: 5px; }
 
 #surveys {
   border-bottom: 3px solid;

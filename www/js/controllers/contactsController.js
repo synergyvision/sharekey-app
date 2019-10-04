@@ -8,7 +8,7 @@
         function contactsController($scope,appConstants,$localStorage,$http,$state,$filter,ionicAlertPopup){
             var uid = $localStorage.uid;
             var token = $localStorage.userToken;
-            var translate = $filter('translate')
+            var filter = $filter('translate')
           
 
             //function makes an http call to server to retrieve users pending friend requests
