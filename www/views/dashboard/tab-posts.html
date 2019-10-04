@@ -1,5 +1,5 @@
 <ion-view view-title="{{'posts.title' | translate}}" cache-view="false">
-  <ion-content ng-controller="DashCtrl">
+  <ion-content ng-controller="DashCtrl" ng-init="activeKeys()" >
     <div class="card" ng-init="checkAppKey()">
       <div class="item item-divider">
           {{'posts.new_post_title' | translate}}

@@ -5,7 +5,7 @@
                 </button>
     </ion-nav-buttons>
     <ion-content ng-controller="messagesController" ng-init="getMessages('inbox')" class="has-header">
-        <div class="button-bar">
+        <div class="button-bar" ng-init="activeKeys()" >
             <a ng-if="tray == 'inbox'" style="color: blue; border-right: 1px solid lightgray" id="inbox" class="button">{{'messages.tab-inbox' | translate}}</a>
             <a ng-if="tray != 'inbox'" id="inbox" style="border-right: 2px solid lightgray" class="button" ng-click="getMessages('inbox')">{{'messages.tab-inbox' | translate}}</a>
             <a ng-if="tray == 'outbox'" style="color: blue" class="button">{{'messages.tab_outbox' | translate}}</a>

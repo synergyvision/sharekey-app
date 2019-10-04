@@ -4,7 +4,7 @@
             <i class="icon ion-plus-circled"></i>
         </button>
 </ion-nav-buttons>
-  <ion-content ng-controller="chatsController">
+  <ion-content ng-controller="chatsController" ng-init="activeKeys()" >
     <ion-list ng-init="getUserChats()">
      <div class="row" ng-if="spinner" style="justify-content: center">
                 <ion-spinner icon="ripple"></ion-spinner>
