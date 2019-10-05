@@ -200,11 +200,14 @@
                   $http.post(appConstants.apiUrl + appConstants.repos + uid + '/getToken',loginGit,
                     {headers: {'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8','Authorization':'Bearer: ' + token} 
                     }).then(function (response){
+                        delete $localStorage[uid + '-gituser'];
+                        delete $localStorage[uid + '-password']
                     if (response.data.status == 'created'){
                       ionicAlertPopup.alertPop(filter('networks.github'),filter('networks.gh_valid'))
-                      delete $localStorage[uid + '-gituser'];
-                      delete $localStorage[uid + '-password']
                       $state.go('tab.networks')
+                    }else{
+                      $state.go('tab.networks')
+                      ionicAlertPopup.alertPop(filter('networks.github'),filter('networks.gh_error'))
                     }
                   }).catch(function (error){
                       console.log(error)
