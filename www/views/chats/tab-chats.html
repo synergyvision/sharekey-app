@@ -6,9 +6,10 @@
 </ion-nav-buttons>
   <ion-content ng-controller="chatsController" ng-init="activeKeys()" >
     <ion-list ng-init="getUserChats()">
-     <div class="row" ng-if="spinner" style="justify-content: center">
-                <ion-spinner icon="ripple"></ion-spinner>
-     </div>
+        <div class="row" ng-if="spinner" style="justify-content: center">
+                    <ion-spinner icon="ripple"></ion-spinner>
+         </div>
+ 
       <ion-item id="chats" ng-click="getChat(chat.chatID)" ng-repeat="chat in userChats | filter: chatSearch">
           {{chat.title}}
           <ion-option-button class="button-assertive" ng-click="deleteChat(chat.chatID)">

@@ -65,6 +65,7 @@
              var url = appConstants.apiUrl + appConstants.messages + uid + '/mail/published'
                $http.post(url,requestFeedback,{headers: {'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8','Authorization':'Bearer: ' + token}
                }).then(function (response){
+                  $scope.empty = false;
                    $scope.spinner = false;
                    var feedbacks = response.data.data;
                    $scope.feedbacks = getDates(feedbacks);
@@ -73,6 +74,9 @@
                   $scope.spinner = false;
                   if (error.status = 404){
                     $scope.empty = true
+                  }else if(error.status){
+                    ionicAlertPopup.alertPop(filter('personalInfo.expired_error'))
+                    $state.go('login')
                   }
                })
             }

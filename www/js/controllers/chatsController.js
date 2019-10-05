@@ -46,6 +46,10 @@
                 }
                 }).catch(function(error){
                     $scope.spinner = false
+                    if(error.status == 401){
+                        ionicAlertPopup.alertPop(filter('personalInfo.expired_error'))
+                        $state.go('login')
+                    }
                     console.log(error);
                 })
             }

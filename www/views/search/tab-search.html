@@ -19,13 +19,11 @@
                     <h2 >{{user.name}} {{user.lastname}}</h2>
                     </h2>
                     <div ng-if="user.contact == true">
-                        <button class="button button-small button-outline button-dark" ng-click="goProfile(user.id)">
-                                {{'search.see_profile' | translate}}
+                        <button class="button icon ion-eye button-outline button-dark" ng-click="goProfile(user.id)">
                         </button>
                     </div>
                     <div ng-if="user.contact == false && user.id != uid">
-                        <button class="button button-small button-outline button-dark" ng-click="sendRequest(user.id)">
-                                {{'search.send_request' | translate}}
+                        <button class="button icon ion-person-add button-outline button-dark" ng-click="sendRequest(user.id)">
                         </button>
                     </div>  
                 </a>

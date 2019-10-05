@@ -115,6 +115,16 @@
             }
             }
         })
+        .state('tab.networks-otp',{
+            url: '/profile/networks/otp',
+            views: {
+            'tab-account':{
+                templateUrl: 'views/profile/tab-account-social-otp.html',
+                controller: 'redesController',
+                css: '../../css/ionic.app.min.css'
+            }
+            }
+        })
         .state('tab.messages',{
             url: '/messages',
             views: {

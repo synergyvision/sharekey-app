@@ -176,12 +176,43 @@
                     $http.post(appConstants.apiUrl + appConstants.repos + uid + '/getToken',loginGit,
                     {headers: {'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8','Authorization':'Bearer: ' + token} 
                     }).then(function (response){
-                        console.log(response.data)
-                        $state.reload()
+                        if (response.data.status == 201){
+                            ionicAlertPopup.alertPop(filter('networks.gh_valid'))
+                            $scope.getSocials()
+                          }else if(response.data.status == 401){
+                            $localStorage[uid + '-gituser'] = $scope.username;
+                            $localStorage[uid + '-password'] = password
+                            $state.go('tab.networks-otp')
+                          }
                     }).catch(function (error){
-                        ionicAlertPopup.alertPop(filter('networks.twitter'),filter('networks.gh_error'))
+                        ionicAlertPopup.alertPop(filter('networks.github'),filter('networks.gh_error'))
                     })
                 })
+            }
+
+            $scope.otpLogin = function(){
+                var loginGit = $.param({
+                    username: $localStorage[uid + '-gituser'],
+                    password: $localStorage[uid + '-password'],
+                    otp: $scope.otp
+                  }) 
+                  console.log(loginGit);
+                  $http.post(appConstants.apiUrl + appConstants.repos + uid + '/getToken',loginGit,
+                    {headers: {'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8','Authorization':'Bearer: ' + token} 
+                    }).then(function (response){
+                    if (response.data.status == 'created'){
+                      ionicAlertPopup.alertPop(filter('networks.github'),filter('networks.gh_valid'))
+                      delete $localStorage[uid + '-gituser'];
+                      delete $localStorage[uid + '-password']
+                      $state.go('tab.networks')
+                    }
+                  }).catch(function (error){
+                      console.log(error)
+                      $state.go('tab.networks')
+                      delete $localStorage[uid + '-gituser'];
+                      delete $localStorage[uid + '-password']
+                      ionicAlertPopup.alertPop(filter('networks.github'),filter('networks.gh_error'))
+                  })
             }
             
             $scope.copy = function(){

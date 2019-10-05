@@ -148,6 +148,7 @@
                 }).catch(function (error){
                     $scope.spinner = false;
                     if(error.code == 401){
+                      ionicAlertPopup.alertPop(filter('personalInfo.expired_error'))
                       $state.go('login')
                     }else{
                      console.log(error)

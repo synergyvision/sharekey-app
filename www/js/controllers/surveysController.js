@@ -31,8 +31,14 @@
                     $scope.surveys = response.data.data;
                     $localStorage.surveys = $scope.surveys;
                 }).catch(function (error){
-                    $state.go('login')
-                    console.log(error)
+                    if (error.status == 401){
+                        ionicAlertPopup.alertPop(filter('personalInfo.expired_error'))
+                         $state.go('login')
+                    }else{
+                        console.log(error)
+                    }
+                    
+
                 })
             }
 

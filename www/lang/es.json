@@ -137,7 +137,9 @@
         "tw_error": "Ha ocurrido un error validando el mensaje, revisa que el mensaje se subio en twitter o recarga la pagina para obtener otro mensaje.",
         "tw_success": "Se ha validado la cuenta de twitter exitosamente.",
         "gh_error": "Hubo un error verifique sus datos.",
-        "fb_error": "Ha ocurrido un error, validando el mensaje, revisa que el mensaje se subio en facebook o recarga la pagina para obtener otro mensaje."
+        "fb_error": "Ha ocurrido un error, validando el mensaje, revisa que el mensaje se subio en facebook o recarga la pagina para obtener otro mensaje.",
+        "gh_otp": "Ingresa tu codigo.",
+        "gh_valid": "Se ha validado la cuenta de github exitosamente."
 
     },
     "messages":{

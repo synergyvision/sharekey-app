@@ -1,0 +1,13 @@
+<ion-view view-title="{{'networks.title' | translate}}" cache-view="false">
+    <ion-content ng-controller="redesController">
+             <li class="item">
+                <label class="item item-input item-stacked-label">
+                    <span class="input-label">{{'networks.gh_otp' | translate}}</span>
+                    <input type="password" ng-model="otp">
+                </label>
+                <button class="button button-positive" id="gitButton" ng-click="otpLogin()">{{'networks.continue' | translate}}</button>
+             </li>
+            </ul>
+    </ion-content>
+</ion-view>
+      

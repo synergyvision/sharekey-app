@@ -23,16 +23,15 @@
                         console.log($scope.users)
                     }
                 }).catch(function (error){
-                    if (error){
                     if (error.status == 401){
-                        alert('Su sesion ha vencido')
+                        ionicAlertPopup.alertPop(filter('personalInfo.expired_error'))
                         $state.go('login');
                     }
                     else{
                         console.log(error.code);
                         console.log(error.message);
                     }
-                    }  
+                     
                 }) 
             }
 
