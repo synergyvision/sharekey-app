@@ -143,19 +143,23 @@
             $scope.encrypt = function (key,userdata) {
                 console.log('begin encription')
                 show();
-                var keyPublic = getPublicKey($scope.chatKey);
-                var keyPrivate = getPrivateKey($scope.chatKey);
-                var pKeys = [keyPublic,key]
-                if ($scope.passphrase){
-                    var Private = decryptKey(keyPrivate,$scope.passphrase);
-                }
-                var message = encryptWithMultiplePublicKeys(pKeys,Private,$scope.passphrase,$scope.message);
-                message.then( function (encryptedMessage){
-                    sendMessage(encryptedMessage,userdata);
-                }).catch(function (error){
-                    hide();
-                    ionicAlertPopup.alertPop('error','Verifica todos los campos')
-                })
+                if ($scope.chatKey){
+                    var keyPublic = getPublicKey($scope.chatKey);
+                    var keyPrivate = getPrivateKey($scope.chatKey);
+                    var pKeys = [keyPublic,key]
+                    if ($scope.passphrase){
+                        var Private = decryptKey(keyPrivate,$scope.passphrase);
+                    }
+                    var message = encryptWithMultiplePublicKeys(pKeys,Private,$scope.passphrase,$scope.message);
+                    message.then( function (encryptedMessage){
+                        sendMessage(encryptedMessage,userdata);
+                    }).catch(function (error){
+                        hide();
+                        ionicAlertPopup.alertPop('error','Verifica todos los campos')
+                    })
+                }else{
+                    ionicAlertPopup.alertPop(filter('messages.no_keys'))
+                }    
             }
 
             //function that sends the message to the server

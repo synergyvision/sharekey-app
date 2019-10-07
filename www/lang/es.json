@@ -171,7 +171,8 @@
         "confirm_title": "Advertencia",
         "confirm_text": "¿Quiere borrar este mensaje?",
         "confirm_button_no": "Cancelar",
-        "confirm_button_yes": "Borrar"
+        "confirm_button_yes": "Borrar",
+        "no_keys": "Seleccione una llave"
 
     },
     "chats":{
