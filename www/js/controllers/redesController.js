@@ -176,7 +176,7 @@
                     $http.post(appConstants.apiUrl + appConstants.repos + uid + '/getToken',loginGit,
                     {headers: {'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8','Authorization':'Bearer: ' + token} 
                     }).then(function (response){
-                        if (response.data.status == 201){
+                        if (response.status == 201){
                             ionicAlertPopup.alertPop(filter('networks.gh_valid'))
                             $scope.getSocials()
                           }else if(response.data.status == 401){
