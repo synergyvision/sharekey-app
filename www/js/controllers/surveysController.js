@@ -4,8 +4,8 @@
         .module('starter')
         .controller('surveysController', surveysController);
   
-        surveysController.$inject = ['$scope','$http','$localStorage','$state','$window','$sessionStorage','$stateParams','$rootScope','appConstants',"ionicAlertPopup"];
-        function surveysController($scope,$http,$localStorage,$state,$window,$sessionStorage,$stateParams,$rootScope,appConstants,ionicAlertPopup){
+        surveysController.$inject = ['$scope','$http','$localStorage','$state','$window','$sessionStorage','$stateParams','$rootScope','appConstants',"ionicAlertPopup","$filter"];
+        function surveysController($scope,$http,$localStorage,$state,$window,$sessionStorage,$stateParams,$rootScope,appConstants,ionicAlertPopup,$filter){
             
             $scope.uid = $localStorage.uid;
             var token = $localStorage.userToken;
@@ -13,6 +13,7 @@
             if ($rootScope.newExists == true){
                 $rootScope.newExists = false;
             }
+            var filter = $filter('translate')
 
             $scope.answers = [
                 {}
