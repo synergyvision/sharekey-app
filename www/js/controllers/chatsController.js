@@ -47,7 +47,7 @@
                 }).catch(function(error){
                     $scope.spinner = false
                     if(error.status == 401){
-                        ionicAlertPopup.alertPop(filter('personalInfo.expired_error'))
+                        ionicAlertPopup.alertPop("error",filter('personalInfo.expired_error'))
                         $state.go('login')
                     }
                     console.log(error);
@@ -96,6 +96,21 @@
 
            // function that creates a chat, then stores the info locally 
 
+            var checkError = function(){
+                if ($scope.name.length == 0){
+                    ionicAlertPopup.alertPop(filter('chats.error'),filter('chats.no_contacts'))
+                    return false
+                }else if(!$scope.chatTitle){
+                    ionicAlertPopup.alertPop(filter('chats.error'),filter('chats.no_title'))
+                    return false
+                }else if(!$scope.keyname){
+                    ionicAlertPopup.alertPop(filter('chats.error'),filter('chats.no_keys'))
+                    return false
+                }else{
+                    return true;
+                }
+            }
+
             $scope.createChat = function (){
                 var participants = {}
                 for (var i = 0; i < $scope.name.length; i++){
@@ -107,15 +122,17 @@
                     title: $scope.chatTitle,
                     participants: JSON.stringify(participants)
                 })
-                $http.post(appConstants.apiUrl + appConstants.chats + uid,chatRequest,{headers: {'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8', 'Authorization':'Bearer: ' + token}
-                    }).then(function (response){
-                        console.log('chat created')
-                        storeLocalChats(response.data.Id,$scope.chatTitle,participants); 
-                        $state.go('tab.chatsMessages',{'id_chat': response.data.Id});
-                    }).catch(function (error){
-                        console.log(error);
-                        alert(filter('chats.new_chat_error'))
-                })
+                if (checkError()){
+                    $http.post(appConstants.apiUrl + appConstants.chats + uid,chatRequest,{headers: {'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8', 'Authorization':'Bearer: ' + token}
+                }).then(function (response){
+                    console.log('chat created')
+                    storeLocalChats(response.data.Id,$scope.chatTitle,participants); 
+                    $state.go('tab.chatsMessages',{'id_chat': response.data.Id});
+                }).catch(function (error){
+                    console.log(error);
+                    ionicAlertPopup.alertPop("error",filter('chats.new_chat_error'))
+            })
+                }
             }
 
 
@@ -143,7 +160,7 @@
                     localDeleteChat(id_chat);
                     $state.go('tab.chats');
                 }).catch(function (error){
-                    alert(error.message);
+                    console.log(error.message);
                 })
             }
 
@@ -250,7 +267,6 @@
                     $scope.getMessages()
                 }).catch(function (error){
                     console.log(error);
-                    alert(error);
                 })
             }
 
@@ -295,11 +311,9 @@
                         sendRequest(messageRequest);
                     }).catch(function (error){
                         console.log(error)
-                        alert(error)
                     })
                 }).catch(function (error){
                     console.log(error)
-                    alert(error)
                 })
             }
         
@@ -394,7 +408,7 @@
                     $scope.chatMessages = decripted;
                     $scope.$apply();
                 }).catch(function(error){
-                    alert(filter('chats.pass_error'))
+                    ionicAlertPopup.alertPop("error",filter('chats.pass_error'))
                     hide();
                     console.log(error)
                 })

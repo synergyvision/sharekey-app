@@ -142,8 +142,8 @@
 
             $scope.encrypt = function (key,userdata) {
                 console.log('begin encription')
-                show();
                 if ($scope.chatKey){
+                    show();
                     var keyPublic = getPublicKey($scope.chatKey);
                     var keyPrivate = getPrivateKey($scope.chatKey);
                     var pKeys = [keyPublic,key]

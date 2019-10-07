@@ -188,7 +188,11 @@
         "pass_error": "Verifique que su par de llave y passphrase sean correctos.",
         "ask_pass": "Introduzca su clave de chat",
         "cancel": "Cancelar",
-        "continue": "Continuar"
+        "continue": "Continuar",
+        "error": "Error",
+        "no_contacts": "Selecciona al menos un contacto.",
+        "no_title": "Ingresa un título.",
+        "no_keys": "Seleccione una llave"
     },
     "suveys":{
         "title": "Encuentas",
