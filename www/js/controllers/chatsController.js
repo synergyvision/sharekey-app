@@ -87,6 +87,7 @@
                 for (var i = 0; i < $scope.name.length; i++){
                     if ($scope.name[i] == id){
                         added = true;
+                        $scope.name.splice(i,1);
                     }
                 }
                 if (added == false){
