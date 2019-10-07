@@ -194,6 +194,8 @@
                         storekeys(pubkey,privateKey,$scope.newName)
                         console.log('keys sent to cloud');
                       }).catch(function (error){
+                        closePop();
+                        ionicAlertPopup.alertPop(filter('keys.error'),filter('keys.invalid_data'))
                         console.log(error.code + '\n' + error.message);
                       })
                 }
@@ -234,7 +236,7 @@
               headers: {'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8','Authorization':'Bearer: ' + token}
               }).then(function (response){
                     if (response.status == 200){
-                      ionicAlertPopup.alertPop('Llaves',filter('keys.key_deleted'))
+                      ionicAlertPopup.alertPop(filter('keys.key_title'),filter('keys.key_deleted'))
                       localDelete(name)
                       $scope.checkKeys();
                     }

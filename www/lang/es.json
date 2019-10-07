@@ -118,7 +118,10 @@
         "continuar": "Activar",
         "ask_pass": "Introduzca su clave de la llave",
         "pass_error": "La clave insertada no es correcta.",
-        "recovery_error": "Su clave de recuperación es incorrecta."
+        "recovery_error": "Su clave de recuperación es incorrecta.",
+        "error": "Error",
+        "invalid_data": "Verifica los campos",
+        "key_title": "Llaves"
 
     },
     "networks":{
