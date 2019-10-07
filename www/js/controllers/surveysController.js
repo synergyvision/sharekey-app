@@ -4,8 +4,8 @@
         .module('starter')
         .controller('surveysController', surveysController);
   
-        surveysController.$inject = ['$scope','$http','$localStorage','$state','$window','$sessionStorage','$stateParams','$rootScope','appConstants'];
-        function surveysController($scope,$http,$localStorage,$state,$window,$sessionStorage,$stateParams,$rootScope,appConstants){
+        surveysController.$inject = ['$scope','$http','$localStorage','$state','$window','$sessionStorage','$stateParams','$rootScope','appConstants',"ionicAlertPopup"];
+        function surveysController($scope,$http,$localStorage,$state,$window,$sessionStorage,$stateParams,$rootScope,appConstants,ionicAlertPopup){
             
             $scope.uid = $localStorage.uid;
             var token = $localStorage.userToken;
