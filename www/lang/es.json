@@ -210,7 +210,8 @@
         "error": "Error",
         "no_title": "Ingresa un título.",
         "no_question": "Ingresa una pregunta",
-        "no_answer": "Ingresa una pregunta"
+        "no_answer": "Ingresa una respuesta",
+        "no_expires": "Ingresa un tiempo de expiración"
 
     },
     "configMenu":{

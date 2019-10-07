@@ -120,11 +120,14 @@
                 if (!$scope.surveyTitle){
                     ionicAlertPopup.alertPop(filter('suveys.error'),filter('suveys.no_title'))
                     return false;
-                //}else if(!$scope.question.title){
-                  //  ionicAlertPopup.alertPop(filter('suveys.error'),filter('suveys.no_question'))
-                   // return false;
-                }else if(!$scope.answers.content){
+                }else if($scope.question == null){
+                    ionicAlertPopup.alertPop(filter('suveys.error'),filter('suveys.no_question'))
+                    return false;
+                }else if($scope.answers[0].content == null){
                     ionicAlertPopup.alertPop(filter('suveys.error'),filter('suveys.no_answer'))
+                    return false;
+                }else if(!$scope.expires){
+                    ionicAlertPopup.alertPop(filter('suveys.error'),filter('suveys.no_expires'))
                     return false;
                 }else{
                     return true
