@@ -206,7 +206,11 @@
         "question": "Pregunta",
         "answer_placeholder": "Respuesta",
         "expires_in": "Expiración (días)",
-        "create": "Crear"
+        "create": "Crear",
+        "error": "Error",
+        "no_title": "Ingresa un título.",
+        "no_question": "Ingresa una pregunta",
+        "no_answer": "Ingresa una pregunta"
 
     },
     "configMenu":{

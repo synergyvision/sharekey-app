@@ -32,7 +32,7 @@
                     $localStorage.surveys = $scope.surveys;
                 }).catch(function (error){
                     if (error.status == 401){
-                        ionicAlertPopup.alertPop(filter('personalInfo.expired_error'))
+                        ionicAlertPopup.alertPop("error",filter('personalInfo.expired_error'))
                          $state.go('login')
                     }else{
                         console.log(error)
@@ -115,29 +115,44 @@
 
             }
 
+            var checkErros = function(){
+                if (!$scope.surveyTitle){
+                    ionicAlertPopup.alertPop(filter('suveys.error'),filter('suveys.no_title'))
+                    return false;
+                }else if(!$scope.question.title){
+                    ionicAlertPopup.alertPop(filter('suveys.error'),filter('suveys.no_question'))
+                    return false;
+                }else if(!$scope.answers.content){
+                    ionicAlertPopup.alertPop(filter('suveys.error'),filter('suveys.no_answer'))
+                    return false;
+                }else{
+                    return true
+                }
+            }
 
             //function that creates a new survey
 
             $scope.createSurvey = function (){
-                console.log($scope.answers)
-                var created = new Date();
-                var expires_in = new Date();
-                expires_in.setDate(expires_in .getDate() + parseInt($scope.expires));
-                var newSurvey = $.param({
-                    title: $scope.surveyTitle,
-                    id_user: $scope.uid,
-                    created: created,
-                    expires_in: expires_in 
-                })
-                $http.post(appConstants.apiUrl + appConstants.surveys,newSurvey,
-                    {headers: {'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8','Authorization':'Bearer: ' + token}
-                }).then(function (response){
-                    var surveyId = response.data.key;
-                    console.log('created survey')
-                    createQuestion(surveyId);
-                }).catch(function (error){
-                    console.log(error)
-                })
+                if (checkErros()){
+                    var created = new Date();
+                    var expires_in = new Date();
+                    expires_in.setDate(expires_in .getDate() + parseInt($scope.expires));
+                    var newSurvey = $.param({
+                        title: $scope.surveyTitle,
+                        id_user: $scope.uid,
+                        created: created,
+                        expires_in: expires_in 
+                    })
+                    $http.post(appConstants.apiUrl + appConstants.surveys,newSurvey,
+                        {headers: {'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8','Authorization':'Bearer: ' + token}
+                    }).then(function (response){
+                        var surveyId = response.data.key;
+                        console.log('created survey')
+                        createQuestion(surveyId);
+                    }).catch(function (error){
+                        console.log(error)
+                    })
+                }
             }
 
             //add more ansers
