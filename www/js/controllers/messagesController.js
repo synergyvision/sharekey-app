@@ -319,6 +319,7 @@
             //function gets users list of messages by the tray
 
             $scope.getMessages = function (tray){
+                    $scope.no_messages = false;
                     $scope.spinner = true;
                     $scope.tray = tray;
                     var requestMessages = $.param({
@@ -330,13 +331,17 @@
                         if (response.data.status == 200){
                             $scope.spinner = false;
                             var messages = response.data.data;
-                            $scope.correos = getDate(messages);
+                            console.log(messages.length)
+                            if (messages.length >= 1){
+                                $scope.correos = getDate(messages);
+                            }else{
+                                $scope.no_messages = true;
+                            }
                         }
                     }).catch(function (error){
                         $scope.spinner = false;
                         if (error.status == 401){
                             $state.go('login');
-                            $scope.spinner = false;
                         }
                         console.log(error);
                     })

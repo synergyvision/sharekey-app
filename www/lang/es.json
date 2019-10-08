@@ -178,7 +178,8 @@
         "confirm_button_yes": "Borrar",
         "no_keys": "Seleccione una llave",
         "invalid": "Verifique todos los campos",
-        "error": "Error"
+        "error": "Error",
+        "no_messages": "No hay mensajes."
 
     },
     "chats":{

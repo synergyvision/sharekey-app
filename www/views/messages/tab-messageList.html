@@ -13,7 +13,14 @@
         </div>
         <div class="row" ng-if="spinner" style="justify-content: center">
                 <ion-spinner icon="ripple"></ion-spinner>
-          </div>
+        </div>
+        <div ng-if="no_messages">
+            <div class="card">
+                    <div class="item item-text-wrap">
+                        {{'messages.no_messages'| translate}}
+                    </div>
+            </div>
+         </div>   
         <div ng-if="tray == 'inbox'" ng-repeat="correo in correos |  orderBy: '-this.data.timestamp'">
             <div class="list social-list"  ng-if="correo.data.status == 'unread'">
                 <a class="item item-text-wrap" ng-click="readMessage(correo.id,correo.data.status,correo.data.content)"  id="unread">
