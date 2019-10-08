@@ -26,8 +26,8 @@
             //retrives the recipient public key
 
             $scope.getPublicKey =  function (idUser){
-                if (!$scope.message){
-                    ionicAlertPopup.alertPop('error',filter('messages.empty_error'))
+                if (!$scope.message || !idUser){
+                    ionicAlertPopup.alertPop(filter('messages.error'),filter('messages.invalid'))
                 }else{
                     var keyRequest = $.param({
                         id: idUser
@@ -39,11 +39,13 @@
                         headers: {'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8','Authorization':'Bearer: ' + token}
                     }).then(function (response){
                         console.log('retrieved public key from server')
+                        console.log('here')
                         var userData = {
                             [idUser]: response.data.name
                           }
                         $scope.encrypt(response.data.data,userData);
                     }).catch(function (error){
+                        console.log(error)
                         if (error){
                             if (error.status == 401){
                                 console.log(error)
@@ -143,6 +145,7 @@
             $scope.encrypt = function (key,userdata) {
                 console.log('begin encription')
                 if ($scope.chatKey){
+                    console.log('here')
                     show();
                     var keyPublic = getPublicKey($scope.chatKey);
                     var keyPrivate = getPrivateKey($scope.chatKey);
@@ -155,10 +158,10 @@
                         sendMessage(encryptedMessage,userdata);
                     }).catch(function (error){
                         hide();
-                        ionicAlertPopup.alertPop('error','Verifica todos los campos')
+                        ionicAlertPopup.alertPop(filter('messages.error'),filter('messages.invalid'))
                     })
                 }else{
-                    ionicAlertPopup.alertPop(filter('messages.no_keys'))
+                    ionicAlertPopup.alertPop(filter('messages.error'),filter('messages.no_keys'))
                 }    
             }
 

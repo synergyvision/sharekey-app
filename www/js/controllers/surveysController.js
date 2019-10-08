@@ -21,6 +21,15 @@
 
             $scope.answeredQuestions = []
 
+            var show = function() {
+                $ionicLoading.show({
+                  template: '<ion-spinner icon="spiral"></ion-spinner>'
+                })
+              };
+              var hide = function(){
+                $ionicLoading.hide()
+              };
+
             //function that retrieves the lists of surveys
 
             $scope.getSurveys = function (){
@@ -92,6 +101,7 @@
                     {headers: {'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8','Authorization':'Bearer: ' + token}
                 }).then(function (response){
                     console.log(response.data)
+                    hide();
                     $state.go('tab.surveys');
                 }).catch(function (error){
                     console.log(error)
@@ -138,6 +148,7 @@
 
             $scope.createSurvey = function (){
                 if (checkErros()){
+                    show();
                     var created = new Date();
                     var expires_in = new Date();
                     expires_in.setDate(expires_in .getDate() + parseInt($scope.expires));

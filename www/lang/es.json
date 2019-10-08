@@ -175,7 +175,9 @@
         "confirm_text": "¿Quiere borrar este mensaje?",
         "confirm_button_no": "Cancelar",
         "confirm_button_yes": "Borrar",
-        "no_keys": "Seleccione una llave"
+        "no_keys": "Seleccione una llave",
+        "invalid": "Verifique todos los campos",
+        "error": "Error"
 
     },
     "chats":{

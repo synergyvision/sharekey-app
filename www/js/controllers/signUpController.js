@@ -11,7 +11,18 @@
 
             //function that register a new user
 
+            var show = function() {
+                $ionicLoading.show({
+                  template: '<ion-spinner icon="spiral"></ion-spinner>'
+                })
+              };
+              var hide = function(){
+                $ionicLoading.hide()
+              };
+            
+
             $scope.sendData = function(){
+                show();
                 var signUpRequest = $.param({
                     email: $scope.email,
                     password: $scope.password,
@@ -23,6 +34,7 @@
                 $http.post(appConstants.apiUrl + 'signup',signUpRequest,
                     {headers: {'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8'}
                 }).then(function(response){
+                    hide();
                     console.log(response)
                     if (response.data.status == 201){
                         ionicAlertPopup.alertPop(translate('register.success_title'),translate('register.success'))

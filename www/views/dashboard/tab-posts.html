@@ -1,6 +1,6 @@
 <ion-view view-title="{{'posts.title' | translate}}" cache-view="false">
   <ion-content ng-controller="DashCtrl" ng-init="activeKeys()" >
-    <div class="card" ng-init="checkAppKey()">
+    <div id="card" class="card" ng-init="checkAppKey()">
       <div class="item item-divider">
           {{'posts.new_post_title' | translate}}
       </div>
@@ -45,11 +45,10 @@
                       <p>{{post.data.sent}}</p>
                     </div> 
                     <div class="col col-25" >
-                        <a class="button icon ion ion-eye button-positive" ng-click="goToPost(post.id)"></a>
+                        <a class="button button-small icon ion ion-eye button-positive" ng-click="goToPost(post.id)"></a>
                     </div> 
                   </div>  
               </div>
-              
               <div class="item item-body">
                 <p ng-if="post.data.public == 'true'">
                     {{post.data.content}}
