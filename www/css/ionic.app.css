@@ -10358,6 +10358,10 @@ a.button {
 .item-checkbox {
   padding-left: 50px; }
 
+.timeline-wrapper {
+  padding-left: 4px;
+  padding-right: 4px; }
+
 .timeline-item {
   background: #fff;
   border: 1px solid;
