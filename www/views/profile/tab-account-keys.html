@@ -9,6 +9,13 @@
           <div class="row" ng-if="spinner" style="justify-content: center">
                 <ion-spinner icon="ripple"></ion-spinner>
           </div>
+          <div ng-if="no_keys">
+                <div class="card">
+                    <div class="item item-text-wrap">
+                        {{'keys.no_keys'| translate}}
+                    </div>
+                </div>
+          </div>    
           <div ng-repeat="key in keys">
             <a id="keyItem" style="justify-items:center " class="item item-icon-left item-button-right">
                 <i ng-if="key.default == true && key.activated == true" class="icon ion-star"  style="color: gold"></i>

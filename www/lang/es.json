@@ -121,7 +121,8 @@
         "recovery_error": "Su clave de recuperación es incorrecta.",
         "error": "Error",
         "invalid_data": "Verifica los campos",
-        "key_title": "Llaves"
+        "key_title": "Llaves",
+        "no_keys": "No tiene llaves creadas."
 
     },
     "networks":{

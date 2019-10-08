@@ -72,13 +72,18 @@
         
             // check the existing keys on the cloud
             $scope.checkKeys = function(){
+              $scope.no_keys = false;
               $scope.spinner = true;
               $http.get(appConstants.apiUrl + appConstants.profile + uid + '/getKeys',
                 {headers: {'Authorization':'Bearer: ' + token}
               }).then(function (response){
                     $scope.spinner = false;
                     var keys = response.data.data;
-                    $scope.keys = checkActiveKeys(keys);
+                    if (keys.length > 0){
+                      $scope.keys = checkActiveKeys(keys);
+                    }else{
+                      $scope.no_keys = true;
+                    }
               }).catch(function (error){
                   if (error.status == 401){
                     ionicAlertPopup.alertPop(filter('keys.error_title'),filter('keys.expired_error'))
@@ -238,7 +243,7 @@
                     if (response.status == 200){
                       ionicAlertPopup.alertPop(filter('keys.key_title'),filter('keys.key_deleted'))
                       localDelete(name)
-                      $scope.checkKeys();
+                      $state.reload();
                     }
                 }).catch(function (e){
                   if (e.status == 401){

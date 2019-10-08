@@ -333,6 +333,7 @@
                             $scope.correos = getDate(messages);
                         }
                     }).catch(function (error){
+                        $scope.spinner = false;
                         if (error.status == 401){
                             $state.go('login');
                             $scope.spinner = false;
