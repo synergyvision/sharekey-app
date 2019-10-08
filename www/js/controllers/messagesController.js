@@ -332,16 +332,14 @@
                             $scope.spinner = false;
                             var messages = response.data.data;
                             console.log(messages.length)
-                            if (messages.length >= 1){
-                                $scope.correos = getDate(messages);
-                            }else{
-                                $scope.no_messages = true;
-                            }
+                            $scope.correos = getDate(messages);
                         }
                     }).catch(function (error){
                         $scope.spinner = false;
                         if (error.status == 401){
                             $state.go('login');
+                        }else if (error.status == 404){
+                            $scope.no_messages = true;
                         }
                         console.log(error);
                     })
