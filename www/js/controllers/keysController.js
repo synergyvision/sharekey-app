@@ -382,7 +382,7 @@
                   var localPrivateKey = encryptKeys($localStorage.recoveryKey.PrivKey,words)
                   var localPrivateKey = localPrivateKey.toString();
                   localStorekeys($localStorage.recoveryKey.PubKey,localPrivateKey,$localStorage.recoveryKey.name,$localStorage.recoveryKey.default);
-                  ionicAlertPopup.alertPop('Llaves',"LLave activada exitosamente")
+                  ionicAlertPopup.alertPop('Llaves',filter('keys.activate_sucess'))
                   delete $localStorage.recoveryKey
                   $state.reload();
                 }).catch(function(error){

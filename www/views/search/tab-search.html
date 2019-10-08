@@ -10,22 +10,44 @@
                     </button>
                 </div>
             <div class="list social-list" ng-init="getUsers()">
-                    <div class="row" ng-if="spinner" style="justify-content: center">
-                            <ion-spinner icon="ripple"></ion-spinner>
+                    <div class="timeline-wrapper" ng-if="spinner">
+                            <div class="timeline-item">
+                                <div class="animated-background">
+                                    <div class="background-masker header-top"></div>
+                                    <div class="background-masker header-left"></div>
+                                    <div class="background-masker header-right"></div>
+                                    <div class="background-masker header-bottom"></div>
+                                    <div class="background-masker subheader-left"></div>
+                                    <div class="background-masker subheader-right"></div>
+                                    <div class="background-masker subheader-bottom"></div>
+                                    <div class="background-masker content-top"></div>
+                                    <div class="background-masker content-first-end"></div>
+                                    <div class="background-masker content-second-line"></div>
+                                    <div class="background-masker content-second-end"></div>
+                                    <div class="background-masker content-third-line"></div>
+                                    <div class="background-masker content-third-end"></div>
+                                </div>
+                            </div>
                     </div>
                 <a class="item item-thumbnail-left item-text-wrap"  ng-repeat="user in users | filter: {name: search} | orderBy: 'this.name'">
                     <img ng-if="user.photo" class="animated zoomIn" ng-src="{{user.photo}}">
                     <img ng-if="!user.photo" class="animated zoomIn" src="img/default-user-icon-8.jpg">
-                    <h2 >{{user.name}} {{user.lastname}}</h2>
-                    </h2>
-                    <div ng-if="user.contact == true">
-                        <button class="button icon ion-eye button-outline button-dark" ng-click="goProfile(user.id)">
-                        </button>
-                    </div>
-                    <div ng-if="user.contact == false && user.id != uid">
-                        <button class="button icon ion-person-add button-outline button-dark" ng-click="sendRequest(user.id)">
-                        </button>
-                    </div>  
+                    <div class="row">
+                        <div class="col col-75">
+                            <h2 >{{user.name}} {{user.lastname}}</h2>
+                            </h2>
+                        </div>
+                        <div class="col col-25">
+                            <div ng-if="user.contact == true">
+                                <button class="button button-small icon ion-eye button-outline button-dark" ng-click="goProfile(user.id)">
+                                </button>
+                            </div>
+                            <div ng-if="user.contact == false && user.id != uid">
+                                <button class="button button-small icon ion-person-add button-outline button-dark" ng-click="sendRequest(user.id)">
+                                </button>
+                            </div>  
+                        </div>    
+                    </div>    
                 </a>
             </div>
           </ion-content>

@@ -32,14 +32,26 @@
 
             //function that retrieves the lists of surveys
 
+            var getTimestamp = function (surveys){
+                for (var i = 0; i < surveys.length; i++){
+                    var sent = new Date(surveys[i].data.created);
+                    surveys[i].data.timestamp = sent.getTime();
+                }
+                if(!surveys.length){
+                    var sent = new Date(surveys.data.created);
+                    surveys[i].data.timestamp = sent.getTime();
+                }
+                return surveys
+            }
+
             $scope.getSurveys = function (){
                 $scope.spinner = true;
                 $http.get(appConstants.apiUrl + appConstants.surveys,{headers: {'Authorization':'Bearer: ' + token}
                 }).then(function (response){
                     $scope.spinner = false;
                     console.log(response.data)
-                    $scope.surveys = response.data.data;
-                    $localStorage.surveys = $scope.surveys;
+                    var surveys = response.data.data
+                    $scope.surveys = getTimestamp(surveys);
                 }).catch(function (error){
                     if (error.status == 401){
                         ionicAlertPopup.alertPop("error",filter('personalInfo.expired_error'))
@@ -79,13 +91,16 @@
             //funciton retrieves data from a single survey
 
             $scope.getSurvey = function (){
+                $scope.spinner = true;
                 $http.get(appConstants.apiUrl + appConstants.surveys + survey,
                     {headers: {'Authorization':'Bearer: ' + token}
                 }).then(function (response){
+                    $scope.spinner = false;
                     var surveyData = response.data;
                     $scope.survey = checkSurvey(surveyData)
                     console.log($scope.survey)
                 }).catch(function (error){
+                    $scope.spinner = false;
                     console.log(error)
                 })
             }

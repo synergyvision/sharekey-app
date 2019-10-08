@@ -1,33 +1,27 @@
 <ion-view view-title="{{'publications.title'| translate}}" cache-view="false">
   <ion-content>
-    <div class="list">
-      <div class="list card" style="margin-bottom:0" ng-init="getUserData()">
-        <div class="row" id="profile">
-            <div class="col col-center" id="profileInfo">
-              <div class="col-8">
-                <div class="item item-avatar">
-                    <img ng-if="userPicture" id="userImage" ng-src="{{userPicture}}">
-                    <img ng-if="!userPicture" id="userImage" src="img/default-user-icon-8.jpg">
-                    <h3>{{username}}</h3>
-                    <p>{{name}} {{lastname}}</p>
-                    <p>{{bio}}</p>
-                </div>
+    <div class="list card" style="margin-bottom:0" class="profileController" ng-init="getUserData()">
+      <div class="row">
+            <div class="col col-75">
+              <div class="item item-avatar">
+                  <img ng-if="userPicture" id="userImage" ng-src="{{userPicture}}">
+                  <img ng-if="!userPicture" id="userImage" src="img/default-user-icon-8.jpg">
+                  <h3>{{username}}</h3>
+                  <p>{{name}} {{lastname}}</p>
+                  <p>{{bio}}</p>
               </div>
-              <div class="col-4">  
-                <div class="col col-center" ng-if="user_id == uid" id="gearButton">
-                    <button class="button button-clear button-dark" ng-click="openModal(2)">
-                        <i class="icon ion-gear-a"></i>
-                      </button>
-                </div>  
-              </div>  
             </div>
-          </div>  
-          <div ng-if="user_id == uid" class="item">
-              <button class="button button-block button-positive" ng-click="openModal(1)">
-                  {{'publications.edit_profile_button' | translate}}
-              </button>
-          </div>
-      </div>
+            <div class="col col-25 col-center"  ng-if="user_id == uid">  
+                <button class="button button-clear button-dark" ng-click="openModal(2)">
+                    <i class="icon ion-gear-a"></i>
+                </button>
+            </div>  
+      </div>  
+        <div ng-if="user_id == uid" class="item">
+            <button class="button button-block button-positive" ng-click="openModal(1)">
+                {{'publications.edit_profile_button' | translate}}
+            </button>
+        </div>
     </div>
     <div ng-init="getFeedbacks()">
         <div ng-if="spinner" class="timeline-wrapper">

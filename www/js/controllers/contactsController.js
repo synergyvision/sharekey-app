@@ -15,6 +15,7 @@
             
             $scope.getFriendRequest = function (){
                 $scope.spinner = true
+                $scope.no_requests = false
                 $http({
                     url: appConstants.apiUrl + appConstants.contacts + uid + '/requests',
                     method: 'GET',
@@ -30,6 +31,8 @@
                     console.log(error);
                     if (error.status == 401){
                       $state.go('login');
+                    }else if (error.status == 404){
+                        $scope.no_requests = true;
                     }
                 })
             }
@@ -74,7 +77,9 @@
                     if (error.status == 401){
                         alert('Su sesion ha vencido')
                         $state.go('login');
-                      }
+                      }else if (error.status == 404){
+                        $scope.no_contacts = true;
+                    }
                 })
             }
           

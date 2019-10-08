@@ -4,38 +4,95 @@
                 <h2>{{'contacts.requests' | translate}}</h2>
             </div>
         <div class="list social-list" ng-init="getFriendRequest()">
-                <div class="row" ng-if="spinner" style="justify-content: center">
-                        <ion-spinner icon="ripple"></ion-spinner>
+                <div class="timeline-wrapper" ng-if="spinner" style="justify-content: center">
+                        <div class="timeline-item">
+                                <div class="animated-background">
+                                        <div class="background-masker header-top"></div>
+                                        <div class="background-masker header-left"></div>
+                                        <div class="background-masker header-right"></div>
+                                        <div class="background-masker header-bottom"></div>
+                                        <div class="background-masker subheader-left"></div>
+                                        <div class="background-masker subheader-right"></div>
+                                        <div class="background-masker subheader-bottom"></div>
+                                        <div class="background-masker content-top"></div>
+                                        <div class="background-masker content-first-end"></div>
+                                        <div class="background-masker content-second-line"></div>
+                                        <div class="background-masker content-second-end"></div>
+                                        <div class="background-masker content-third-line"></div>
+                                        <div class="background-masker content-third-end"></div>
+                                </div>
+                        </div>
+                </div>
+                <div ng-if="no_requests">
+                        <div class="card">
+                                <div class="item item-text-wrap">
+                                        {{'contacts.no_requests'| translate}}
+                                </div>
+                        </div>
                 </div>
             <a class="item item-thumbnail-left item-text-wrap"  ng-repeat="request in requests">
                 <img ng-if="request.picture" class="animated zoomIn" ng-src="{{request.picture}}">
                 <img ng-if="!request.picture" class="animated zoomIn" src="img/default-user-icon-8.jpg">
-                <h2 >{{request.name}} {{request.lastname}}</h2>
-                </h2>
-                <p class="animated fadeIn">{{'contacts.request_body' | translate}}</p>
-                <button class="button button-small button-outline button-balanced" ng-click="acceptRequest(request.requestId)">
-                        <i class="icon ion-checkmark"></i>
-                </button>
-                <button class="button button-small button-outline button-assertive" ng-click="rejectRequest(request.requestId)">
-                        <i class="icon ion-close"></i>
-                </button>
+                <div class="row">
+                        <div class="col col-75">
+                                <h2 >{{request.name}} {{request.lastname}}</h2>      
+                                <p class="animated fadeIn">{{'contacts.request_body' | translate}}</p>
+                        </div>
+                        <div class="col col-25">        
+                                <button class="button button-small button-outline button-balanced" ng-click="acceptRequest(request.requestId)">
+                                        <i class="icon ion-checkmark"></i>
+                                </button>
+                                <button class="button button-small button-outline button-assertive" ng-click="rejectRequest(request.requestId)">
+                                        <i class="icon ion-close"></i>
+                                </button>
+                        </div>
+                 </div>  
             </a>
         </div>
         <div id="friendRequest" class="item item-divider">
                 <h2>{{'contacts.title' | translate}}</h2>
         </div>
         <div class="list social-list" ng-init="getContacts()">
-                <div class="row" ng-if="!contacts" style="justify-content: center">
-                        <ion-spinner icon="ripple"></ion-spinner>
+                <div class="timeline-wrapper" ng-if="spinner" style="justify-content: center">
+                        <div class="timeline-item">
+                                <div class="animated-background">
+                                        <div class="background-masker header-top"></div>
+                                        <div class="background-masker header-left"></div>
+                                        <div class="background-masker header-right"></div>
+                                        <div class="background-masker header-bottom"></div>
+                                        <div class="background-masker subheader-left"></div>
+                                        <div class="background-masker subheader-right"></div>
+                                        <div class="background-masker subheader-bottom"></div>
+                                        <div class="background-masker content-top"></div>
+                                        <div class="background-masker content-first-end"></div>
+                                        <div class="background-masker content-second-line"></div>
+                                        <div class="background-masker content-second-end"></div>
+                                        <div class="background-masker content-third-line"></div>
+                                        <div class="background-masker content-third-end"></div>
+                                </div>
+                        </div>
                 </div>
+                <div ng-if="no_contacts">
+                                <div class="card">
+                                        <div class="item item-text-wrap">
+                                                {{'contacts.no_requests'| translate}}
+                                        </div>
+                                </div>
+                        </div>
                 <a class="item item-thumbnail-left item-text-wrap"  ng-repeat="contact in contacts">
                     <img ng-if="contact.photo" class="animated zoomIn" ng-src="{{contact.photo}}">
                     <img ng-if="!contact.photo" class="animated zoomIn" src="img/default-user-icon-8.jpg">
-                    <h2 >{{contact.name}} {{contact.lastname}}</h2>
-                    </h2>
-                    <p class="animated fadeIn">{{contact.bio}}</p>
-                    <button class="button icon ion-eye button-outline button-dark" ng-click="goProfile(contact.id)">
-                    </button>
+                     <div class="row">
+                             <div class="col col-75">
+                                <h2 >{{contact.name}} {{contact.lastname}}</h2>
+                                </h2>
+                                <p class="animated fadeIn">{{contact.bio}}</p>
+                              </div>   
+                              <div class="col col-25">
+                                <button class="button button-small icon ion-eye button-outline button-dark" ng-click="goProfile(contact.id)">
+                                </button>
+                              </div>  
+                    </div>   
                 </a>
             </div>
       </ion-content>

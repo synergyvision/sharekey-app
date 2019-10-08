@@ -12,6 +12,7 @@
             var filter = $filter('translate')
            
             $scope.getUsers = function (){
+                $scope.spinner =true;
                 $scope.search = $localStorage.search
                 $http({
                     url: appConstants.apiUrl + appConstants.contacts + uid + '/users',
@@ -22,6 +23,7 @@
                         $scope.users = response.data.data;
                         console.log($scope.users)
                     }
+                    $scope.spinner = false;
                 }).catch(function (error){
                     if (error.status == 401){
                         ionicAlertPopup.alertPop(filter('personalInfo.expired_error'))

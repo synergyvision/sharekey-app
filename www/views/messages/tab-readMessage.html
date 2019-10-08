@@ -1,21 +1,21 @@
 <ion-view view-title="{{'messages.title_read' | translate}}">
         <ion-content ng-controller="messagesController">
                 <div class="list card" ng-init="getMessage()">
-                    <div class="item item-avatar">
-                        <img ng-if="photo" id="picture" ng-src="{{photo}}">
-                        <img ng-if="!photo" id="picture" src="img/default-user-icon-8.jpg">
-                        <div class="row">
-                            <div class="col col-75" style="padding: 0px;margin: 0px">
+                    <div class="row">
+                        <div class="col col-75">
+                            <div class="item item-avatar">
+                                <img ng-if="photo" id="picture" ng-src="{{photo}}">
+                                <img ng-if="!photo" id="picture" src="img/default-user-icon-8.jpg">
                                 <h2 ng-if="data.sender">{{'messages.from' | translate}} {{data.sender}}</h2>
                                 <h2 ng-if="data.r_username">{{'messages.to' | translate}} {{data.r_username}}</h2>
                                 <p>{{data.sent}}</p>
                             </div>
-                            <div class="col col-25" style="padding: 0px;margin: 0px">  
-                                    <a class="button button-small button-assertive" ng-click="deleteMessage()"><i class="ion ion-trash-a"></i></a>  
-                                    <a class="button button-small button-balanced" ng-if="data.publish == 'true' && !data.r_username" ng-click="publishMessage()"><i class="ion ion-forward"></i></a>
-                            </div>
                         </div>    
-                    </div>
+                        <div class="col col-25 col-offset-10 col-center">  
+                                <a class="button button-small button-assertive" ng-click="deleteMessage()"><i class="ion ion-trash-a"></i></a>  
+                                <a class="button button-small button-balanced" ng-if="data.publish == 'true' && !data.r_username" ng-click="publishMessage()"><i class="ion ion-forward"></i></a>
+                        </div>
+                    </div>    
                     <div class="item item-body">
                         <p>
                             {{decryptedContent}}

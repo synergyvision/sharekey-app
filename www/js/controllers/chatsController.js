@@ -265,7 +265,7 @@
                 }).then(function (response){
                     console.log(response.data);
                     $scope.chatMessage = "";
-                    $scope.getMessages()
+                    $state.reload()
                 }).catch(function (error){
                     console.log(error);
                 })
@@ -409,7 +409,7 @@
                     $scope.chatMessages = decripted;
                     $scope.$apply();
                 }).catch(function(error){
-                    ionicAlertPopup.alertPop("error",filter('chats.pass_error'))
+                    ionicAlertPopup.alertPop(filter('chats.erro'),filter('chats.pass_error'))
                     hide();
                     console.log(error)
                 })

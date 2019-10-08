@@ -122,7 +122,8 @@
         "error": "Error",
         "invalid_data": "Verifica los campos",
         "key_title": "Llaves",
-        "no_keys": "No tiene llaves creadas."
+        "no_keys": "No tiene llaves creadas.",
+        "activate_success": "LLave activada exitosamente."
 
     },
     "networks":{
@@ -142,7 +143,7 @@
         "tw_success": "Se ha validado la cuenta de twitter exitosamente.",
         "gh_error": "Hubo un error verifique sus datos.",
         "fb_error": "Ha ocurrido un error, validando el mensaje, revisa que el mensaje se subio en facebook o recarga la pagina para obtener otro mensaje.",
-        "gh_otp": "Ingresa tu codigo.",
+        "gh_otp": "Ingresa tu código.",
         "gh_valid": "Se ha validado la cuenta de github exitosamente."
 
     },
@@ -170,10 +171,10 @@
         "cancel": "Cancelar",
         "continue": "Continuar",
         "pass_error": "Verifique que la llave y la clave sean correctas.",
-        "deleted": "Se ha borrado un mensaje.",
+        "deleted": "Se ha borrado el mensaje.",
         "publish_success": "Su mensaje se ha publicado exitosamente.",
         "confirm_title": "Advertencia",
-        "confirm_text": "¿Quiere borrar este mensaje?",
+        "confirm_text": "¿Desea borrar este mensaje?",
         "confirm_button_no": "Cancelar",
         "confirm_button_yes": "Borrar",
         "no_keys": "Seleccione una llave",
@@ -192,14 +193,15 @@
         "chatKey": "Llave",
         "create": "Crear",
         "new_chat_error": "Error en la creacion de chat intenta de nuevo.",
-        "pass_error": "Verifique que su par de llave y passphrase sean correctos.",
+        "pass_error": "Verifique que su par de llave y clave sean correctos.",
         "ask_pass": "Introduzca su clave de chat",
         "cancel": "Cancelar",
         "continue": "Continuar",
         "error": "Error",
         "no_contacts": "Selecciona al menos un contacto.",
         "no_title": "Ingresa un título.",
-        "no_keys": "Seleccione una llave"
+        "no_keys": "Seleccione una llave",
+        "no_chats": "No hay conversaciones abiertas."
     },
     "suveys":{
         "title": "Encuentas",
@@ -235,14 +237,15 @@
         "request_body": "Te ha enviado una solicitud de amistad.",
         "profile_button": "Ver perfil",
         "accept_requests": "Has aceptado la solicitud de amistad.",
-        "reject_requests": "Has rechazado la solicitud."
+        "reject_requests": "Has rechazado la solicitud.",
+        "no_requests": "No tiene solicitudes."
     },
     "search":{
-        "view_title": "Bùsqueda",
+        "view_title": "Búsqueda",
         "see_profile": "Ver perfíl",
         "send_request": "Enviar solicitud",
         "sent_request": "Solicitud de amistad enviada",
         "search_placeholder": "Buscar usuario",
-        "pop_title": "Solicitud"
+        "pop_title": "Solicitud de amistad"
     }
 }

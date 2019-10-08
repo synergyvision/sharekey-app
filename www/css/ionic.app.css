@@ -10467,10 +10467,6 @@ a.button {
   left: 300px;
   top: 88px; }
 
-#profileInfo {
-  display: flex;
-  justify-content: center; }
-
 #cardFooter {
   display: flex; }
 
