@@ -183,7 +183,7 @@
                     {headers:  {'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8','Authorization':'Bearer: ' + token}
                 }).then(function (response){
                     hide();
-                    ionicAlertPopup.alertPop('Mensaje',filter('messages.send_success'))
+                    ionicAlertPopup.alertPop(filter('messages.mensaje_title'),filter('messages.send_success'))
                     $state.go('tab.messages');
                     console.log('message sent');
                 }).catch(function (error){
@@ -287,7 +287,7 @@
                 try {
                     var privateKey = decryptKey(privateKey,data.passphrase);
                 }catch(e){
-                    ionicAlertPopup.alertPop('error',filter('messages.pass_error'))
+                    ionicAlertPopup.alertPop(filter('messages.error'),filter('messages.pass_error'))
                 }
                 var message = decriptMessage(privateKey,data.passphrase,data.content)
                 message.then(function (decrypted){

@@ -12,7 +12,7 @@
         "error_title": "Error"
     },
     "recoverPassword":{
-        "view_title": "Recuperar Contraseña",
+        "view_title": "Recuperar contraseña",
         "email": "Correo electrónico",
         "email_placeholder": "ejemplo@hotmail.com",
         "button_go": "Continuar",
@@ -180,7 +180,8 @@
         "no_keys": "Seleccione una llave",
         "invalid": "Verifique todos los campos",
         "error": "Error",
-        "no_messages": "No hay mensajes."
+        "no_messages": "No hay mensajes.",
+        "mensaje_title": "Mensaje"
 
     },
     "chats":{
@@ -238,13 +239,14 @@
         "profile_button": "Ver perfil",
         "accept_requests": "Has aceptado la solicitud de amistad.",
         "reject_requests": "Has rechazado la solicitud.",
-        "no_requests": "No tiene solicitudes."
+        "no_requests": "No tiene solicitudes.",
+        "no_contacts": "No tiene contactos."
     },
     "search":{
         "view_title": "Búsqueda",
         "see_profile": "Ver perfíl",
         "send_request": "Enviar solicitud",
-        "sent_request": "Solicitud de amistad enviada",
+        "sent_request": "Solicitud de amistad enviada.",
         "search_placeholder": "Buscar usuario",
         "pop_title": "Solicitud de amistad"
     }
