@@ -44,7 +44,7 @@
     }
   ],
   "dependencies": {
-    "angular": ">=1.2.26 <=1.7"
+    "angular": ">=1.2.26 <=1.8"
   },
   "deprecated": false,
   "description": "A translation module for AngularJS",
